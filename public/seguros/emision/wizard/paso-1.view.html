@@ -1,0 +1,441 @@
+                
+
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+
+                <div class="modal-body">
+
+                    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+
+                                <div class="form-section" id="section-0">
+                                    <h5><span>DATOS DEL SOLICITANTE</span></h5>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Nombres</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="name"
+                                                        id="name"
+                                                        ng-model="form.name"
+                                                        ng-init="form.name"
+                                                        placeholder=""
+                                                        required
+                                                        autofocus autocomplete="off">
+    													<label for="name" class="hidden-xs">Nombres</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="lastname" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Apellidos</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="lastname"
+                                                        name="lastname"
+                                                        ng-model="form.lastname"
+                                                        ng-init="form.lastname"
+                                                        placeholder=""
+                                                        required autocomplete="off">
+    													<label for="lastname" class="hidden-xs">Apellidos</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label for="address" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Dirección</label>
+                                                    <div class="col-xs-12">
+                                                        <textarea
+                                                            class="form-control"
+                                                            id="address"
+                                                            name="address"
+                                                            ng-model="form.address"
+                                                            ng-init=""
+                                                            rows="4" required autocomplete="off"></textarea>
+    													<label for="address" class="hidden-xs">Dirección</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="sex" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Sexo</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control input-sm"
+                                                        id="sex"
+                                                        name="sex"
+                                                        ng-model="form.sex"
+                                                        ng-init=""
+                                                        placeholder=""
+                                                        required autocomplete="off"
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.person_sex">
+                                                        </select>
+    													<label for="sex" class="hidden-xs">Sexo</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="civil_status" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Estado Civil</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control input-sm"
+                                                        id="civil_status"
+                                                        name="civil_status"
+                                                        ng-model="form.civil_status"
+                                                        ng-init="form.civil_status = '2'"
+                                                        placeholder=""
+                                                        required autocomplete="off"
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.person_status">
+                                                        </select>
+    													<label for="civil_status" class="hidden-xs">Estado Civil</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="country_id" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">País</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control"
+                                                        id="country_id"
+                                                        name="country_id"
+                                                        ng-model="form.country_id"
+                                                        ng-init="form.country_id = '1'"
+                                                        placeholder=""
+                                                        required autocomplete="off"
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.countries">
+                                                        </select>
+    													<label for="country" class="hidden-xs">País</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="state_id" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Provincia</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control"
+                                                        id="state_id"
+                                                        name="state_id"
+                                                        ng-model="form.state_id"
+                                                        ng-init="form.state_id = '1'"
+                                                        placeholder=""
+                                                        required autocomplete="off"
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.states[form.country_id]">
+                                                        </select>
+    													<label for="state" class="hidden-xs">Provincia</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="city_id" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Ciudad</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control"
+                                                        id="city_id"
+                                                        name="city_id"
+                                                        ng-model="form.city_id"
+                                                        ng-init="form.city_id = '1'"
+                                                        placeholder=""
+                                                        required autocomplete="off"
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.cities[form.state_id]">
+                                                        </select>
+    													<label for="city" class="hidden-xs">Ciudad</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="email" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Email</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="email"
+                                                        id="email"
+                                                        name="email"
+                                                        ng-model="form.email"
+                                                        ng-init="form.email"
+                                                        placeholder=""
+                                                        required autocomplete="off">
+                                                        <label for="email" class="hidden-xs">Email</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="phone" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Teléfono</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="tel"
+                                                        id="phone"
+                                                        name="phone"
+                                                        ng-model="form.phone"
+                                                        ng-init="form.phone"
+                                                        placeholder=""
+                                                        required>
+    													<label for="phone" class="hidden-xs" autocomplete="off">Teléfono</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="mobile" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Móvil</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="tel"
+                                                        id="mobile"
+                                                        name="mobile"
+                                                        ng-model="form.mobile"
+                                                        ng-init="form.mobile"
+                                                        placeholder="" autocomplete="off"
+                                                        required>
+    													<label for="mobile" class="hidden-xs">Móvil</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pob" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Lugar de nacimiento</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="pob"
+                                                        name="pob"
+                                                        ng-model="form.pob"
+                                                        ng-init="form.pob"
+                                                        placeholder=""
+                                                        required autocomplete="off">
+    													<label for="pob" class="hidden-xs">Lugar de nacimiento</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="dob" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Fecha de nacimiento</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="date"
+                                                        id="dob"
+                                                        name="dob"
+                                                        ng-init="form.dob = (form.dob | parseDate)"
+                                                        ng-model="form.dob"
+                                                        placeholder=""
+                                                        required autocomplete="off">
+    													<label for="dob" class="hidden-xs">Fecha de nacimiento</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="height" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Estatura</label>
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-6" style="display:inline-block; padding-right:0; padding-left:0">
+                                                            <input
+                                                                class="form-control"
+                                                                type="text"
+                                                                id="height"
+                                                                name="height"
+                                                                ng-model="form.height"
+                                                                ng-init="form.height"
+                                                                placeholder=""
+                                                                required autocomplete="off">
+                                                        </div>
+                                                        <div class="col-xs-6 btn-group" style="display: inline-block">
+                                                            <label class="btn btn-primary" ng-model="form.heightu" uib-btn-radio="'m'">M</label>
+                                                            <label class="btn btn-primary" ng-model="form.heightu" uib-btn-radio="'cm'">CM</label>
+                                                        </div>
+    													<label for="height" class="hidden-xs">Estatura</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pid_type" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Tipo de documento</label>
+                                                    <div class="col-xs-12">
+                                                        <select
+                                                        class="form-control"
+                                                        id="pid_type"
+                                                        name="pid_type"
+                                                        ng-model="form.pid_type"
+                                                        ng-init=""
+                                                        placeholder=""
+                                                        required
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.person_doctype">
+                                                        </select>
+                                                        <label for="pid_type" class="hidden-xs">Tipo de documento</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pid_num" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label"># del documento</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="pid_num"
+                                                        name="pid_num"
+                                                        ng-model="form.pid_num"
+                                                        ng-init=""
+                                                        placeholder=""
+                                                        required autocomplete="off">
+    													<label for="pid_num" class="hidden-xs"># del documento</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="weight" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Peso</label>
+                                                    <div class="col-xs-12">
+                                                        <div class="col-xs-6" style="display:inline-block; padding-right:0; padding-left:0">
+                                                            <input
+                                                                class="form-control"
+                                                                type="text"
+                                                                id="weight"
+                                                                name="weight"
+                                                                ng-model="form.weight"
+                                                                ng-init="form.weight"
+                                                                placeholder=""
+                                                                required autocomplete="off">
+                                                        </div>
+                                                        <div class="col-xs-6 btn-group" style="display: inline-block">
+                                                            <label class="btn btn-primary" ng-model="form.weightu" uib-btn-radio="'kg'">KG</label>
+                                                            <label class="btn btn-primary" ng-model="form.weightu" uib-btn-radio="'lb'">LB</label>
+                                                        </div>
+                                                        <label for="weight" class="hidden-xs">Peso</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="occupation" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Ocupación</label>
+                                                    <div class="col-xs-12">
+                                                        <input
+                                                        class="form-control"
+                                                        type="text"
+                                                        id="occupation"
+                                                        name="occupation"
+                                                        ng-model="form.occupation"
+                                                        ng-init="form.occupation"
+                                                        placeholder="(opcional)"
+                                                        autocomplete="off">
+    													<label for="occupation" class="hidden-xs">Ocupación</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-section" id="section-0">
+                                    <h5><span>QUIZ</span></h5>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+
+
+
+
+
+                                 <!--<pre ng-show="form" class="col-xs-12 col-md-offset-3 col-md-7">{{form | json}}</pre> <!---->
+
+                    </form>
+                    </div>
+
+                <div class="modal-footer">
+
+                    <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Continuar</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+
+                    <a ng-show="!checking" ui-sref="^.^" class="btn btn-link pull-right">Salir</a>
+                </div>

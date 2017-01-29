@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-xs-3" style='display:inline;'>   
+            <select
+                class="form-control"
+                ng-options="key as (value) for (key, value) in data.documentList" 
+                ng-model="form.files[$index].category"
+                required
+                autofocus autocomplete="off">
+            </select>
+        </div>
+        <div class="col-xs-3" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="form.files[$index].description"
+            placeholder=""
+            required
+            autofocus autocomplete="off">
+        </div>
+        <input type="hidden" name="form.files[$index].id">
+        <button class="col-xs-1 btn btn-primary" 
+        style='display:inline;' type="file" ngf-select="registerFile($file, register)" accept="*/*"  >
+            <i ng-show="!form.files[$index].file.progress" class='glyphicon glyphicon-upload'></i>
+            <span ng-show="form.files[$index].file.progress > 0" ng-bind="form.files[$index].file.progress + '%'"></span>
+        </button>
+        <button class="col-xs-1 btn btn-danger" style='display:inline;' ng-click="deleteRegister(register)">
+            <i class='glyphicon glyphicon-remove'></i>
+        </button>
+        <div class="col-xs-3" style="font:smaller; display:inline; overflow:hidden"> 
+            <a ng-if="!form.files[$index].file.error" ng-href="file/view/{{form.files[$index].id}}?token={{ ntoken }}" target="_blank">
+                {{form.files[$index].name}}
+            </a>
+            <span ng-if="form.files[$index].file.error">{{form.files[$index].name}}</span>
+        </div>
+        <span ng-show="form.files[$index].file.error" class="col-xs-1" style='display:inline; color:red'>
+            <i class='glyphicon glyphicon-remove'></i>
+        </span>
+    </div>
+</div>
+<br>

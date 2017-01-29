@@ -1,0 +1,522 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-xlg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<div></div>
+					<header class="row" id="myLargeModalLabel">
+						<div class="col-md-6" style="margin-left: 30px">
+                            <div>
+                                <h4 style="font-size: 16px;">Reclamo #: {{claim.id}}</h4>
+                            </div>
+    						<div>
+                                <h4 style="font-size: 16px;">Poliza #: {{claim.policy_num}}</h4>
+                            </div>
+    						<div>
+                                <h4 style="font-size: 16px;">Afiliado: {{claim.affiliate_name}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <table style="font-size: 16px;margin-top: 10px;"  
+                                    class="col-md-8 pull-right table-bordered">
+                                <thead>
+                                    <th style="width:40%"></th>
+                                    <th style="width:30%">Local</th>
+                                    <th style="width:30%">USA</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Individual</td>
+                                        <td>
+                                            {{ adeductibles.local }} / {{ pdeductibles.local }}
+                                        </td>
+                                        <td>
+                                            {{ adeductibles.usa }} / {{ pdeductibles.usa }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Familiar</td>
+                                        <td>
+                                            {{ gdeductibles.local }} / {{ pdeductibles.local*2 }}
+                                        </td>
+                                        <td>
+                                            {{ gdeductibles.usa }} / {{ pdeductibles.usa*2}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+					</header>
+				</div>
+				<div class="modal-body">
+					<div class="decor-title">
+                        <div class="container-fluid con-margin">
+                            <div class="row">
+                                <!--table class="table table-bordered table-notAssc">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h5 class="text-center">Factura N.</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Fecha</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Proveedor</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Tipo de Servicio</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Valor Facturado </h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Monto No Cubierto</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Descuento</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Deducible</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Copago</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Total Pagado</h5>
+                                            </th>
+                                            <th>
+                                                <h5 class="text-center">Acciones</h5>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in not_associated">
+                                            <td>{{item.description}}</td>
+                                            <td>{{item.date_invoice}}</td>
+                                            <td>{{item.supplier_id}}</td>
+                                            <td>{{item.service_id}}</td>
+                                            <td>{{item.amount}}</td>
+                                            <td>{{item.supplier_id}}</td>
+                                            <td>
+                                                <input type="text" ng-model="notAss-notCovered">
+                                            </td>
+                                            <td>
+                                                <input type="text" ng-model="notAss-discount">
+                                            </td>
+                                            <td>
+                                                <input type="text" ng-model="notAss-deductible">
+                                            </td>
+                                            <td>
+                                                <input type="text" ng-model="notAss-copay">
+                                            </td>
+                                            <td>
+                                                {{ item.totalPay }}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary glyphicon glyphicon-edit"></button>
+                                                <button class="btn btn-success glyphicon glyphicon-save"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table-->
+                            </div>
+                            <div class="container-fluid con-margin">
+                            	<div class="row">
+                            		<div class="col-md-2">
+                            			<header>
+                            				<h5 class="text-center">Factura N.</h5>
+                            			</header>
+                            		</div>
+                                    <div class="col-md-10">
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Monto</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">No Cubierto</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Descuento</h5>
+                                			</header>
+                                		</div>
+                                        <div class="col-md-2">
+                                            <header>
+                                                <h5 class="text-center">Deducible</h5>
+                                            </header>
+                                        </div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Coaseguro</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-1">
+                                			<header>
+                                				<h5 class="text-center">Total</h5>
+                                			</header>
+                                		</div>
+                                    </div>
+                            	</div>
+								<form ng-repeat="liq in settlements" name="pending-form-{{$index}}" class="form-horizontal clearfix" ng-submit="submitLiqChanges(liq)" >
+	                                <div class="row row-edit-hover pos-rel" ng-class="{edithightlight : !liq.disabled}">
+	                                	<div class="edit-hover" ng-class="{hidden: !liq.disabled}" ng-click="editLiquidation(liq.id)">
+	                                		<p class="vert-center">Editar registro</p>
+	                                	</div>
+	                                    <div class="col-md-2">
+	                                        <div class="form-group">
+	                                            <div class="col-xs-12">
+	                                                <input class="form-control" type="text" id="number-invoice-{{liq.id}}" name="number-invoice-{{liq.id}}" ng-model="liq.description" placeholder="" required="" ng-disabled="1">
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                        <div div class="col-md-10">
+    	                                    <div class="col-md-2">
+    	                                        <div class="form-group">
+    	                                            <div class="col-xs-12">
+    	                                                <div class="input-group">
+    	                                                    <div class="input-group-addon">$</div>
+    	                                                    <input class="form-control text-right" type="number" min="0.00" step="1.00" id="amount-{{liq.id}}" name="amount-{{liq.id}}" ng-model="liq.amount" ng-disabled="1">
+    	                                                </div>
+    	                                            </div>
+    	                                        </div>
+    	                                    </div>
+    	                                    <div class="col-md-2">
+    	                                        <div class="form-group">
+    	                                            <div class="col-xs-12 btn-group">
+    	                                                <div class="input-group">
+    	                                                    <div class="input-group-addon">$</div>
+    	                                                    <input class="form-control text-right" type="number" min="0.00" max="{{liq.amount}}" step="1.00" id="no-cubierto-{{liq.id}}" name="no-cubierto-{{liq.id}}" ng-model="liq.settlement.uncovered_value" ng-disabled="liq.disabled">
+    	                                                </div>
+    	                                            </div>
+    	                                        </div>
+    	                                    </div>
+    	                                    <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <div class="col-xs-12 btn-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input class="form-control text-right" type="number" min="0.00" max="{{liq.amount}}" step="1.00" id="descuento-{{liq.id}}" name="descuento-{{liq.id}}" ng-model="liq.settlement.descuento" ng-disabled="liq.disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <div class="col-xs-12 btn-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon">$</div>
+                                                            <input class="form-control text-right" type="number" min="0.00" max="{{liq.amount}}" step="1.00" id="deducible-{{liq.id}}" name="deducible-{{liq.id}}" ng-model="liq.settlement.expected_deduct" ng-disabled="liq.disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    	                                    <div class="col-md-2">
+    	                                        <div class="form-group">
+    	                                             <div class="col-xs-12 btn-group">
+    	                                                 <div class="input-group">
+    	                                                    <div class="input-group-addon">$</div>
+    	                                                    <input class="form-control text-right" type="number" min="0.00" step="1.00" id="coaseguro-{{liq.id}}" name="coaseguro-{{liq.id}}" ng-model="liq.settlement.coaseguro" ng-disabled="liq.disabled">
+    	                                                </div>
+    	                                            </div>
+    	                                        </div>
+    	                                    </div>
+    	                                    <div class="col-md-1">
+    	                                        <div class="form-group">
+    	                                            <div class="col-xs-12 text-right">
+    	                                                {{  liq.amount - liq.settlement.uncovered_value - liq.settlement.descuento - liq.settlement.expected_deduct - liq.settlement.coaseguro | currency:$:2}}
+    	                                            </div>
+    	                                        </div>
+    	                                    </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                        <button class="btn btn-primary btn-block" type="button" ng-click="submitLiqChanges(liq)" ng-disabled="liq.disabled">
+                                                         <i class="glyphicon glyphicon glyphicon-ok"></i>
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <button class="btn btn-primary btn-block" type="button" ng-click="addFilesLiquidation(liq)" ng-disabled="liq.disabled">
+                                                    Ver Archivos <i class="glyphicon glyphicon-folder-open"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+	                                </div>
+       							</form> 
+       							<div class="row">
+                            		<div class="col-md-offset-9 col-md-2">
+                            			<header>
+                            				<h5 class="text-center">Total</h5>
+                            			</header>
+                            		</div> 
+                            		<div class="col-md-1">
+                            			<header>
+                            				<h5 class="text-right">{{ sumLiqTotal()|currency:'$':2}}</h5>
+                            			</header>
+                            		</div> 
+                            	</div> 
+                            </div>
+       				</div>
+       				<form name="addLiquidationForm" class="form-horizontal clearfix" ng-submit="">
+                        <div class="form-section" id="section-0">
+                            <h5><span>NO LIQUIDADAS</span></h5>
+                            <div class="container-fluid con-margin">
+                            	<div class="row">
+                            		<div class="col-md-2">
+                            			<header>
+                            				<h5 class="text-center">Factura N.</h5>
+                            			</header>
+                            		</div>
+                                    <div class="col-md-10">
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Monto</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">No Cubierto</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Descuento</h5>
+                                			</header>
+                                		</div>
+                                        <!--<div class="col-md-2">
+                                            <header>
+                                                <h5 class="text-center">Deducible</h5>
+                                            </header>
+                                        </div>!-->
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Coasegurado</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-1">
+                                			<header>
+                                				<h5 class="text-center">Total</h5>
+                                			</header>
+                                		</div>
+                                    </div> 
+                            	</div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <select class="form-control" type="text" id="number-invoice" name="number-invoice" ng-model="form.obj" placeholder="" required="required" ng-options="item as item.description for item in not_associated track by item.id" ng-change="noLiqSelected(form.obj)">
+                                                	<!--option ng-repeat="item in not_associated" value="{{item.numberInvoice}}">{{item.numberInvoice}}</option-->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="10.00" step="1.00" id="monto" name="monto" ng-model="amountLiqSelected">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" max="{{amountLiqSelected}}" step="1.00" id="uncovered" name="uncovered" ng-model="form.uncovered" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" max="{{amountLiqSelected}}" step="1.00" id="dscto" name="dscto" ng-model="form.dscto" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-md-2">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" max="{{amountLiqSelected}}" step="1.00" id="deducible" name="deducible" ng-model="form.deducible" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>!-->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" max="{{amountLiqSelected}}" step="1.00" id="coaseguro" name="coaseguro" ng-model="form.coaseguro" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 text-right">
+                                                    {{  form.amount - form.uncovered - form.coaseguro - form.deducible - form.dscto | currency:$:2}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-primary btn-block" ng-click="addFilesNLLiquidation()" type="button" ng-disabled="!form.cfid">
+                                                    Agregar Archivos <i class="glyphicon glyphicon-folder-open"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+       					</div>
+						<div class="modal-footer">
+							<input type="submit" value="Guardar y crear uno nuevo" class="btn btn-primary pull-right" ng-click="addLiquidation()" ng-disabled="addLiquidationForm.$invalid">
+						</div>
+       				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="modal-backdrop bs-example-modal" ng-show="addFiles" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+		<div class="modal-dialog modal" ng-style="{'display':addFiles && 'block'}">
+			<div class="modal-content wizard-form">
+				<div class="modal-header">
+					<button type="button" class="close" ng-click="addFiles = false" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="fileModalLabel">Archivos de la liquidacion</h4>
+				</div>
+				<div class="modal-body">
+				    <div class="row">
+				    	<div class="col-md-4">
+                			<header>
+                				<h5 class="text-center">Descripcion</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-4">
+                			<header>
+                				<h5 class="text-center">Nombre del Archivo</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-2">
+                			<header>
+                				<h5 class="text-center">Cheque</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-1">
+                			<header>
+                				<h5 class="text-center glyphicon glyphicon-ok"></h5>
+                			</header>
+                		</div>
+				    </div>
+				    <div class="row" ng-repeat="file in currentFiles">
+				    	<div class="col-md-4">
+                			<p class="text-center">{{ file.description }}</p>
+                		</div>
+                		<div class="col-md-4">
+                			<p class="text-center">{{ file.name }}</p>
+                		</div>
+                        <div class="col-md-2">
+                            <p class="text-center">
+                                <i class="glyphicon" ng-class="{'glyphicon-exclamation-sign text-danger':file.paycheck == 0, 'glyphicon-ok-sign text-success': file.paycheck == 1 }"></i>
+                            </p>
+                        </div>
+                		<div class="col-md-1">
+                			<p class="text-center glyphicon" ng-class="{'glyphicon-unchecked':!file.selected, 'glyphicon-check':file.selected }" ng-click="selectedFilesLiq(file.id)"></p>
+                		</div>
+				    </div>
+				</div>
+	            <div class="modal-footer">
+	            	<div class="col-offset-md-6 col-md-12">
+	            		<button class="btn btn-danger" type="button" ng-click=" addFiles = false">Cancelar</button>
+	            		<button class="btn btn-success" type="button" ng-click="addFilesSuccess()">Ok</button>
+	            	</div>
+	            </div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal-backdrop bs-example-modal" ng-show="addNLFiles" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+		<div class="modal-dialog modal" ng-style="{'display':addNLFiles && 'block'}">
+			<div class="modal-content wizard-form">
+				<div class="modal-header">
+					<button type="button" class="close" ng-click="cancelSelFilesNLiq()" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="fileModalLabel">Archivos de la liquidacion</h4>
+				</div>
+				<div class="modal-body">
+				    <div class="row">
+				    	<div class="col-md-4">
+                			<header>
+                				<h5 class="text-center">Descripcion</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-4">
+                			<header>
+                				<h5 class="text-center">Nombre del Archivo</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-2">
+                			<header>
+                				<h5 class="text-center">Cheque</h5>
+                			</header>
+                		</div>
+                		<div class="col-md-1">
+                			<header>
+                				<h5 class="text-center glyphicon glyphicon-ok"></h5>
+                			</header>
+                		</div>
+				    </div>
+				    <div class="row" ng-repeat="file in uploaded">
+				    	<div class="col-md-4">
+                			<p class="text-center">{{ file.descrip }}</p>
+                		</div>
+                		<div class="col-md-4">
+                			<p class="text-center br-word">{{ file.name }}</p>
+                		</div>
+                		<div class="col-md-2">
+                			<p class="text-center">
+                				<i class="glyphicon" ng-class="{'glyphicon-exclamation-sign text-danger':file.paycheck == 0, 'glyphicon-ok-sign text-success': file.paycheck == 1 }"></i>
+                			</p>
+                		</div>
+                		<div class="col-md-1">
+                			<p class="text-center glyphicon" ng-class="{'glyphicon-unchecked':!file.selected, 'glyphicon-check':file.selected }" ng-click="selectedFilesNLiq(file.id)"></p>
+                		</div>
+				    </div>
+				</div>
+	            <div class="modal-footer">
+	            	<div class="col-offset-md-6 col-md-12">
+	            		<button class="btn btn-danger" type="button" ng-click="cancelSelFilesNLiq()">Cancelar</button>
+	            		<button class="btn btn-success" type="button" ng-click="addNLFilesSuccess()">Ok</button>
+	            	</div>
+	            </div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-xs-12">
+        <div class="col-xs-4" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="form[$index]['descrip']"
+            ng-init="form[$index]['descrip']"
+            placeholder="Descripción"
+            required
+            autofocus autocomplete="off">
+        </div>
+        <div class="col-xs-1" style='display:inline;'>
+            <input
+                ng-model="form[$index]['paycheck']"
+                ng-name="form[$index]['paycheck']" 
+                type="checkbox" 
+                ng-true-value=1
+                >
+        </div>
+        <div class="col-xs-4" style="font:smaller; display:inline;"> 
+            <div class="col-xs-8" style="overflow:hidden; display:inline;">{{f[$index].name}}</div>
+        </div>
+        
+        <div class="col-xs-2" style='display:inline;'>
+    		<button class="col-xs-6 btn btn-primary" style='display:inline;' type="file" ngf-select="registerFile($file, $index)" accept="*/*" ngf-max-height="1000" >
+    	      	<i class='glyphicon glyphicon-upload'></i>
+    	  	</button>
+        </div>
+        <button class="col-xs-1 btn btn-danger" style='display:inline;' ng-click="deleteRegister(register)">
+            <i class='glyphicon glyphicon-remove'></i>
+        </button>
+	</div> 
+</div>
+<br>

@@ -1,0 +1,15 @@
+{
+    "name": "Policy",
+    "alias": "policy",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Policy\\Providers\\PolicyServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

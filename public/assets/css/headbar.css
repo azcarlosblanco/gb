@@ -1,0 +1,47 @@
+.navbar {
+	position: fixed;
+	width:100%;
+	background: #fff;
+	border: 0px;
+	/*border-bottom: 1px solid;*/
+	box-shadow: 0 2px 4px rgba(0,0,0,.08);
+	z-index: 100;
+	border-radius: 0px;
+}
+.navbar-header {
+	width: 260px;
+	background: #63625D; /*rgb(98, 168, 234);*/
+	color: #fff;
+}
+
+.navbar-default .navbar-brand {
+	color: rgba(255, 255, 255, .9);
+	font-size: 18px;
+	font-weight: 500;
+	height: auto;
+	padding-left: 0px;
+}
+.navbar-default  .navbar-brand:hover {
+	color: rgba(255, 255, 255, 1);
+}
+
+nav.navbar li, nav.navbar .navbar-brand {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+nav.navbar li a {
+	padding: 0px 20px;
+}
+
+nav.navbar	{
+	margin-bottom: 0px;
+}
+
+#navbar-toggle-cbox:checked ~ .collapse {
+    display: block;
+}
+
+#navbar-toggle-cbox {
+	display:none;
+}

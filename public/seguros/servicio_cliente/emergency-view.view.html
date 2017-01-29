@@ -1,0 +1,203 @@
+<div class="modal-backdrop bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="fileModalLabel" >
+ <div ng-if="newDiagnosisObject.showmodal"
+    	ng-include="'seguros/general/new_diagnosis.view.html'">
+  </div>
+  <div ng-if="newSpecialtyObject.showmodal"
+    	ng-include="'seguros/general/new-specialty.view.html'">
+  </div>
+   <div ng-if="newDoctorObject.showmodal"
+    	ng-include="'seguros/general/new-doctor.view.html'">
+  </div>
+	<div class="modal-dialog modal-lg" style="display: block; /*padding-right: 17px;*/">            
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content wizard-form">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Emergencias
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+				        <div style="margin:5px 10px">
+						   <div class="form-section" id="section-1" style="padding:5px; margin:5px 0px">
+						    	<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;">
+	    							   <span>Informacion Emergencia</span>
+	    					    </h5>	
+					       </div>
+					       <div class="container-fluid con-margin" >
+					       	<label for="customer_policy_id" class="col-xs-6 col-sm-2 control-label">Poliza:</label>
+							 <div class="col-xs-6 col-sm-3 col-md-3">
+						    	<select
+					                class="form-control"
+					                ng-options="key as (value) for (key, value) in catalog.customer_policy_id"
+					                ng-model="form.customer_policy_id"
+					                ng-init="form.customer_policy_id ? (form.customer_policy_id = parseValueToString(form.customer_policy_id)):''"
+					                placeholder="#Poliza"
+					                ng-readonly="1"
+					                required
+					                ng-disabled="true"
+					                autofocus autocomplete="off">
+					            </select>
+							  </div>
+					         </div>
+							</div>
+							<div style="margin:5px 10px">
+								<div class="container-fluid con-margin" >
+							       	<label for="name" class="col-xs-6 col-sm-2 control-label">Nombre del Cliente:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								     <input 
+								            class="form-control"
+								            type="text"
+								            id="name"
+								            value="{{ form.name}}"
+								            name="name"
+								            ng-model="form.name"
+								            ng-init="form.name"
+								            placeholder="Nombre"
+								            ng-required=1
+								            focus="{{$parent.$parent.$first && $first}}"
+								            ng-readonly="1"
+								            ng-blur="focused[name] = false" autocomplete="off">
+		                            </div>
+		                            <label for="phone" class="col-xs-10 col-sm-3 control-label">Telefono:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								      <input 
+							            class="form-control"
+							            type="text"
+							            id="phone"
+							            value="{{ form.phone}}"
+							            name="phone"
+							            ng-model="form.phone"
+							            ng-init="form.phone"
+							            placeholder="Telefono"
+							            ng-required=1
+							            focus="{{$parent.$parent.$first && $first}}"
+							            ng-readonly="1"
+							            ng-blur="focused[phone] = false" autocomplete="off">
+		                            </div>
+								</div>
+						     </div>
+						     <div style="margin:5px 10px">
+			                    <div class="container-fluid con-margin" >
+							       	<label for="hospital_id" class="col-xs-6 col-sm-2 control-label">Hospital:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								      <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.hospital_id" 
+								                ng-model="form.hospital_id"
+								                ng-init="form.hospital_id ? (form.hospital_id = parseValueToString(form.hospital_id)):''"
+								                required
+								                ng-disabled="true"
+								                ng-blur="focused[hospital_id] = false" autocomplete="off">
+								            </select>
+			                            </div>
+										<label for="diagnosis_id" class="col-xs-10 col-sm-3 control-label">Diagnostico:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								   <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.diagnosis_id" 
+								                ng-model="form.diagnosis_id"
+								                ng-init="form.diagnosis_id ? (form.diagnosis_id = parseValueToString(form.diagnosis_id)):''"
+								                required
+								                ng-disabled="true"
+								                ng-blur="focused[diagnosis_id] = false" autocomplete="off">
+								         </select>
+			                            </div>
+			                            
+							    </div>
+							  </div>
+							  <div style="margin:5px 10px"> 
+									<div class="container-fluid con-margin" >
+									     <label for="doctor_id" class="col-xs-6 col-sm-2 control-label">Tratante:</label>
+										 <div class="col-xs-6 col-sm-3 col-md-3">						   
+										 <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.doctor_id" 
+								                ng-model="form.doctor_id"
+								                ng-init="form.doctor_id ? (form.doctor_id = parseValueToString(form.doctor_id)):''"
+								                required
+								                ng-disabled="true"
+								                ng-blur="focused[doctor_id] = false" autocomplete="off">
+								          </select>
+			                            </div>
+			                           	  <label for="specialty_id" class="col-xs-10 col-sm-3 control-label">Especialidad:</label>
+									       <div class="col-xs-6 col-sm-3 col-md-3">						 
+									       <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.specialty_id" 
+								                ng-model="form.specialty_id"
+								                ng-init="form.specialty_id ? (form.specialty_id = parseValueToString(form.specialty_id)):''"
+								                required
+								                ng-disabled="true"
+								                ng-blur="focused[specialty_id] = false" autocomplete="off">
+								           </select>
+			                            </div>
+			                        </div>
+			                 </div>
+			                 <div style="margin:5px 10px">
+									<div class="container-fluid con-margin" >
+								       	<label for="start_date" class="col-xs-6 col-sm-2 control-label">Fecha Ingreso:</label>
+										 <div class="col-xs-6 col-sm-3 col-md-3">								      <input 
+										            class="form-control"
+										            type="text"
+										            id="start_date"
+										            value="{{ form.start_date}}"
+										            name="start_date"
+										            ng-model="form.start_date"
+										            ng-init="form.start_date"
+										            placeholder="yyyy/mm/dd"
+										            ng-required=1
+										            focus="{{$parent.$parent.$first && $first}}"
+										            ng-readonly="1"
+										            ng-blur="focused[start_date] = false" autocomplete="off">
+			                                </div>
+										  <label for="end_date" class="col-xs-10 col-sm-3 control-label">Fecha Alta:</label>
+								         	<div class="col-xs-6 col-sm-3 col-md-3">							 <input 
+										            class="form-control"
+										            type="text"
+										            id="end_date"
+										            value="{{ form.end_date}}"
+										            name="end_date"
+										            ng-model="form.end_date"
+										            ng-init="form.end_date"
+										            placeholder="yyyy/mm/dd"
+										            ng-required=1
+										            focus="{{$parent.$parent.$first && $first}}"
+										            ng-readonly="1"
+										            ng-blur="focused[end_date] = false" autocomplete="off">
+			                                </div>
+									</div>
+								</div>
+									<div class="form-group" ng-class="{'highlight': focused[hospitalized], 'invalid' : !modalForm[hospitalized].$valid && modalForm[hospitalized].$touched}">
+									 <label for="hospitalized" class="col-xs-12 col-sm-3 control-label">Hospitalizacion:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+										    	<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.hospitalized",
+												       name="hospitalized"
+												       ng-disabled="true"
+												       ng-checked="form.hospitalized ==1">
+									    </div>
+								    </div>
+
+									<div class="form-group" ng-class="{'highlight': focused[accident], 'invalid' : !modalForm[accident].$valid && modalForm[accident].$touched}">
+									 <label for="accident" class="col-xs-12 col-sm-3 control-label">Accidente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+										    	<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.accident",
+												       name="accident"
+												       ng-disabled="true"
+												       ng-checked="form.accident ==1">
+									    </div>
+				                   </div>
+						     </form>
+                        </div> 
+                       <br>
+					    <div class="modal-footer">
+							<a ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+						</div>
+				</div> 
+		 </div>
+	</div>
+</div>

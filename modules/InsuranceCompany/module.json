@@ -1,0 +1,15 @@
+{
+    "name": "InsuranceCompany",
+    "alias": "insurancecompany",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\InsuranceCompany\\Providers\\InsuranceCompanyServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

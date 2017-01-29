@@ -1,0 +1,53 @@
+/*.ng-enter           { animation: fadeIn 0.3s both ease-in; z-index: 8888; }
+.ng-leave           { animation: fadeOut 0.1s both ease-in; z-index: 9999; }*/
+
+.ng-enter {
+    /* transition on enter for .5s */
+    /*transition: .5s;
+    /* start with opacity 0 (invisible) */
+    animation: fadeIn 0.3s both ease-in;
+    opacity: 0;
+}
+
+/* end 'enter' transition on main view */
+.ng-enter-active {
+    /* end with opacity 1 (fade in) */
+    opacity: 1;
+}
+
+/* leaving animations ----------------------------------------- */
+
+/* fade in */
+
+@-webkit-keyframes fadeIn {
+    from { opacity:0; } 
+    to { opacity:1; } 
+}
+
+@-moz-keyframes fadeIn { 
+    from { opacity:0; } 
+    to { opacity:1; } 
+}
+
+@keyframes fadeIn { 
+    from { opacity:0; } 
+    to { opacity:1; } 
+}
+
+/* fade out */
+
+@-webkit-keyframes fadeOut { 
+    from { opacity:1; } 
+    to { opacity:0; } 
+}
+
+@-moz-keyframes fadeOut { 
+    from { opacity:1; } 
+    to { opacity:0; } 
+}
+
+@keyframes fadeOut { 
+    from { opacity:1; } 
+    to { opacity:0; } 
+}
+

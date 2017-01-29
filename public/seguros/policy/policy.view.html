@@ -1,0 +1,155 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						General - Informacion de la Póliza
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-1">
+							<h5 >
+								<span>DATOS GENERALES</span>
+							</h5>
+							<div class="container-fluid con-margin">	
+								<div class="row">
+								    <div class="form-group" ng-class="{'highlight': focused[policy_number], 'invalid' : !modalForm[policy_number].$valid && modalForm[policy_number].$touched}">
+									    <label for="num_policy" class="col-xs-12 col-sm-3 control-label">Número de Póliza:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="policy_number"
+									            value="{{ form.policy_number }}"
+									            name="policy_number"
+									            ng-model="form.policy_number"
+									            ng-init="form.policy_number"
+									            placeholder="# Póliza"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[policy_number] = false" autocomplete="off">
+									    </div>
+								    </div>
+								     <div class="form-group">
+									    <label for="clastname" class="col-xs-12 col-sm-3 control-label">Plan / Opción :</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<span class="form-control">{{ form.plan }} / {{ form.deductibles }}</span>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[agente_name], 'invalid' : !modalForm[agente_name].$valid && modalForm[agente_name].$touched}">
+									    <label for="agente_name" class="col-xs-12 col-sm-3 control-label">Agente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="agente_name"
+									            value="{{ form.agente_name}}"
+									            name="agente_name"
+									            ng-model="form.agente_name"
+									            ng-init="form.agente_name"
+									            placeholder="agente_name"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[agente_name] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[start_date], 'invalid' : !modalForm[start_date].$valid && modalForm[start_date].$touched}"><label for="start_date" class="col-xs-12 col-sm-3 control-label">Inicio Cobertura:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="start_date"
+									            value="{{ form.start_date}}"
+									            name="start_date"
+									            ng-model="form.start_date"
+									            ng-init="form.start_date"
+									            placeholder="start_date"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[start_date] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[end_date], 'invalid' : !modalForm[end_date].$valid && modalForm[end_date].$touched}"><label for="end_date" class="col-xs-12 col-sm-3 control-label">Fin Cobertura:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="end_date"
+									            value="{{ form.end_date}}"
+									            name="end_date"
+									            ng-model="form.end_date"
+									            ng-init="form.end_date"
+									            placeholder="end_date"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[end_date] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[state], 'invalid' : !modalForm[state].$valid && modalForm[state].$touched}"><label for="state" class="col-xs-12 col-sm-3 control-label">Estado:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="state"
+									            value="{{ form.state}}"
+									            name="state"
+									            ng-model="form.state"
+									            ng-init="form.state"
+									            placeholder="state"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[state] = false" autocomplete="off">
+									    </div>
+								    </div>
+						        </div>
+							</div>
+						</div>
+						
+						<div class="form-section" id="section-2">
+							<h5 >
+								<span>AFILIADOS</span>
+							</h5>
+							<div class="container-fluid con-margin" ng-hide="view">
+								<div class="row">
+									<div class="col-xs-12" style="border:solid 1px">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="col-xs-3" style="color: #337ab7;">Nombre</div>
+												<div class="col-xs-2" style="color: #337ab7;">Identificacion</div>
+												<div class="col-xs-2" style="color: #337ab7;"">Fec. Nac</div>
+												<div class="col-xs-2" style="color: #337ab7;"">Rol</div>
+												<div class="col-xs-2" style="color: #337ab7;"">Fec. Efec</div>
+											</div>
+										</div>
+										<div class="row" ng-repeat="affiliate in form.affiliates_obj">
+											<div class="col-xs-12">
+												<div class="col-xs-3">{{ affiliate.name }}</div>
+												<div class="col-xs-2">{{ affiliate.pid_num }}</div>
+												<div class="col-xs-2">{{ affiliate.dob }}</div>
+												<div class="col-xs-2">{{ affiliate.role }}</div>
+												<div class="col-xs-2">{{ affiliate.edate }}</div>
+											</div>
+										</div>
+									</div>
+						    	</div>
+						    </div>
+						</div>
+				    </form>
+			    </div> 
+			    <div class="modal-footer">
+					<a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

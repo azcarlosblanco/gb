@@ -1,0 +1,141 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<header>
+			<div>
+				<h4>{{ listable.display.title | uppercase}}</h4>
+				<input ng-model="itemBuscado" class="form-control pull-right"
+				id="search_field" placeholder="Buscar">
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div ng-repeat="action in listable.actions"
+						 ng-if="action.type">
+						<div class="form-group">
+				    		<label  ng-if="action.label" for="{{action.name}}" class="col-xs-12 col-xs-1 control-label" style="font-weight:normal">
+				    			{{action.label}}
+				    		</label>
+				   			<div class="col-xs-12 col-sm-3 col-md-3" ng-switch on="action.type">
+				   				<select ng-switch-when="select"
+						            class="form-control col-xs-2"
+						            style='display:inline;'
+						            id="{{action.name}}"
+						            ng-class="{'first': $first}"
+						            name="{{action.name}}"
+						            ng-model="form[action.name]"
+						            focus="{{$parent.$parent.$first && $first}}"
+						            ng-init="focused[action.name] = false"
+												ng-focus="focused[action.name] = true"
+												ng-blur="focused[action.name] = false"
+						            ng-options="key as (value) for (key, value) in action.options"
+						            ng-change="changeFilter('^')">
+						            <option value="">{{action.placeholder ? action.placeholder : 'Seleccionar'}}</option>
+						        </select>
+						        <button	ng-switch-when="button"
+									class="btn-primary btn"
+									name="{{action.name}}"
+									id="{{action.name}}"
+									ng-click="doAction(action.link)">
+									{{ action.value }}
+								</button>
+				   			</div>
+				   		</div>
+				   	</div>
+				</div>
+			</div>
+		</header>
+	</div>
+	<table class="table table-striped table-hover table-condensed">
+
+	  	<thead>
+	  		<tr style="border-bottom: 1px solid #f0f0f0;
+    					border-top: 1px solid #f0f0f0;
+    					background-color: #fafafa;
+    					color: #5c5c5c;">
+	  			<th ng-if="listable.display.select"><input type="checkbox"></th>
+	  			<th ng-repeat="campo in listable.header" ng-if="campo.label != ''">
+	  				<span >{{campo.label}}</span>
+	  				<span ng-show="campo.sort" class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span><span ng-show="campo.search" class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	  			</th>
+	  		</tr>
+  		</thead>
+
+	  	<tbody>
+	  		<tr ng-repeat="register in listable.list | filter:itemBuscado"
+			selection-model>
+				<td ng-repeat="field in register" ng-if="field.name" ng-switch on="field.name">
+					<span ng-switch-when="registerid">
+						<input
+						type="checkbox"
+						value="{{field.value}}"
+						name="selectedregs[]"
+						ng-click="toggleSelection(field.value)"
+						>
+					</span>
+					<div ng-switch-when="buttons" class="no-wrap">
+						<button type="button"
+							ng-repeat="button in field.value"
+							ng-class="{
+							'success':'btn-success',
+							'available':'btn-primary',
+							'warning':'btn-warning',
+							'available':'btn-primary',
+							'used':'btn-default',
+							'unavailable':'btn-disabled',
+							'edit':'btn-primary',
+							'delete':'btn-danger',
+							'danger':'btn-danger',
+							'':'btn-default'}[button.class]"
+							class="btn"
+
+							ui-sref="{{
+							(button.class=='edit'?'.edit':(button.class=='delete'?'.delete':button.link))}}(button.params)"
+
+							ng-disabled="!button.active && (button.class != 'edit' && button.class != 'delete') "
+							data-qo-theme="info" data-nq-tooltip="" data-qo-placement="top" data-qs-title="{{button.description}}">
+
+							<span class="{{button.icon}}"
+								ng-class="{
+								'edit':'glyphicon glyphicon-pencil',
+								'delete':'glyphicon glyphicon-trash'
+								}[button.class]"
+								data-toggle="tooltip" data-placement="left" title="{{button.description}}" aria-hidden="true">
+							</span>
+						</button>
+					</div>
+					<div ng-switch-when="link">
+						<a ui-sref="{{field.value.link}}">{{field.value.label}}</a>
+					</div>
+					<span class="str-truncated" ng-switch-default>{{field.value}}</span>
+				</td>
+
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="panel-footer">
+		<!--<nav>
+			<ul class="pagination pudll-left">
+				<li><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+			</ul>
+
+			<!--
+			<form class="form-inline pul;ll-left">
+				<div class="form-group">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></div>
+							<input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+					</div>
+				</div>
+			</form>
+			-->
+
+		<!--</nav>-->
+	</div>
+</div>
+<div style="z-index:200; position:absolute;"ui-view=""></div>

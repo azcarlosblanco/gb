@@ -1,0 +1,277 @@
+
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal-body">
+
+                    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+
+                                <div class="form-section" id="section-0">
+                                    <h5><span>INFORMACION DE DEPENDIENTES</span></h5>
+
+                                    <div ng-repeat="afiliado in afiliados">
+                                        <div class="container-fluid con-margin">
+                                            <div class="row">
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="name" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Nombres</label>
+                                                        <div class="col-xs-12">
+                                                            <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            id="name"
+                                                            id="name"
+                                                            ng-model="form[$index].name"
+                                                            ng-init=""
+                                                            placeholder="" autofocus>
+                                                            <label for="name" class="hidden-xs">Nombres</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="lastname" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Apellidos</label>
+                                                        <div class="col-xs-12">
+                                                            <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            id="lastname"
+                                                            name="lastname"
+                                                            ng-model="form[$index].lastname"
+                                                            ng-init=""
+                                                            placeholder="">
+                                                            <label for="lastname" class="hidden-xs">Apellidos</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="pid_type" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Tipo de documento</label>
+                                                        <div class="col-xs-12">
+                                                            <select
+                                                            class="form-control"
+                                                            id="pid_type"
+                                                            name="pid_type"
+                                                            ng-model="form[$index].pid_type"
+                                                            ng-init=""
+                                                            placeholder="">
+                                                                <option label="Cédula" value="0" selected="selected"></option>
+                                                                <option label="Pasaporte" value="1"></option>
+                                                            </select>
+                                                            <label for="pid_type" class="hidden-xs">Tipo de documento</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="pid_num" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label"># del documento</label>
+                                                        <div class="col-xs-12">
+                                                            <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            id="pid_num"
+                                                            name="pid_num"
+                                                            ng-model="form[$index].pid_num"
+                                                            ng-init=""
+                                                            placeholder="">
+                                                            <label for="pid_num" class="hidden-xs"># del documento</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="container-fluid con-margin">
+                                            <div class="row">
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="role" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Relación</label>
+                                                        <div class="col-xs-12">
+                                                            <select
+                                                            class="form-control"
+                                                            id="role"
+                                                            name="role"
+                                                            ng-model="form[$index].role"
+                                                            ng-init=""
+                                                            placeholder=""
+                                                            ng-options="key as value for (key, value) in data.affiliate_role">
+                                                            </select>
+                                                            <label for="role" class="hidden-xs">Relación</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="dob" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Fecha de nacimiento</label>
+                                                        <div class="col-xs-12">
+                                                            <input
+                                                            class="form-control"
+                                                            type="date"
+                                                            id="dob"
+                                                            name="dob"
+                                                            ng-init="form[$index].dob = (form[$index].dob | parseDate)"
+                                                            ng-model="form[$index].dob"
+                                                            placeholder="">
+                                                            <label for="dob" class="hidden-xs">Fecha de nacimiento</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="height" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Estatura</label>
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-5" style="display:inline-block; padding-right:0; padding-left:0">
+                                                                <input
+                                                                    class="form-control"
+                                                                    type="text"
+                                                                    id="height"
+                                                                    name="height"
+                                                                    ng-model="form[$index].height"
+                                                                    ng-init="form[$index].height"
+                                                                    placeholder=""
+                                                                    required autocomplete="off">
+                                                            </div>
+                                                            <div class="col-xs-7 btn-group" style="display: inline-block; padding-right:0">
+                                                                <label class="btn btn-primary" ng-model="form[$index].heightu" uib-btn-radio="'m'">M</label>
+                                                                <label class="btn btn-primary" ng-model="form[$index].heightu" uib-btn-radio="'cm'">CM</label>
+                                                            </div>
+                                                            <label for="height" class="hidden-xs">Estatura</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="weight" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Peso</label>
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-5" style="display:inline-block; padding-right:0; padding-left:0">
+                                                                <input
+                                                                    class="form-control"
+                                                                    type="text"
+                                                                    id="weight"
+                                                                    name="weight"
+                                                                    ng-model="form[$index].weight"
+                                                                    ng-init="form[$index].weight"
+                                                                    placeholder=""
+                                                                    required autocomplete="off">
+                                                            </div>
+                                                            <div class="col-xs-7 btn-group" style="display: inline-block; padding-right:0">
+                                                                <label class="btn btn-primary" ng-model="form[$index].weightu" uib-btn-radio="'kg'">KG</label>
+                                                                <label class="btn btn-primary" ng-model="form[$index].weightu" uib-btn-radio="'lb'">LB</label>
+                                                            </div>
+                                                            <label for="weight" class="hidden-xs">Peso</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid con-margin">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="sex" class="col-xs-12 hidden-lg hidden-md hidden-sm control-label">Sexo</label>
+                                                        <div class="col-xs-12">
+                                                            <select
+                                                            class="form-control"
+                                                            id="sex"
+                                                            name="sex"
+                                                            ng-model="form[$index].sex"
+                                                            ng-init=""
+                                                            placeholder=""
+                                                            ng-options="key as value for (key, value) in data.person_sex">
+                                                            </select>
+                                                            <label for="sex" class="hidden-xs">Sexo</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="col-xs-12">
+                                                        <button ng-click="deleteAffiliate(afiliado)" class="btn btn-sm btn-danger">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </div>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a ng-click="addAfiliado()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> Agregar Dependiente</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--<div class="form-section" id="section-0">
+                                    <h5><span>QUIZ</span></h5>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+
+
+
+                    </form>
+                    </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Seguir</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^.paso-2" class="btn btn-link pull-right">Regresar</a>
+                </div>
+
+
+
+
+<!--
+<br />
+                                <pre ng-show="form" class="col-xs-12 col-md-offset-3 col-md-7">{{form | json}}</pre>
+                                <pre class="col-xs-12 col-md-offset-3 col-md-7">{{afiliados | json}}</pre> <!-- -->

@@ -1,0 +1,127 @@
+<section id="claim">
+    <div class="row">
+        <!-- Info Boxes Style 2 -->
+        <div class="col-lg-5 col-sm-12">
+            <div class="info-box" ng-class={'bg-green':salesmonth.increase,'bg-red':!salesmonth.decrease}>
+                <span class="info-box-icon"><i class="glyphicon glyphicon-usd"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">{{salesmonth.title}}</span>
+                    <span class="info-box-number">{{salesmonth.value | currency}}</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 50%"></div>
+                    </div>
+                    <span class="progress-description">
+                        {{salesmonth.comp_percentage | number:2}} %
+                        <span>
+                            <span ng-if="salesmonth.increase">de Incremento</span>
+                            <span ng-if="salesmonth.decrease">de Decremento</span>
+                        </span>
+                        <span>( {{salesmonth.lastmonth_value | currency}} )</span>
+                    </span>
+                </div>
+            <!-- /.info-box-content -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12" >
+            <div class="panel panel-primary nova-panel-primary-border">
+                <div class="panel-heading">
+                    <h3 class="nova-charts-panel-titte">Ventas por mes</h3>
+                    <div class="nova-charts-panel-btn pull-rigth">
+                        <a title="configuraciones" ng-click="openSettings(salesbymonth)">
+                            <i class="glyphicon glyphicon-cog"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body" style="height:280px;">
+                    <div class="col-lg-9 col-sm-9" style="height:260px;">
+                        <canvas id="salesbymonth" class="chart chart-bar"
+                            chart-data="salesbymonth.data" 
+                            chart-labels="salesbymonth.labels" 
+                            chart-series="salesbymonth.series"
+                            chart-colors="salesbymonth.colors"
+                            chart-options="salesbymonth.options"
+                            >
+                        </canvas> 
+                    </div>
+                    <div class="col-lg-3 col-sm-3">
+                        <div class="info-box bg-yellow" >
+                            <span class="info-box-icon"><i class="glyphicon glyphicon-usd"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">2016</span>
+                                <span class="info-box-number">{{salesbymonth.total_current | currency}}</span>
+                            </div>
+                        </div>
+                        <div class="info-box bg-aqua">
+                            <span class="info-box-icon"><i class="glyphicon glyphicon-usd"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">2105</span>
+                                <span class="info-box-number">{{salesbymonth.total_past | currency}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">
+            <div class="panel panel-primary nova-panel-primary-border">
+                <div class="panel-heading">
+                    <h3 class="nova-charts-panel-titte">Monto Ventas por Vendedor</h3>
+                    <div class="nova-charts-panel-btn pull-rigth">
+                        <a title="configuraciones" ng-click="openSettings(avgtimeemission)">
+                            <i class="glyphicon glyphicon-cog"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <canvas id="avgtimeemission" class="chart-horizontal-bar"
+                        chart-data="avgtimeemission.data" 
+                        chart-labels="avgtimeemission.labels" 
+                        chart-options="avgtimeemission.options"
+                        chart-series="avgtimeemission.series"
+                        chart-colors="avgtimeemission.colors"
+                        >
+                    </canvas> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">
+            <div class="panel panel-primary nova-panel-primary-border">
+                <div class="panel-heading">
+                    <h3 class="nova-charts-panel-titte">Tiempo Promedio Emitir una Póliza</h3>
+                    <div class="nova-charts-panel-btn pull-rigth">
+                        <a title="configuraciones" ng-click="openSettings(avgtimeemission)">
+                            <i class="glyphicon glyphicon-cog"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-border">
+                        <thead>
+                            <th>Secuencia</th>
+                            <th>Nombre Proceso</th>
+                            <th>Tiempo (min)</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="emsionespdataitem in emsionespdata">
+                                <td>{{emsionespdataitem.seq}}</td>
+                                <td>{{emsionespdataitem.name}}</td>
+                                <td>{{emsionespdataitem.time}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Total</td>
+                                <td>{{total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

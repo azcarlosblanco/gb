@@ -1,0 +1,602 @@
+<style type="text/css" scoped>
+	.invalid-file{
+		background-color: lightblue;
+	}
+</style>
+<div >
+	<!--include templete to create diagnosis-->
+    <div ng-if="newDiagnosisObject.showmodal"
+    	ng-include="'seguros/general/new_diagnosis.view.html'">
+    </div>
+    <div ng-if="newConceptObject.showmodal"
+    	ng-include="'seguros/general/new_concept.view.html'">
+    </div>
+
+	<div style="width:100%">
+		<div class="nova-content modal-content">
+			<div class="nova-header modal-header">
+				<h4 >Reclamos - Tramites Pendientes</h4>
+			</div>
+			<div class="nova-body modal-body">
+				<form name="claimForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="generalInfo">
+						<div class="container-fluid">
+							<div class="row" ng-if="brand_new">
+								<div uib-alert class="alert-warning">
+									Primer Año de Vigencia de la Póliza
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="col-sm-6">
+										<div class="form-group">
+									    	<label for="policy" class="col-sm-4 control-label">
+									    		# Poliza:
+									    	</label>
+									    	<div class="col-sm-6">
+									    		<span class="form-control">{{policy_number}}</span>
+									    	</div>
+									  	</div>
+									  	<div class="form-group">
+									    	<label for="customer" class="col-sm-4 control-label">
+									    		Cliente:
+									    	</label>
+									    	<div class="col-sm-8">
+									    		<span class="form-control">{{customer_name}}</span>
+									    	</div>
+									  	</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+									    	<label for="effective_date" class="col-sm-4 control-label">
+									    		Inicio Cobertura:
+									    	</label>
+									    	<div class="col-sm-6">
+									    		<span class="form-control">{{effective_date}}</span>
+									    	</div>
+									  	</div>
+									  	<div class="form-group">
+									    	<label for="plan" class="col-sm-4 control-label">
+									    		Plan:
+									    	</label>
+									    	<div class="col-sm-8">
+									    		<span class="form-control">{{plan}}</span>
+									    	</div>
+									  	</div>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<button style="margin:0px 5px" type="submit" ng-click="checking_submit=1;submitAffiliateDiagnosis()" ng-disabled="claimForm.$invalid || checking_submit==true" class="btn btn-md btn-primary pull-right">
+				                        <span ng-show="!checking_submit"><i class="glyphicon glyphicon-ok"></i>Guardar</span>
+				                        <btn-spinner ng-show="checking_submit"></btn-spinner>
+				                    </button>
+							    	<button class="btn btn-md btn-success pull-right" data-toggle="modal" data-target="modal-backdrop" ng-click="addAffiliateCategory()">
+										<i class="glyphicon glyphicon-file"></i> 
+										<span>Agregar Afiliado</span>
+									</button>
+								</div>
+							</div>
+					  	</div>
+					</div>
+					<div style="margin:5px 10px">
+						<div class="form-section" id="section-1" ng-repeat="affDiagnostic in affDiagnostics | reverse" style="border:solid 1px; padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;
+	    							   ">
+	    						<span>Afiliado y Diagnóstico</span>
+	    						<button ng-if="$index!=(affDiagnostics.length-1)" class="btn btn-sm pull-right btn-danger" ng-click="removeAffDiagnostic(affDiagnostic)">
+	    							<i class="glyphicon glyphicon-trash"></i>
+	    						</button>
+	    					</h5>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-sm-9">
+										<div class="form-group">
+									    	<label for="affiliate" class="col-sm-2 control-label">
+									    		Afiliado:
+									    	</label>
+									    	<div class="col-sm-5">
+									    		<select
+									                class="form-control" id="affiliate"
+									                ng-options="key as (value) for (key, value) in affiliates" 
+									                ng-model="affDiagnostic.affiliate"
+									                ng-init="affDiagnostic.affiliate"
+									                ng-required="1"
+									                ng-change="selectAffiliate(affDiagnostic)"
+									                autofocus autocomplete="off">
+										        </select>
+									    	</div>
+									    	<div class="col-sm-2">
+												<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="selectFileAff(affDiagnostic)">
+													<i class="glyphicon glyphicon-file"></i> 
+													<span>Seleccionar Archivos</span>
+												</button>
+											</div>
+									  	</div>
+									  	<div class="form-group">
+									    	<label for="diagnosis" class="col-sm-2 control-label">
+									    		Diagnóstico:
+									    	</label>
+									    	<div class="col-sm-5">
+										    	<select
+									                class="form-control" id="diagnosis"
+									                ng-options="key as (value) for (key, value) in diagnosis" 
+									                ng-model="affDiagnostic.diagnosis"
+									                ng-init="affDiagnostic.diagnosis"
+									                ng-required="1"
+									                ng-change="selectDiagnisticAff(affDiagnostic)"
+									                autofocus autocomplete="off">
+										        </select>
+									    	</div>
+									    	<div class="col-sm-1">
+									    		<button class="btn btn-primary btn-sm" ng-click="addDiagnostic()">
+									    			<i class="glyphicon glyphicon-plus"></i>
+									    		</button>
+									    	</div>
+									    </div>
+									  </div>
+								</div>
+							</div>
+							<div class="form-section" id="section-2">
+								<h5 style="color: #61a8cf; 
+		    							   margin-bottom: 10px;">
+		    							   <span>Documentos</span>
+		    					</h5>
+								<div class="container-fluid con-margin">
+									<div class="row">
+										<table class="table table-bordered">
+									    	<thead>
+									    		<th></th>
+									    		<th>Archivo</th>
+									    		<th>Proveedor</th>
+									    		<th>Concepto</th>
+									    		<th>Valor Total</th>
+									    		<th>Valor</th>
+									    	</thead>
+									    	<tbody>
+									    		<tr ng-repeat="selectdFile in affDiagnostic.pickedFiles">
+									    			<td>
+									    				{{}}
+									    			</td>
+									    			<td>{{categories[selectdFile.data.procedure_document_id]}} : {{selectdFile.description}}</td>
+									    			<td >
+									    				<span>
+									    					{{suppliers[selectdFile.data.supplier]}}
+									    				</span>
+									    			</td>
+									    			<td>
+									    				<select
+											                id="concept"
+											                ng-options="key as (value) for (key, value) in concepts" 
+											                ng-model="affDiagnostic.files[selectdFile.id].concept"
+											                ng-required="1"
+											                ng-disabled="viewprocess"
+											                autofocus autocomplete="off">
+												        </select>
+														<button style="margin:0px 5px" class="btn btn-sm btn-primary" ng-click="addConcept()"><i class="glyphicon glyphicon-plus"></i>
+													    </button>
+									    			</td>
+									    			<td>
+									    				<span ng-if="cat_names[selectdFile.data.procedure_document_id]=='claim_invoice'">
+									    					{{currencies[selectdFile.data.currency]}} {{selectdFile.data.amount}}
+									    				</span>
+									    			</td>
+									    			<td>
+									    				<input ng-if="cat_names[selectdFile.data.procedure_document_id]=='claim_invoice'"
+									    					style="width:100px" 
+									    					type="number"
+									    					min="0.00"
+									    					max="{{selectdFile.data.amount}}"
+									    					ng-model="affDiagnostic.files[selectdFile.id].value"
+									    					ng-required="1"
+									    					ng-init="affDiagnostic.files[selectdFile.id].value"
+									    					>
+									    			</td>
+									    		</tr>
+									    	</tbody>
+									    </table>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="selectPrevOrders(affDiagnostic)" ng-disabled="affDiagnostic.affiliate==undefined">
+												<i class="glyphicon glyphicon-file"></i> 
+												<span>Seleccionar Órdenes Anteriores</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--end affiliate diagnostic section-->
+					</div>
+				</form>
+			</div>
+			<div class="nova-footer modal-footer">
+				<div class="col-offset-md-6 col-md-12">
+            		<button type="submit" ng-click="checking_submit=1;submitAffiliateDiagnosis()" ng-disabled="claimForm.$invalid || checking_submit==true" class="btn btn-primary pull-right" style="margin:0px 5px">
+                        <span ng-show="!checking_submit"><i class="glyphicon glyphicon-ok"></i>Guardar</span>
+                        <btn-spinner ng-show="checking_submit"></btn-spinner>
+                    </button>
+                    <a ui-sref="root.seguros.reclamos" class="btn btn-danger pull-right">Regresar</a>
+            	</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop bs-example-modal" ng-show="pickFilesAffiliate" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-xlg" ng-style="{'display':pickFilesAffiliate && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closePickFilesAffiliate()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Archivos del Reclamo</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row" ng-if="pickFileHasError">
+					<div uib-alert class="alert alert-danger">
+						Por favor revisar los siguietes errores:
+						<ul ng-repeat="error in pickFileErrors">
+							<li>{{error.file}}: {{error.error}}</li>
+						</ul>
+					</div>
+				</div>
+			    <table class="table table-bordered table-condesed">
+			    	<thead>
+			    		<tr style="font-size: 12px;">
+				    		<th style="padding: 5px 5px !important;"></th>
+				    		<th style="padding: 5px 5px !important;">Tipo</th>
+				    		<th style="padding: 5px 5px !important;">Descripción</th>
+				    		<th style="padding: 5px 5px !important;">Proveedor</th>
+				    		<th style="padding: 5px 5px !important;">Fecha</th>
+				    		<th style="padding: 5px 5px !important;">Moneda</th>
+				    		<th style="padding: 5px 5px !important;">Valor</th>
+				    		<th style="padding: 5px 5px !important;">USA</th>
+				    		<th style="padding: 5px 5px !important;">Válido</th>
+				    		<th style="padding: 5px 5px !important;"></th>
+				    		<th style="padding: 5px 5px !important;"></th>
+			    		</tr>
+			    	</thead>
+			    	<tbody style="font-size:10px">
+			    		<tr ng-repeat="uploadFile in uploadedFiles" 
+			    			ng-class="'invalid-'+listPickedFiles[uploadFile.id]">
+			    			<td style="padding:5px">
+			    				<input type="checkbox" 
+			    				ng-click="toggleSelectionLinkFiles(uploadFile,affDiagnostics[currentAffDigdx].pickedFiles)"
+			    				ng-checked="ischeckedLinkFiles(uploadFile) && !uploadFile.dirty"
+			    				ng-disabled="!uploadFile.data.valid">
+			    			</td>
+			    			<td style="padding:5px">
+			    				<select
+					                id="category"
+					                ng-options="key as (value) for (key, value) in categories" 
+					                ng-model="uploadFile.data.procedure_document_id"
+					                ng-init="uploadFile.data.procedure_document_id"
+					                ng-required="1"
+					                ng-disabled="viewprocess"
+					                autofocus autocomplete="off">
+						        </select>
+						    </td>
+			    			<td style="padding:5px"> 
+			    				<input 
+			    					style="width:100px" 
+			    					type="text"
+			    					ng-model="uploadFile.description"
+			    					ng-init="uploadFile.description"
+			    					>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<select
+					                id="supplier"
+					                ng-options="key as (value) for (key, value) in suppliers" 
+					                ng-model="uploadFile.data.supplier"
+					                ng-init="uploadFile.data.supplier"
+					                ng-required="1"
+					                ng-disabled="viewprocess"
+					                autofocus autocomplete="off">
+						        </select>
+			    			<td style="padding:5px">
+			    				<input ng-if="cat_names[uploadFile.data.procedure_document_id]=='claim_invoice'"
+					                id="date"
+					                type="date" 
+					                ng-model="uploadFile.data.date"
+					                ng-init="uploadFile.data.date"
+					                ng-required="1"
+					                autofocus autocomplete="off">
+					        </td>
+			    			<td style="padding:5px">
+			    				<select ng-if="cat_names[uploadFile.data.procedure_document_id]=='claim_invoice'"
+					                id="currency"
+					                ng-options="key as (value) for (key, value) in currencies" 
+					                ng-model="uploadFile.data.currency"
+					                ng-init="uploadFile.data.currency"
+					                ng-required="1"
+					                autofocus autocomplete="off">
+						        </select>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<input ng-if="cat_names[uploadFile.data.procedure_document_id]=='claim_invoice'"
+						            type="number"
+						            min="0.00"
+						            style="width:100px"
+						            ng-model="uploadFile.data.amount"
+						            ng-init="uploadFile.data.amount"
+						            placeholder=""
+						            required
+						            autofocus autocomplete="off"> 
+						    </td>
+						    <td style="padding:5px">
+			    				<input ng-if="cat_names[uploadFile.data.procedure_document_id]=='claim_invoice'"
+					                type="checkbox"
+					                ng-model="uploadFile.data.usa"
+					                ng-true-value="1"
+					                ng-false-value="0">
+					        </td>
+			    			<td style="padding:5px">
+			    				<input 
+					                type="checkbox"
+					                ng-model="uploadFile.data.valid"
+					                ng-true-value="1"
+					                ng-false-value="0">
+					        </td>
+			    			<td style="padding:5px">
+			    				<a ng-href="file/view/{{uploadFile.id}}?token={{ ntoken }}" target="_blank">
+                					<span class="str-truncated" style="max-width:100px">
+                						{{uploadFile.original_filename}}
+                					</span>
+            					</a>
+            				</td>
+			    			<td style="padding:5px">
+								<button class="btn btn-primary btn-sm" type="file" ngf-select="registerExistingFile($file,uploadFile)" accept="*/*" >
+						            <i class='glyphicon glyphicon-upload'></i>
+						        </button>
+						        <button class="btn btn-primary btn-sm" ng-click="submitEditFile(uploadFile)" >
+						            <i class='glyphicon glyphicon-ok'></i>
+						        </button>
+			    			</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+			    <div class="row" style="margin-left: 0px; margin-right: 0px;">
+			    	<button class="btn btn-success btn-sm" ng-click="addFile()">
+		    			<i class="glyphicon glyphicon-plus">Agregar Archivo</i>
+		    		</button>
+		    		<button class="btn btn-primary btn-sm pull-rigth" ng-click="saveChangesFiles()">
+		    			<i class="glyphicon glyphicon-ok">Guardar Cambios Archivos</i>
+		    		</button>
+			    </div>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button class="btn btn-danger" type="button" ng-click="closePickFilesAffiliate()">
+            			Cancelar
+            		</button>
+            		<button class="btn btn-success" type="button" ng-click="linkFilesAffiliate()">
+            			Seleccionar
+            		</button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop bs-example-modal" ng-show="pickPrevOrders" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':pickPrevOrders && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closepickPrevOrders()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Ordenes Anteriores</h4>
+			</div>
+			<div class="modal-body">
+			    <table class="table table-bordered table-condesed">
+			    	<thead>
+			    		<tr >
+				    		<th style="padding: 5px 5px !important;"></th>
+				    		<th style="padding: 5px 5px !important;">Descripción</th>
+				    		<th style="padding: 5px 5px !important;">Proveedor</th>
+				    		<th style="padding: 5px 5px !important;">Concepto</th>
+			    		</tr>
+			    	</thead>
+			    	<tbody style="font-size:10px">
+			    		<tr ng-repeat="prevOrder in affDiagnostics[currentAffDigdx].previousOrders">
+			    			<td style="padding:5px">
+			    				<input type="checkbox" 
+			    				ng-click="toggleSelection(prevOrder,affDiagnostics[currentAffDigdx].pickedFiles)"
+			    				ng-checked="ischecked(prevOrder)">
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					<a ng-href="file/view/{{prevOrder.id}}?token={{ ntoken }}" target="_blank">
+			    						{{prevOrder.description}}
+			    					</a>
+			    				</span>
+						    </td>
+			    			<td style="padding:5px"> 
+			    				<span>
+			    					{{suppliers[prevOrder.data.supplier]}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{concepts[prevOrder.data.concept]}}
+			    				</span>
+			    			</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button class="btn btn-danger" type="button" ng-click="closePickFilesAffiliate()">
+            			Cancelar
+            		</button>
+            		<button class="btn btn-success" type="button" ng-click="linkOrdersAffiliate()">
+            			Seleccionar
+            		</button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop bs-example-modal" ng-show="addEditClaimFile" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog lg-modal" ng-style="{'display':addEditClaimFile && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closeAddEditClaimFile()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Archivo Reclamo</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="section-1">
+						<div class="container-fluid">
+							<div class="row">
+								<input type="hidden" ng-model="file_upload.id">
+								<div class="form-group">
+							    	<label for="category" class="col-sm-3 control-label">
+							    		Tipo:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id="category"
+							                ng-options="key as (value) for (key, value) in categories" 
+							                ng-model="file_upload.data.procedure_document_id"
+							                ng-init="file_upload.data.procedure_document_id"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							  	</div>
+								<div class="form-group">
+							    	<label for="description" class="col-sm-3 control-label">
+							    		Descripción:
+							    	</label>
+							    	<div class="col-sm-6">
+							            <input
+							            class="form-control"
+							            type="text"
+							            ng-model="file_upload.description"
+							            ng-init="file_upload.description"
+							            placeholder="{{cat_placeholder[file_upload.category]}}"
+							            required
+							            autofocus autocomplete="off">
+							    	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="supplier" class="col-sm-3 control-label">
+							    		Proveedor:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id="supplier"
+							                ng-options="key as (value) for (key, value) in suppliers" 
+							                ng-model="file_upload.data.supplier"
+							                ng-init="file_upload.data.supplier"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							    	<div class="col-sm-1">
+							    		<button class="btn btn-primary btn-sm" ng-click="addSupplier()">
+							    			<i class="glyphicon glyphicon-plus"></i>
+							    		</button>
+							    	</div>
+							  	</div>
+							  	<div class="form-group" ng-if="cat_names[file_upload.data.procedure_document_id]=='claim_invoice'">
+							    	<label for="date" class="col-sm-3 control-label">
+							    		Fecha Factura:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<input
+							                class="form-control" 
+							                id="date"
+							                type="date" 
+							                ng-model="file_upload.data.date"
+							                ng-init="file_upload.data.date"
+							                ng-required="1"
+							                autofocus autocomplete="off">
+							    	</div>
+							  	</div>
+							  	<div class="form-group" ng-if="cat_names[file_upload.data.procedure_document_id]=='claim_invoice'">
+							    	<label for="currency" class="col-sm-3 control-label">
+							    		Moneda:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id="category"
+							                ng-options="key as (value) for (key, value) in currencies" 
+							                ng-model="file_upload.data.currency"
+							                ng-init="file_upload.data.currency"
+							                ng-required="1"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							  	</div>
+							  	<div class="form-group" ng-if="cat_names[file_upload.data.procedure_document_id]=='claim_invoice'">
+							    	<label for="amount" class="col-sm-3 control-label">
+							    		Valor:
+							    	</label>
+							    	<div class="col-sm-6">
+							            <input
+							            class="form-control"
+							            type="number"
+							            min="0.00"
+							            ng-model="file_upload.data.amount"
+							            ng-init="file_upload.data.amount"
+							            placeholder=""
+							            required
+							            autofocus autocomplete="off">
+							    	</div>
+							  	</div>
+							  	<div class="form-group" ng-if="cat_names[file_upload.data.procedure_document_id]=='claim_invoice'">
+							    	<label for="valid" class="col-sm-3 control-label">
+							    		USA:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<input
+							                class="form-control" 
+							                type="checkbox"
+							                ng-model="file_upload.data.usa"
+							                ng-true-value="1"
+							                ng-false-value="0">
+							    	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="Archivo" class="col-sm-3 control-label">
+							    		Archivo:
+							    	</label>
+							    	<div class="col-sm-1">
+							    		<button class="btn btn-primary btn-sm" type="file" ngf-select="registerNewFile($file,file_upload)" accept="*/*" ngf-max-height="1000" >
+								            <i class='glyphicon glyphicon-upload'></i>
+								        </button>
+							    	</div>
+							    	<dir class="col-sm-6">
+							    		{{file_upload.original_filename}}
+							    	</dir>
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="closeEditClaimFile()">
+            			Cancelar
+            		</button>
+            		<button style="margin: 0px 5px" type="submit" ng-click="checking_new_file=1;submitAddFileToClaim(file_upload)" ng-disabled="modalForm.$invalid || checking_new_file==true" class="btn btn-success pull-right">
+                        <span ng-show="!checking_new_file">Subir Archivo</span>
+                        <btn-spinner ng-show="checking_new_file"></btn-spinner>
+                    </button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div>

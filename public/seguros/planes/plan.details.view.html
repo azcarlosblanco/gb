@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+<div class="panel-body">
+<header>
+	<div>
+	<h4>Detalles del Plan</h4>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group pull-right" role="group">
+				<button ng-repeat="plan in planes" type="button" class="btn btn-default" ng-click="planOptionSelected($index)">{{plan.planName}}</button>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<h3>Deducible</h3>
+			<div class="col-md-4">
+				<p><strong>Local:</strong></p>
+				<p><strong>USA:</strong></p>
+			</div>
+			<div class="col-md-8">
+				<p>{{optionSelected.outEEUU | currency:"$ ":2}}</p>
+				<p>{{optionSelected.inEEUU | currency:"$ ":2 }}</p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<table class="table table-bordered">
+                <thead>
+                    <th>Edad</th>
+                    <th>Anual</th>
+                    <th>Semestral</th>
+                    <th>Trimestral</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="option in optionSelected.ageRanges">
+                        <td>{{ option.age }}</td>
+                        <td>{{ option.yearly }}</td>
+                        <td>{{ option.semesterly }}</td>
+                        <td>{{ option.trimesterly }}</td>
+                    </tr>
+                    <tr ng-show="!optionSelected">
+                    	<th colspan="4" class="text-center">Escoja una opcion</th>
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+	</div>
+</header>
+</div>
+</div>

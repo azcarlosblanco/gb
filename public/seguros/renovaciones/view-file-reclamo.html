@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-xs-12">
+        <div class="col-xs-2" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="form[$index]['description']"
+            ng-init="form[$index]['description']"
+            placeholder="# Factura | # Orden | Resultado"
+            required
+            autofocus autocomplete="off"
+            ng-readonly="1">
+        </div>
+        <div ng-switch on="form[$index]['status']" class="col-xs-2">
+        	<div ng-switch-when="1"> <!-- Finished -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:green' class='glyphicon glyphicon-ok-sign'></i></span>
+            </div>
+            <div ng-switch-when="2"> <!-- Failed -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:red' class='glyphicon glyphicon-remove-sign'></i></span>
+                <button class="col-xs-5 btn btn-primary" type="file" ngf-select="registerFile($file)" accept="*/*">
+                    <i class='glyphicon glyphicon-upload'></i>
+                </button>
+            </div>
+            <div ng-switch-default> <!-- Uploading -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:green' class='glyphicon glyphicon-time'></i></span>
+            </div>
+		</div>
+        <div class="col-xs-3">
+            <div style="overflow:hidden;">{{form[$index]['name']}}</div>
+        </div>
+	</div>
+</div>
+<br>

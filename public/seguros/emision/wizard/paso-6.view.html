@@ -1,0 +1,127 @@
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        <div class="modal-body">
+            <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+                <div class="form-section" id="section-0">
+                    <h5><span>FECHA INICIO DE COBERTURA</span></h5>
+                    <div class="container-fluid con-margin">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-class="{'highlight': focused[effective_date], 'invalid' : !modalForm[effective_date].$valid && modalForm[effective_date].$touched}">
+                                    <label for="plan_id" class="col-xs-12 col-sm-3 control-label">Fecha de Inicio de Cobertura:</label>
+                                    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <select
+                                            class="form-control"
+                                            ng-options="key as (value) for (key, value) in data.effectiveDate" 
+                                            ng-model="form.effective_date"
+                                            ng-init="form.effective_date"
+                                            required
+                                            ng-disabled="viewprocess"
+                                            autofocus autocomplete="off">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="form-section" id="section-0">
+                    <h5><span>SEGURO ANTERIOR</span></h5>
+                    <div class="container-fluid con-margin">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-class="{'highlight': focused[prev_insurance], 'invalid' : !modalForm[prev_insurance].$valid && modalForm[prev_insurance].$touched}">
+                                    <label for="prev_insurance" class="col-xs-12 col-sm-3 control-label">Tiene Seguro Anterior:</label>
+                                    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input type="checkbox"
+                                               class="form-control"
+                                               ng-model="form.prev_insurance",
+                                               name="prev_insurance">
+                                    </div>
+                                </div>
+                                <div ng-if="form.prev_insurance" class="form-group" ng-class="{'highlight': focused[prev_insurance_comp], 'invalid' : !modalForm[prev_insurance_comp].$valid && modalForm[prev_insurance_comp].$touched}">
+                                    <label for="prev_insurance_comp" class="col-xs-12 col-sm-3 control-label">Nombre Comp. Seguros:</label>
+                                    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input 
+                                            class="form-control"
+                                            type="text"
+                                            id="prev_insurance_comp"
+                                            value="{{ form.prev_insurance_comp }}"
+                                            name="prev_insurance_comp"
+                                            ng-model="form.prev_insurance_comp"
+                                            ng-init="form.prev_insurance_comp"
+                                            ng-required=1
+                                            focus="{{$parent.$parent.$first && $first}}"
+                                            ng-disabled="viewprocess"
+                                            ng-blur="focused[prev_insurance_comp] = false" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div ng-if="form.prev_insurance" class="form-group" ng-class="{'highlight': focused[prev_insurance_plan], 'invalid' : !modalForm[prev_insurance_plan].$valid && modalForm[prev_insurance_plan].$touched}">
+                                    <label for="prev_insurance_plan" class="col-xs-12 col-sm-3 control-label">Nombre del Plan:</label>
+                                    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input 
+                                            class="form-control"
+                                            type="text"
+                                            id="prev_insurance_plan"
+                                            value="{{ form.prev_insurance_plan }}"
+                                            name="prev_insurance_plan"
+                                            ng-model="form.prev_insurance_plan"
+                                            ng-init="form.prev_insurance_plan"
+                                            ng-required=1
+                                            focus="{{$parent.$parent.$first && $first}}"
+                                            ng-disabled="viewprocess"
+                                            ng-blur="focused[prev_insurance_plan] = false" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'highlight': focused[prev_insurance_continue], 'invalid' : !modalForm[prev_insurance_continue].$valid && modalForm[prev_insurance_continue].$touched}">
+                                    <label for="prev_insurance_continue" class="col-xs-12 col-sm-3 control-label">Aplicar continuidad de cobertura:</label>
+                                    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input type="checkbox"
+                                               class="form-control"
+                                               ng-model="form.prev_insurance_continue",
+                                               name="prev_insurance_continue">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </form>
+            <br /><br />
+        </div>
+        <div class="modal-footer">
+            <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                <span ng-show="!checking">Seguir</span>
+                <btn-spinner ng-show="checking"></btn-spinner>
+            </button>
+            <a ng-show="!checking" ui-sref="^.paso-5" class="btn btn-link pull-right">Regresar</a>
+        </div>

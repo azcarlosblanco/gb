@@ -1,0 +1,148 @@
+<style>
+	.quotation-section-header{
+		color: #61a8cf;
+	    margin-bottom: 10px;
+	    text-align: center;
+	    font-weight: 600;
+	}
+</style>
+<div >
+	<div style="width:100%">
+		<div class="nova-content modal-content">
+			<div class="nova-header modal-header">
+				<h4 >Cotizaciones - Ver Cotización</h4>
+			</div>
+			<div class="nova-body modal-body">
+				<form name="quotationForm" class="form-horizontal" role="form">
+					<div class="form-section" id="quotationInfo">
+						<h5 class="quotation-section-header">
+							<span>Información Solicitante</span>
+						</h5>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xs-12 form-group">
+								    <label class="col-xs-4 control-label">Agente:</label>
+							   		<div class="col-xs-4">
+								 		<span class="form-control">
+								 			{{form.agent_name}}
+								        </span>
+									</div>
+								</div>
+								<div class="col-xs-12 form-group">
+									<label class="col-xs-4 control-label">Cliente:</label>
+							   		<div class="col-xs-4">
+								 		<span class="form-control">
+								 			{{form.client_name}}
+								        </span>
+									</div>
+								</div>
+								<div class="col-xs-12 form-group">
+									<label class="col-xs-4 control-label">Cliente Email:</label>
+							   		<div class="col-xs-4">
+								 		<span class="form-control">
+								 			{{form.client_email}}
+								        </span>
+									</div>
+								</div>
+								<div class="col-xs-12 form-group">
+									<label class="col-xs-4 control-label">Fecha Cotización:</label>
+							   		<div class="col-xs-4">
+								 		<span class="form-control">
+								 			{{form.date_quotation}}
+								        </span>
+									</div>
+								</div>
+								<div class="col-xs-12 form-group">
+									<label class="col-xs-4 control-label">Forma de Pago:</label>
+							   		<div class="col-xs-4">
+								 		<span class="form-control">
+								 			{{form.number_payments}}
+								        </span>
+									</div>
+								</div>
+							</div>
+					  	</div>
+					</div>
+					<div class="form-section" id="quotationInfoAff">
+						<h5 class="quotation-section-header">
+							<span>Afiliados</span>
+						</h5>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="form-group">
+								    	<label for="owner_age" class="col-sm-6 control-label">
+								    		Edad Solicitante:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{form.affiliates.owner_age}}</span>
+								    	</div>
+								  	</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group">
+								    	<label for="spouse_age" class="col-sm-6 control-label">
+								    		Edad Cónyugue:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{form.affiliates.spouse_age}}</span>
+								    	</div>
+								  	</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group">
+								    	<label for="number_kid" class="col-sm-6 control-label">
+								    		Número Hijos:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{form.affiliates.number_kid}}</span>
+								    	</div>
+								  	</div>
+								</div>
+							</div>
+					  	</div>
+					</div>
+					<div class="form-section" id="plansInfo">
+						<h5 class="quotation-section-header">
+							<span>Valores Cotización</span>
+						</h5>	
+						<div class="container-fluid">
+							<div ng-repeat="plan in form.plans">
+								<div class="alert alert-info">
+									<div><span style="font-weight:bold">Compañía de Seguro:</span> {{plan['insurance_company']}}</div>
+									<div><span style="font-weight:bold">Nombre Plan: </span>{{plan['plan_name']}}</div>
+									<div><span style="font-weight:bold">Opción de Deducible: </span> {{plan['deductible_name']}}</div>
+									<div><span style="font-weight:bold">Total: </span>$ {{plan['total']}} </div>
+									<br>
+									<div class="container-fluid">
+										<div class="row">
+											<div ng-repeat="quote in plan['quotes']">
+												<div class="col-xs-3 bor" style="display:inline-block;width:300px;vertical-align: top;">
+													<table class="table table-bordered" style="background-color:white">
+														<tr ng-repeat="item in quote['items']">
+															<td>{{item['name']}}: </td>
+															<td>$ {{item['amount']}}</td>	
+														</tr>
+														<tr>
+															<th>Total:</th>
+															<td>$ {{quote['total']}}</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="nova-footer modal-footer">
+				<div class="col-offset-md-6 col-md-12">
+                    <a ui-sref="root.seguros.quotation" class="btn btn-danger pull-right">Regresar</a>
+            	</div>
+			</div>
+		</div>
+	</div>
+</div>

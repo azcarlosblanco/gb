@@ -1,0 +1,34 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-md">
+
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">{{ title_dialog }}</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid con-margin">
+						<div class="row">
+							<header class="col-xs-12 text-center">
+							<br />
+						    	<h4>{{ message }}</h4>
+					  		</header>
+				  		</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<input type="submit" ng-click="submit()" value="{{ button_name }}" class="btn btn-danger pull-right"></input>
+					<a ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- <pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{data | json}}</pre>
+	<pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{formidable.form | json}}</pre><!---->
+</div>

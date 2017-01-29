@@ -1,0 +1,426 @@
+<style>
+    .nova-charts-panel-btn{
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        position: absolute;
+    }
+    .nova-charts-panel-titte{
+        width: 100%;
+        font-size: 20px;
+        margin: 6px 0px;
+        display: inline-block;
+    }
+    .nova-charts-panel-btn > a{
+        color: white;
+    }
+    .nova-charts-panel-btn > a > i{
+        color: white;
+    }
+    .nova-panel-primary-border{
+        border: 1px solid transparent;
+        border-color: #337ab7;
+    }
+    .nova-search-dashboard{
+        color: white; 
+        padding:0 0 20px;
+    }
+    .nova-form-control-search{
+        background-color: white;
+        font-size: 12px;
+    }
+    .nova-dashboard-content{
+
+    }
+    /*
+     * Component: Info Box
+     * -------------------
+     */
+    .info-box {
+      display: block;
+      min-height: 90px;
+      background: #fff;
+      width: 100%;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      margin-bottom: 15px;
+    }
+    .info-box small {
+      font-size: 14px;
+    }
+    .info-box .progress {
+      background: rgba(0, 0, 0, 0.2);
+      margin: 5px -10px 5px -10px;
+      height: 2px;
+    }
+    .info-box .progress,
+    .info-box .progress .progress-bar {
+      border-radius: 0;
+    }
+    .info-box .progress .progress-bar {
+      background: #fff;
+    }
+    .info-box-icon {
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 2px;
+      display: block;
+      float: left;
+      height: 90px;
+      width: 90px;
+      text-align: center;
+      font-size: 45px;
+      line-height: 90px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .info-box-icon > img {
+      max-width: 100%;
+    }
+    .info-box-content {
+      padding: 5px 10px;
+      margin-left: 90px;
+    }
+    .info-box-number {
+      display: block;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .progress-description,
+    .info-box-text {
+      display: block;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .info-box-text {
+      text-transform: uppercase;
+    }
+    .info-box-more {
+      display: block;
+    }
+    .progress-description {
+      margin: 0;
+    }
+    /*end infobox*/
+    /*colors*/
+    .bg-red,
+    .bg-yellow,
+    .bg-aqua,
+    .bg-blue,
+    .bg-light-blue,
+    .bg-green,
+    .bg-navy,
+    .bg-teal,
+    .bg-olive,
+    .bg-lime,
+    .bg-orange,
+    .bg-fuchsia,
+    .bg-purple,
+    .bg-maroon,
+    .bg-black,
+    .bg-red-active,
+    .bg-yellow-active,
+    .bg-aqua-active,
+    .bg-blue-active,
+    .bg-light-blue-active,
+    .bg-green-active,
+    .bg-navy-active,
+    .bg-teal-active,
+    .bg-olive-active,
+    .bg-lime-active,
+    .bg-orange-active,
+    .bg-fuchsia-active,
+    .bg-purple-active,
+    .bg-maroon-active,
+    .bg-black-active,
+    .callout.callout-danger,
+    .callout.callout-warning,
+    .callout.callout-info,
+    .callout.callout-success,
+    .alert-success,
+    .alert-danger,
+    .alert-error,
+    .alert-warning,
+    .alert-info,
+    .label-danger,
+    .label-info,
+    .label-warning,
+    .label-primary,
+    .label-success,
+    .modal-primary .modal-body,
+    .modal-primary .modal-header,
+    .modal-primary .modal-footer,
+    .modal-warning .modal-body,
+    .modal-warning .modal-header,
+    .modal-warning .modal-footer,
+    .modal-info .modal-body,
+    .modal-info .modal-header,
+    .modal-info .modal-footer,
+    .modal-success .modal-body,
+    .modal-success .modal-header,
+    .modal-success .modal-footer,
+    .modal-danger .modal-body,
+    .modal-danger .modal-header,
+    .modal-danger .modal-footer {
+      color: #fff !important;
+    }
+    .bg-gray {
+      color: #000;
+      background-color: #d2d6de !important;
+    }
+    .bg-gray-light {
+      background-color: #f7f7f7;
+    }
+    .bg-black {
+      background-color: #111111 !important;
+    }
+    .bg-red,
+    .callout.callout-danger,
+    .alert-danger,
+    .alert-error,
+    .label-danger,
+    .modal-danger .modal-body {
+      background-color: #dd4b39 !important;
+    }
+    .bg-yellow,
+    .callout.callout-warning,
+    .alert-warning,
+    .label-warning,
+    .modal-warning .modal-body {
+      background-color: #f39c12 !important;
+    }
+    .bg-aqua,
+    .callout.callout-info,
+    .alert-info,
+    .label-info,
+    .modal-info .modal-body {
+      background-color: #00c0ef !important;
+    }
+    .bg-blue {
+      background-color: #0073b7 !important;
+    }
+    .bg-light-blue,
+    .label-primary,
+    .modal-primary .modal-body {
+      background-color: #3c8dbc !important;
+    }
+    .bg-green,
+    .callout.callout-success,
+    .alert-success,
+    .label-success,
+    .modal-success .modal-body {
+      background-color: #00a65a !important;
+    }
+    .bg-navy {
+      background-color: #001f3f !important;
+    }
+    .bg-teal {
+      background-color: #39cccc !important;
+    }
+    .bg-olive {
+      background-color: #3d9970 !important;
+    }
+    .bg-lime {
+      background-color: #01ff70 !important;
+    }
+    .bg-orange {
+      background-color: #ff851b !important;
+    }
+    .bg-fuchsia {
+      background-color: #f012be !important;
+    }
+    .bg-purple {
+      background-color: #605ca8 !important;
+    }
+    .bg-maroon {
+      background-color: #d81b60 !important;
+    }
+    .bg-gray-active {
+      color: #000;
+      background-color: #b5bbc8 !important;
+    }
+    .bg-black-active {
+      background-color: #000000 !important;
+    }
+    .bg-red-active,
+    .modal-danger .modal-header,
+    .modal-danger .modal-footer {
+      background-color: #d33724 !important;
+    }
+    .bg-yellow-active,
+    .modal-warning .modal-header,
+    .modal-warning .modal-footer {
+      background-color: #db8b0b !important;
+    }
+    .bg-aqua-active,
+    .modal-info .modal-header,
+    .modal-info .modal-footer {
+      background-color: #00a7d0 !important;
+    }
+    .bg-blue-active {
+      background-color: #005384 !important;
+    }
+    .bg-light-blue-active,
+    .modal-primary .modal-header,
+    .modal-primary .modal-footer {
+      background-color: #357ca5 !important;
+    }
+    .bg-green-active,
+    .modal-success .modal-header,
+    .modal-success .modal-footer {
+      background-color: #008d4c !important;
+    }
+    .bg-navy-active {
+      background-color: #001a35 !important;
+    }
+    .bg-teal-active {
+      background-color: #30bbbb !important;
+    }
+    .bg-olive-active {
+      background-color: #368763 !important;
+    }
+    .bg-lime-active {
+      background-color: #00e765 !important;
+    }
+    .bg-orange-active {
+      background-color: #ff7701 !important;
+    }
+    .bg-fuchsia-active {
+      background-color: #db0ead !important;
+    }
+    .bg-purple-active {
+      background-color: #555299 !important;
+    }
+    .bg-maroon-active {
+      background-color: #ca195a !important;
+    }
+    [class^="bg-"].disabled {
+      opacity: 0.65;
+      filter: alpha(opacity=65);
+    }
+    .text-red {
+      color: #dd4b39 !important;
+    }
+    .text-yellow {
+      color: #f39c12 !important;
+    }
+    .text-aqua {
+      color: #00c0ef !important;
+    }
+    .text-blue {
+      color: #0073b7 !important;
+    }
+    .text-black {
+      color: #111111 !important;
+    }
+    .text-light-blue {
+      color: #3c8dbc !important;
+    }
+    .text-green {
+      color: #00a65a !important;
+    }
+    .text-gray {
+      color: #d2d6de !important;
+    }
+    .text-navy {
+      color: #001f3f !important;
+    }
+    .text-teal {
+      color: #39cccc !important;
+    }
+    .text-olive {
+      color: #3d9970 !important;
+    }
+    .text-lime {
+      color: #01ff70 !important;
+    }
+    .text-orange {
+      color: #ff851b !important;
+    }
+    .text-fuchsia {
+      color: #f012be !important;
+    }
+    .text-purple {
+      color: #605ca8 !important;
+    }
+    .text-maroon {
+      color: #d81b60 !important;
+    }
+    /*end colors*/
+</style>
+<div class="nova-search-dashboard col-sm-12">
+    <div style="display:inline-block;">
+        <a title="configuraciones" class="btn btn-sm btn-primary" ng-click="openSettings(salesbymonth)">
+            <i class="glyphicon glyphicon-cog"></i>
+        </a>
+    </div>
+    <h3 class="nova-charts-panel-titte" style="color:white;width:80%">Panel de Control -> Emisiones</h3>
+</div>
+<div class="nova-dashboard-content">
+    <div ng-if="typedashboard=='emission'" ng-include="'seguros/dashboard/dashboard-emission.view.html'"></div>
+    <div ng-if="typedashboard=='claim'" ng-include="'seguros/dashboard/dashboard-claim.view.html'"></div>
+</div>
+<div class="modal-backdrop bs-example-modal" ng-show="showWidgetSettings" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+    <div class="modal-dialog lg-modal" ng-style="{'display':showWidgetSettings && 'block'}">
+        <div class="modal-content wizard-form">
+            <form name="_form" class="form-horizontal" ng-submit="">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="closeWidgetSettings()" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="fileModalLabel">{{avgtimeemission.title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group" ng-class="{error: _form.name.$error &amp;&amp; _form.submitted}">
+                                <label class="control-label col-lg-4 col-md-4">Desde</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input name="name" type="date" ng-model="widget.params.from" class="form-control" max="{{today}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group" ng-class="{error: _form.name.$error &amp;&amp; _form.submitted}">
+                                <label class="control-label col-lg-4 col-md-4">Hasta</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <input name="name" type="date" ng-model="widget.params.to" class="form-control" max="{{today}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="widget.responsible">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group" ng-class="{error: _form.name.$error &amp;&amp; _form.submitted}">
+                                <label class="control-label col-lg-4 col-md-4">Reponsable</label>
+                                <div class="col-lg-8 col-md-8">
+                                    <select
+                                        class="form-control"
+                                        ng-options="employee as employee.full_name for employee in employees track by employee.id"
+                                        ng-model="widget.params.responsible"
+                                        ng-disabled="viewprocess"
+                                        autofocus autocomplete="off">
+                                        <option value="">Seleccionar Empleado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <div class="col-offset-md-6 col-md-12">
+                        <button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="closeWidgetSettings()">
+                            Cancelar
+                        </button>
+                        <button style="margin: 0px 5px" type="submit" ng-click="checking_graph=1;updateWidget(widget)" ng-disabled="_form.$invalid || checking_graph==true" class="btn btn-success pull-right">
+                            <span ng-show="!checking_graph">Aceptar</span>
+                            <btn-spinner ng-show="checking_graph"></btn-spinner>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

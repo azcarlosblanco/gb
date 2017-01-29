@@ -1,0 +1,224 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Emergencias
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+				        <div style="margin:5px 10px">
+						   <div class="form-section" id="section-1" style="padding:5px; margin:5px 0px">
+						    	<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;">
+	    							   <span>Informacion Emergencia</span>
+	    					    </h5>	
+					       </div>
+					       <div class="container-fluid con-margin" >
+					       	<label for="customer_policy_id" class="col-xs-6 col-sm-2 control-label">Poliza:</label>
+							 <div class="col-xs-6 col-sm-3 col-md-3">
+						    	<select
+					                class="form-control"
+					                ng-options="key as (value) for (key, value) in catalog.policy_id"
+					                ng-model="form.customer_policy_id"
+					                ng-init="form.customer_policy_id"
+					                required
+					                ng-disabled="viewprocess"
+					                autofocus autocomplete="off">
+					            </select>
+									    </div>
+							  <label for="date" class="col-xs-10 col-sm-3 control-label">Fecha:</label>
+					         	<div class="col-xs-6 col-sm-3 col-md-3">								 <input 
+							            class="form-control"
+							            type="text"
+							            id="ticket_id"
+							            value="{{ form.date }}"
+							            name="date"
+							            ng-model="form.date"
+							            ng-init="form.date"
+							            placeholder="yyyy/mm/dd"
+							            ng-required=1
+							            focus="{{$parent.$parent.$first && $first}}"
+							            ng-readonly="0"
+							            ng-blur="focused[date] = false" autocomplete="off">
+                                </div>
+							 </div>
+							</div>
+							<div style="margin:5px 10px">
+								<div class="container-fluid con-margin" >
+							       	<label for="name" class="col-xs-6 col-sm-2 control-label">Nombre:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								      <input 
+									            class="form-control"
+									            type="text"
+									            id="ticket_id"
+									            value="{{ form.name}}"
+									            name="date"
+									            ng-model="form.name"
+									            ng-init="form.name"
+									            placeholder="Nombre"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[name] = false" autocomplete="off">
+		                                </div>
+									  <label for="apellido" class="col-xs-10 col-sm-3 control-label">Apellido:</label>
+							         	<div class="col-xs-6 col-sm-3 col-md-3">							
+							         	     <input 
+									            class="form-control"
+									            type="text"
+									            id="ticket_id"
+									            value="{{ form.last_name}}"
+									            name="date"
+									            ng-model="form.last_name"
+									            ng-init="form.last_name"
+									            placeholder="Apellido"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[last_name] = false" autocomplete="off">
+		                                </div>
+								</div>
+						     </div>
+						     <div style="margin:5px 10px">
+			                    <div class="container-fluid con-margin" >
+							       	<label for="hospital_id" class="col-xs-6 col-sm-2 control-label">Hospital:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								      <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.hospital_id" 
+								                ng-model="form.hospital_id"
+								                ng-init="form.hospital_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							              </select>
+			                            </div>
+			                            <div class="col-sm-1">
+											<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="addHospital()">
+												<i class="glyphicon glyphicon-plus"></i> 
+											</button>
+										</div>
+										<label for="diagnosis_id" class="col-xs-6 col-sm-2 control-label">Diagnostico:</label>
+									 <div class="col-xs-6 col-sm-3 col-md-3">								      <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.diagnosis_id" 
+								                ng-model="form.diagnosis_id"
+								                ng-init="form.diagnosis_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							              </select>
+			                            </div>
+			                            <div class="col-sm-1">
+											<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="addDiagnosis()">
+												<i class="glyphicon glyphicon-plus"></i> 
+											</button>
+										</div>
+							    </div>
+							  </div>
+							  <div style="margin:5px 10px"> 
+									<div class="container-fluid con-margin" >
+									     <label for="doctor_id" class="col-xs-6 col-sm-2 control-label">Tratante:</label>
+										 <div class="col-xs-6 col-sm-3 col-md-3">						   <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.doctor_id" 
+								                ng-model="form.doctor_id"
+								                ng-init="form.doctor_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							              </select>
+			                            </div>
+			                            <div class="col-sm-1">
+											<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="addDoctor()">
+												<i class="glyphicon glyphicon-plus"></i> 
+											</button>
+										</div>
+			                           	  <label for="specialty_id" class="col-xs-6 col-sm-2 control-label">Especialidad:</label>
+									       <div class="col-xs-6 col-sm-3 col-md-3">						 <select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.specialty_id" 
+								                ng-model="form.specialty_id"
+								                ng-init="form.specialty_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							              </select>
+			                            </div>
+			                            <div class="col-sm-1">
+											<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="addSpecialty()">
+												<i class="glyphicon glyphicon-plus"></i> 
+											</button>
+										</div>
+			                        </div>
+			                 </div>
+			                 <div style="margin:5px 10px">
+									<div class="container-fluid con-margin" >
+								       	<label for="start_date" class="col-xs-6 col-sm-2 control-label">Fecha Ingreso:</label>
+										 <div class="col-xs-6 col-sm-3 col-md-3">								      <input 
+										            class="form-control"
+										            type="date"
+										            id="start_date"
+										            value="{{ form.start_date}}"
+										            name="start_date"
+										            ng-model="form.start_date"
+										            ng-init="form.start_date"
+										            placeholder="yyyy/mm/dd"
+										            ng-required=1
+										            focus="{{$parent.$parent.$first && $first}}"
+										            ng-readonly="0"
+										            ng-blur="focused[start_date] = false" autocomplete="off">
+			                                </div>
+										  <label for="end_date" class="col-xs-10 col-sm-3 control-label">Fecha Alta:</label>
+								         	<div class="col-xs-6 col-sm-3 col-md-3">							 <input 
+										            class="form-control"
+										            type="date"
+										            id="end_date"
+										            value="{{ form.end_date}}"
+										            name="end_date"
+										            ng-model="form.end_date"
+										            ng-init="form.end_date"
+										            placeholder="yyyy/mm/dd"
+										            ng-required=1
+										            focus="{{$parent.$parent.$first && $first}}"
+										            ng-readonly="0"
+										            ng-blur="focused[end_date] = false" autocomplete="off">
+			                                </div>
+									</div>
+								</div>
+									<div class="form-group" ng-class="{'highlight': focused[hospitalized], 'invalid' : !modalForm[hospitalized].$valid && modalForm[hospitalized].$touched}">
+									 <label for="hospitalized" class="col-xs-12 col-sm-3 control-label">Hospitalizacion:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+										    	<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.hospitalized",
+												       name="hospitalized">
+									    </div>
+								    </div>
+
+									<div class="form-group" ng-class="{'highlight': focused[accident], 'invalid' : !modalForm[accident].$valid && modalForm[accident].$touched}">
+									 <label for="accident" class="col-xs-12 col-sm-3 control-label">Accidente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+										    	<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.accident",
+												       name="accident">
+									    </div>
+				                   </div>
+						     </form>
+                        </div> 
+                       <br>
+					    <div class="modal-footer">
+							<div >
+								<input type="submit" ng-click="submit()"  value="Enviar" class="btn btn-primary pull-right" >
+							</div>
+							<a ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+						</div>
+				</div> 
+		 </div>
+	</div>
+</div>

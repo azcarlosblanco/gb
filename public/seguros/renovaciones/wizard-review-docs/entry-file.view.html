@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-xs-12" ng-class="{'claim-fdeleted': !file[id]['valid']}">
+        <div class="col-xs-2" style='display:inline;'>   
+            <select
+            class="form-control"
+            ng-options="key as (value | titleCase) for (key, value) in categoriesA" 
+            ng-model="file[id]['category']"
+            ng-init="file[id]['category'] = file[id]['category'] || init_category[file[id]]"
+            required
+            autofocus autocomplete="off">
+            </select>
+        </div>
+        <div class="col-xs-3" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="file[id]['description']"
+            placeholder="# Factura | # Orden | Resultado"
+            required
+            autofocus autocomplete="off">
+        </div>
+        <div class="col-xs-2" style='display:inline;'>
+            <select
+            class="form-control"
+            ng-options="supplier.id as supplier.name for supplier in suppliers" 
+            ng-model="file[id]['supplier']"
+            ng-init="file[id]['supplier']"
+            required
+            autofocus autocomplete="off">
+            <option value="">{{field.placeholder ? field.placeholder : 'Seleccionar'}}</option>
+            </select>
+        </div>
+        <input type="hidden" name="file[id]['id']">
+        <div class="col-xs-3" style="font:smaller; display:inline;"> 
+            <a ng-href="file/view/{{file[id]['id']}}?token={{ ntoken }}" target="_blank">
+                {{file[id]['name']}}
+            </a>
+        </div>
+        <div class="col-xs-2" style='display:inline;'>
+            <select
+            class="form-control"
+            ng-options="valid.id as valid.value for valid in validOpt" 
+            ng-model="file[id]['valid']"
+            ng-init="file[id]['valid']"
+            required
+            autofocus autocomplete="off">
+            </select>
+        </div>
+    </div> 
+</div>
+<br>

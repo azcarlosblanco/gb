@@ -1,0 +1,281 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Ventas - Crear Agente
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section">
+							<h5 >
+								<span>Datos Personales</span>
+							</h5>
+							<div class="container-fluid con-margin">	
+								<div class="row">
+									<div class="form-group" ng-class="{'highlight': focused[cname], 'invalid' : !modalForm[cname].$valid && modalForm[cname].$touched}">
+									    <label for="cname" class="col-xs-12 col-sm-3 control-label">Nombre:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="cname"
+									            value="{{ form.name }}"
+									            name="cname"
+									            ng-model="form.name"
+									            ng-init="form.name"
+									            placeholder="Nombre"
+									            ng-required=1
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[clastname], 'invalid' : !modalForm[clastname].$valid 
+								    && modalForm[clastname].$touched}">
+									    <label for="clastname" class="col-xs-12 col-sm-3 control-label">Apellido:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="clastname"
+									            value="{{ form.lastname }}"
+									            name="clastname"
+									            ng-model="form.lastname"
+									            ng-init="form.lastname"
+									            placeholder="Apellido"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[identity_document], 'invalid' : !modalForm[identity_document].$valid
+									&& modalForm[identity_document].$touched}">
+									    <label for="identity_document" class="col-xs-12 col-sm-3 control-label"># Identificación:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="identity_document"
+									            value="{{ form.identity_document }}"
+									            name="identity_document"
+									            ng-model="form.identity_document"
+									            ng-init="form.identity_document"
+									            placeholder="# Identificación"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[identity_document] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[dob], 'invalid' : !modalForm[dob].$valid && modalForm[dob].$touched}">
+									    <label for="dob" class="col-xs-12 col-sm-3 control-label">Fecha Naciemiento:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="date"
+									            id="dob"
+									            value="{{ form.dob}}"
+									            name="dob"
+									            ng-model="form.dob"
+									            ng-init="form.dob"
+									            placeholder="a@example.com"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[dob] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[mobile], 'invalid' : !modalForm[mobile].$valid && modalForm[mobile].$touched}">
+									    <label for="mobile" class="col-xs-12 col-sm-3 control-label">Celular:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="mobile"
+									            value="{{ form.mobile }}"
+									            name="mobile"
+									            ng-model="form.mobile"
+									            ng-init="form.mobile"
+									            placeholder="0999999999" 
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[mobile] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[phone], 'invalid' : !modalForm[phone].$valid && modalForm[phone].$touched}">
+									    <label for="phone" class="col-xs-12 col-sm-3 control-label">Convencional:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="phone"
+									            value="{{ form.phone }}"
+									            name="phone"
+									            ng-model="form.phone"
+									            ng-init="form.phone"
+									            placeholder="5556666" 
+									            ng-required=0
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[phone] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[email], 'invalid' : !modalForm[email].$valid && modalForm[email].$touched}">
+									    <label for="email" class="col-xs-12 col-sm-3 control-label">Email:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="email"
+									            id="email"
+									            value="{{ form.email }}"
+									            name="email"
+									            ng-model="form.email"
+									            ng-init="form.email"
+									            placeholder="a@example.com"
+    								            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[email] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[skype], 'invalid' : !modalForm[skype].$valid && modalForm[skype].$touched}">
+									    <label for="skype" class="col-xs-12 col-sm-3 control-label">Skype:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="skype"
+									            value="{{ form.skype }}"
+									            name="skype"
+									            ng-model="form.skype"
+									            ng-init="form.skype"
+									            placeholder="a@example.com" 
+									            ng-required=0
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[skype] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[country_id], 'invalid' : !modalForm[country_id].$valid && modalForm[country_id].$touched}">
+									    <label for="country_id" class="col-xs-12 col-sm-3 control-label">Pais:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.country_list" 
+								                ng-model="form.country_id"
+								                ng-init="form.country_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+								            </select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[province_id], 'invalid' : !modalForm[province_id].$valid && modalForm[province_id].$touched}">
+									    <label for="province_id" class="col-xs-12 col-sm-3 control-label">Provincia:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.province_list" 
+								                ng-model="form.province_id"
+								                ng-init="form.province_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+								            </select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[city_id], 'invalid' : !modalForm[city_id].$valid && modalForm[city_id].$touched}">
+									    <label for="city_id" class="col-xs-12 col-sm-3 control-label">Ciudad:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.cities_list" 
+								                ng-model="form.city_id"
+								                ng-init="form.city_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+								            </select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[address], 'invalid' : !modalForm[address].$valid && modalForm[address].$touched}">
+									    <label for="address" class="col-xs-12 col-sm-3 control-label">Direccion:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="address"
+									            value="{{ form.address }}"
+									            name="address"
+									            ng-model="form.address"
+									            ng-init="form.address"
+									            placeholder="Direccion" 
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[address] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[comision], 'invalid' : !modalForm[comision].$valid && modalForm[comision].$touched}">
+									    <label for="comision" class="col-xs-12 col-sm-3 control-label">Comision:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="numeric"
+									            id="comision"
+									            value="{{ form.address }}"
+									            name="comision"
+									            ng-model="form.comision"
+									            ng-init="form.comision"
+									            placeholder="%" 
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[comision] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[subagent], 'invalid' : !modalForm[subagent].$valid && modalForm[subagent].$touched}">
+									    <label for="subagent" class="col-xs-12 col-sm-3 control-label">Subagente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input type="checkbox"
+									    		   class="form-control"
+											       ng-model="form.subagent",
+											       name="subagent">
+									    </div>
+								    </div>
+								    <div ng-if="form.subagent" class="form-group" ng-class="{'highlight': focused[leader], 'invalid' : !modalForm[leader].$valid && modalForm[leader].$touched}">
+									    <label for="leader" class="col-xs-12 col-sm-3 control-label">Lider:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select 
+									            class="form-control"
+									            ng-options="key as (value) for (key, value) in catalog.agent_list"
+									            ng-model="form.leader"
+									            ng-init="form.leader"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-disabled="viewprocess"
+									            ng-blur="focused[leader] = false" autocomplete="off">
+									        </select>
+									    </div>
+								    </div>
+								 </div>
+							</div>
+						</div>
+				    </form>
+				</div>
+				<div class="modal-footer">
+					<div >
+						<input type="submit" ng-click="submit()"  value="Enviar" class="btn btn-primary pull-right" ng-disabled="modalForm.$invalid">
+					</div>
+					<a ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

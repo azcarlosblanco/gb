@@ -1,0 +1,15 @@
+{
+    "name": "ClientService",
+    "alias": "clientservice",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\ClientService\\Providers\\ClientServiceServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

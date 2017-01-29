@@ -1,0 +1,88 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">{{title | uppercase}}</h4>
+				</div>
+				<div class="modal-body">
+					<form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-{{$index}}" ng-repeat="section in formidable.sections">
+							<h5 ng-show="formidable.sections.length > 0"><span>{{section.label | uppercase}}</span></h5>
+							
+							<input type="hidden" id="{{section.id}}" value="{{data_fields[section.id]}}" name="{{section.id}}"
+								ng-model="form[section.id]"
+								ng-init="data_fields[section.id] ? (form[section.id] = data_fields[section.id]) : ''">
+							
+							<div class="container-fluid con-margin">
+								<div class="row">
+									<formidable-field ng-repeat="field in section.fields"></formidable-field>
+								</div>
+							</div>
+							
+							<!-- Add Details -->
+							<div class="form-section" ng-show="formSale == true">
+								<h5><span>DETALLE</span></h5>
+								<div class="container-fluid con-margin">
+									<table class="table table-hover data-table sort display">
+										<thead>
+											<tr>
+												<th class="concept"> <a href="">Concepto</a></th>
+												<th class="amount"> <a href="">Valor</a></th>
+												<th class="apply_commission"> <a href="">Aplicar comisión</a></th>
+												<th class="delete"> <a href="">Eliminar</a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="item in allList">
+												<td>{{item.concept}}</td>
+												<td>{{item.amount}}</td>
+												<td>{{item.apply_commission ? 'SI' : 'NO'}}</td>
+												<td>
+													<button ng-click="remove(item)" type="button" class="btn btn-danger">
+														<span class="glyphicon glyphicon-minus"></span>
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="row">
+										<div class="col-xs-3"><input type="text" name="concept" ng-model="concept" class="form-control" placeholder="Concepto"></div>
+										<div class="col-xs-3"><input type="text" name="amount" ng-model="amount" class="form-control" placeholder="Cantidad"></div>
+										<div class="col-xs-3">
+											<select name="apply_commission" ng-model="apply_commission" class="form-control">
+												<option value="1">SI</option>
+												<option value="0">NO</option>
+											</select>
+										</div>
+										<div class="col-xs-1">
+											<button ng-click="add()" type="button" class="btn btn-primary">
+												<span class="glyphicon glyphicon-plus"></span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Details -->
+							
+						</div>
+						
+						<!-- <hr/><pre ng-show="form" class="col-xs-12 col-md-offset-3 col-md-7">{{form | json}}</pre> -->
+					</form>
+					<br/><br/>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" ng-click="submit()" ng-disabled="modalForm.$invalid" value="{{formidable.actions[0].display}}" class="btn btn-primary pull-right"></input>
+					<a ui-sref="^" class="btn btn-link pull-right">{{formidable.actions[1].display}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--
+	<pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{data | json}}</pre>
+	<pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{formidable.form | json}}</pre>
+	-->
+</div>

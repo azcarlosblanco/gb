@@ -1,0 +1,42 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content wizard-form">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">RECLAMOS - VALIDACIÓN DE DOCUMENTOS</h4>
+				</div>
+				<div class="modal-body">
+				    <div class="pearls row">
+				        <div class="pearl col-xs-offset-1 col-xs-4" aria-expanded="true"
+				    			ng-class="{'current': step==1}">
+				        	<a ui-sref-active="active" ui-sref=".paso-1">
+					          	<div class="pearl-icon"><span class="glyphicon glyphicon-pencil"></span></div>
+					          	<span class="pearl-title">Revisión de Documentos</span>
+				          	</a>
+				        </div>
+				        <div class="pearl col-xs-4 disabled" aria-expanded="false"
+				        	ng-class="{'current': step==2}">
+				        	<a ui-sref-active="active" ui-sref=".paso-2">
+				          		<div class="pearl-icon"><span class="glyphicon glyphicon-cog"></span></div>
+				          		<span class="pearl-title">Asignación de Documentos</span>
+				          	</a>
+				        </div>
+				        <div class="pearl col-xs-4 disabled" aria-expanded="false"
+				        	ng-class="{'current': step==3}">
+				        	<a ui-sref-active="active" ui-sref=".paso-3">
+					          	<div class="pearl-icon"><span class="glyphicon glyphicon-user"></span></div>
+					          	<span class="pearl-title">Resumen</span>
+					       	</a>
+				        </div>
+				    </div>
+				</div>
+	            <!-- our nested state views will be injected here -->
+	            <div id="form-views" ui-view></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

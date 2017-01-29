@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-xs-3" style='display:inline;'>   
+            <select
+                class="form-control"
+                ng-options="key as (value) for (key, value) in catalog.documentList" 
+                ng-model="form.files[$index].category"
+                required
+                autofocus autocomplete="off">
+            </select>
+        </div>
+        <div class="col-xs-3" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="form.files[$index].description"
+            placeholder=""
+            required
+            autofocus autocomplete="off">
+        </div>
+        <input type="hidden" name="form.files[$index].id">
+        <button ng-if="form.files[$index].error || !viewprocess" class="col-xs-1 btn btn-primary" style='display:inline;' type="file" ngf-select="registerFile($file, register)" accept="*/*" >
+            <i class='glyphicon glyphicon-upload'></i>
+        </button>
+        <div class="col-xs-4" style="font:smaller; display:inline;"> 
+            <a ng-if="!form.files[$index].error" ng-href="file/download/{{form.files[$index].id}}?token={{ ntoken }}" target="_blank">
+                {{form.files[$index].name}}
+            </a>
+            <span ng-if="form.files[$index].error">{{form.files[$index].name}}</span>
+        </div>
+        <div ng-if="form.files[$index].categoory!='form' ||  form.files[$index].categoory!='id'">
+            <button ng-if="!viewprocess" class="col-xs-1 btn btn-danger" style='display:inline;' ng-click="deleteRegister(register)">
+                <i class='glyphicon glyphicon-remove'></i>
+            </button>
+        </div>
+        <span ng-if="form.files[$index].error" class="col-xs-1" style='display:inline; color:red'>
+            <i class='glyphicon glyphicon-remove'></i>
+        </span>
+    </div> 
+</div>
+<br>

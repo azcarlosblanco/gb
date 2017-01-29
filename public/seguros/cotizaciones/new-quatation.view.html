@@ -1,0 +1,253 @@
+<div class="container-fluid">
+	<div class="panel panel-default no-scroll">	
+		
+		<div class="container-fluid">
+			<div class="panel-default">
+    			<h3 class="text-center">Cotizar Planes</h3>
+				<div class="panel-body">
+					<form name="modalForm" class="form-vertical" role="form">
+    					<div class="container-fluid">
+						    <div class="panel-default ">
+						    	<div class="panel-heading" >
+									<h3 class="panel-title">Tipo de Seguro y Compañías</h3>
+								</div>
+								<br>
+							    <div class="container-fluid">
+								    <div class="col-xs-12">
+									    <label class="col-xs-2 control-label">Tipo de Seguro:</label>
+								   		<div class="col-xs-4">
+									 		<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in typeInsurance" 
+								                ng-model="form.typeInsurance"
+								                ng-init="form.typeInsurance"
+								                ng-required="1"
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+									        </select>
+										</div>
+									</div>
+									<br><br><br>
+									<div class="col-xs-12">
+										<div class="col-xs-3" ng-repeat="(key, value) in ics">
+											<label class="checkbox-inline">
+												<input name="form.ics[]" 
+									                    type="checkbox" 
+									                    value="{{key}}"
+									                    ng-required="1"
+														ng-click="toggleSelection(key,form.ics)">
+												       {{value}}
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+
+							<!-- /.INFOMRACION DEL SOLICITANTE  -->
+							<div class="panel-default ">
+								<div class="panel-heading" >
+									<h3 class="panel-title">Información Solicitante/Dependiente</h3>
+								</div>
+								<div class="container-fluid">
+									 <div class="container-fluid con-margin">
+										<quotation-affiliate ng-repeat="affiliate in form.affiliates" >
+										</quotation-affiliate>
+		                        	</div>
+		                        </div>
+							</div>	
+							<br>
+						
+						<!-- / FORMA DE PAGO -->	
+							<div class="panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Forma de Pago</h3>			
+								</div>	
+								<br>
+								<div class="container-fluid">
+									<div class="col-xs-4" ng-repeat="(key, value) in pmethod">
+										<label class="checkbox-inline">
+											<input name="form.pmethod"
+													ng-model="form.pmethod" 
+													ng-required="1"
+								                    type="radio" 
+								                    value="{{key}}">
+										       {{value}}
+										</label>
+									</div>
+								</div>
+							</div>	
+						</form>
+					</div> 
+					<div class=" col-sm-9-offset-2 text-right">
+						<div class="container-fluid">
+							<button type="button" class="btn btn-primary" ng-click="gettingPlans=true;getListPlan()" ng-disabled="gettingPlans==true" >
+								<span ng-show="!gettingPlans">SOLICITAR</span>
+                				<btn-spinner ng-show="gettingPlans"></btn-spinner>
+							</button>	
+						</div>
+					</div> 
+				</div>	
+				<br>
+			</div>
+		</div>	
+		<hr>		
+
+		<!-- / Planes de DE PAGO -->
+		<div class="container-fluid" ng-repeat="listPlans in listPlansIC">
+			<h3 style="display:inline-block"><small>{{ics[listPlans.insurance_company_id]}}</small></h3>
+			<button type="button" class="btn btn-default pull-right" 
+					ng-click="saveQuotation('ic',listPlans)">
+				Guardar Cotización
+			</button>
+			<div class="panel-default  col-sm-9-offset-1 text-right">
+				<div class="panel-default  col-sm-9-offset-1 text-right">
+					<div class="" ng-repeat="plan in listPlans.plans">
+						<div class="panel panel-default">
+				 			<div class="container-fluid premierplus">
+				 				<div class="container-fluid ">
+				 					<small>	
+				 						<h5 class="text" style="text-align:left">		
+				 							{{plan.plan_name}}
+				 						</h5>
+				 					</small>
+				 				</div>
+				 				<div class="container-fluid ">
+							 		<table class="table table-default tcolor">
+										<tr class="" ng-repeat="deductible_row in plan.deductibles_rows">
+											<td class="text-right">{{deductible_row.name}}</td>
+											<td ng-repeat="deductValue in deductible_row.values">
+												{{deductValue}}
+											</td>
+										</tr>
+										<tr>
+											<td class="text-right">DEDUCIBLE</td>
+											<td ng-repeat="deduciblesID in plan.deduciblesIDs">
+												<label class="text-center">
+													<input name="form.deductibles[plan.plan_id][]"
+											                    type="checkbox" 
+											                    value="{{deduciblesID}}"
+				    											ng-click="toggleSelection(deduciblesID,form.deductibles[plan.plan_id])">
+												</label>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-right">PRIMA</td>
+											<th ng-repeat="premiun in plan.premiuns"
+											style="text-align: right; vertical-align: top; max-width: 230px;" >
+												<span style="display:block">
+													{{premiun.total}}
+												</span>
+												<div ng-repeat="quote in premiun.quotes" style="display:inline-block; font-weight:normal; font-size:12px">
+													<table>
+														<tr ng-repeat="item in quote.items">
+															<td style="text-align: left;">{{item.name}}: </td>
+															<td style="text-align: right;">${{item.amount}}</td>
+														</tr>
+													</table>
+												</div>
+											</th>
+										</tr>
+									</table>
+									<div class=" col-sm-9-offset-1 text-right">
+										<button type="button" class="btn btn-default" 
+											ng-click="saveQuotation('plan',plan)">
+											Guardar Cotización
+										</button>
+										<button type="button" class="btn btn-primary" 
+											ng-click="gettingCosts[plan.plan_id]=true;
+											calculatePremiun(plan,listPlans.insurance_company_id)"
+											ng-disabled="gettingCosts[plan.plan_id]==true">
+											<span ng-show="!gettingCosts[plan.plan_id]">Calcular Costo</span>
+                							<btn-spinner ng-show="gettingCosts[plan.plan_id]"></btn-spinner>
+										</button>
+									</div> 	
+									<br>
+								</div>
+				 			</div>
+				 		</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--DIV FOR DISPLAY POPUP TO SAVE WUOTATION-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showSaveQuotation" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showSaveQuotation && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="cancelSaveQuotation()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Guardar Cotización</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >DATOS COTIZACIÓN</span>
+						</h5>
+						<div class="container-fluid con-margin">	
+							<div class="row">
+								<div class="form-group" ng-class="{'highlight': focused[agent], 'invalid' : !modalForm[agent].$valid && modalForm[agent].$touched}">
+								    <label for="agent" class="col-xs-12 col-sm-3 control-label">Agente:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<select
+							                class="form-control"
+							                ng-options="key as (value) for (key, value) in agentList" 
+							                ng-model="form.agent_id"
+							                ng-init="form.agent_id"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[client_name], 'invalid' : !modalForm[client_name].$valid && modalForm[client_name].$touched}">
+								    <label for="client_name" class="col-xs-12 col-sm-3 control-label">Nombre del Cliente:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"
+								            type="text"
+								            id="client_name"
+								            value="{{ form.client_name }}"
+								            name="client_name"
+								            ng-model="form.client_name"
+								            ng-init="form.client_name"
+								            placeholder="Nombre"
+								            ng-required=1 
+								            autocomplete="off">
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[client_email], 'invalid' : !modalForm[client_email].$valid && modalForm[client_email].$touched}">
+								    <label for="client_email" class="col-xs-12 col-sm-3 control-label">Email del Cliente:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"
+								            type="email"
+								            id="client_email"
+								            value="{{ form.client_email }}"
+								            name="client_email"
+								            ng-model="form.client_email"
+								            ng-init="form.client_email"
+								            placeholder="Opcional"
+								            ng-required=0 
+								            autocomplete="off">
+								    </div>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button class="btn btn-danger" type="button" ng-click="cancelSaveQuotation()">Cancelar</button>
+            		<button class="btn btn-primary" type="button" ng-click="sendSaveQuotation()">Enviar Cotizacion</button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div>

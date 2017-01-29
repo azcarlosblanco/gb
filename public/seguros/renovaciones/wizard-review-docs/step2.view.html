@@ -1,0 +1,36 @@
+<div class="modal-body">
+    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+		<div class="form-section">
+			<h5 >
+				<span>ASIGNACIÓN DE DOCUMENTOS</span>
+			</h5>
+			<br>
+			<div class="container-fluid con-margin">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-xs-3" style='display:inline;'>
+							<b>Documento</b>
+						</div>
+						<div class="col-xs-3" style='display:inline;'>
+							<b>Afiliado</b>
+						</div>
+						<div class="col-xs-6" style='display:inline;'>
+							<b>Lugar</b>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="container-fluid con-margin">		
+				<new-association ng-repeat="association in associations">
+				</new-association> 
+			</div>
+		</div>
+    </form>
+</div>
+<div class="modal-footer">
+	<a ng-click="next()" ng-disabled="modalForm.$invalid"  class="btn btn-primary pull-right">
+    Continuar <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </a>
+    <a ng-click="previous()" class="btn btn-link pull-right">Regresar</a>
+</div>

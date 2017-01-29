@@ -1,0 +1,54 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">{{data.data.title | uppercase}}</h4>
+				</div>
+				<div class="modal-body"><!--
+					<div class="container-fluid con-margin">
+						<div class="row">
+							<header class="col-xs-12 col-md-offset-3 col-md-9">
+							<br />
+					    		<ul class="list-unstyled">
+					    			<li></li>
+						    		<li>Puedes teclear <kbd>TAB</kbd> para mover el cursor al siguiente campo.</li>
+						    		<li><kbd>SHIFT</kbd> + <kbd>TAB</kbd> para regresar el cursor al campo anterior.</li>
+						    		<li>Teclea <kbd>ENTER</kbd> para guardar el formulario.</li>
+					    		</ul>
+					  		</header>
+				  		</div>
+			  		</div>-->
+					<form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-{{$index}}" ng-repeat="section in formidable.sections">
+						<!-- <hr /> class="col-xs-12 col-md-offset-2 col-md-8"
+						<h5 class="col-sm-offset-3 col-xs-12 col-sm-9">{{section.label}}</h5>-->
+							<h5 ng-show="formidable.sections.length > 0"><span>{{section.label | uppercase}}</span></h5>
+
+							<div class="container-fluid con-margin">
+								<div class="row">
+									<formidable-field ng-repeat="field in section.fields"></formidable-field>
+								</div>
+							</div>
+
+						</div>
+								<!--<hr/>
+			    				<pre ng-show="form" class="col-xs-12 col-md-offset-3 col-md-7">{{form | json}}</pre>-->
+					</form>
+			    				<br/><br/>
+				</div>
+
+				<div class="modal-footer">
+					<input type="submit" ng-click="submit()" ng-disabled="modalForm.$invalid" value="{{formidable.actions[0].display}}" class="btn btn-primary pull-right"></input>
+					<a ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--<pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{data | json}}</pre>
+	<pre ng-show="form" class="col-xs-offset-1 col-xs-10">{{formidable.form | json}}</pre><!---->
+</div>

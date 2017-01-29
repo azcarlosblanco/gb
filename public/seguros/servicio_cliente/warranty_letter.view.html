@@ -1,0 +1,205 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+		  <div class="modal-content">
+			<div class="modal-header">
+               <button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+			   </button>
+                <h4 class="modal-title" id="fileModalLabel">Carta de Garantia</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >Recibido Carta Garantia</span>
+						</h5>
+						<div class="container-fluid con-margin">	
+							<div class="row">
+							      <div class="form-group" ng-class="{'highlight': focused['file'], 'invalid' : !modalForm['file'].$valid && modalForm['file'].$touched}">
+									    <label for="file" class="col-xs-12 col-sm-3 control-label">Carta de Garantia:</label>
+									    <div class="col-xs-12 col-sm-7">
+									        <span>
+									    		{{attachment.name}}
+									    	</span>
+									    	<span ng-show="attachment.file.progress > 0" ng-bind="attachment.file.progress + '%'"></span>
+									    	<button class="btn btn-primary btn-sm" 
+										        style='display:inline;' type="file" ngf-select="registerFile($file, attachment)" accept="*/*" ngf-max-height="1000" >
+										            <i class='glyphicon glyphicon-upload'></i>
+										    </button>
+										</div>
+									
+								    </div>
+							    <div class="form-group" ng-class="{'highlight': focused['question'], 'invalid' : !modalForm[question].$valid && modalForm[question].$touched}">
+									 <label for="question" class="col-xs-12 col-sm-3 control-label">La informacion de la Carta es Correcta?:</label>
+									    <div class="col-xs-6 col-sm-1 col-md-1">
+									          <label for="form.yes" class="col-xs-1 col-sm-1 col-md-1 control-label">Si:</label>
+									          <td>
+										    	<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.yes",
+												       name="yes"
+												       ng-disabled="form.not">
+											   </td>
+											   <label for="form.not" class="col-xs-1 col-sm-1 col-md-1 control-label">No:</label>
+												<input type="checkbox"
+							     		    		   class="form-control"
+												       ng-model="form.not",
+												       name="not"
+												       ng-disabled="form.yes">
+									    </div>
+								    </div>
+							     <div ng-if="form.not==1" class="form-group" ng-class="{'highlight': focused['description'], 'invalid' : !modalForm[description].$valid && modalForm[description].$touched}"><label for="description" class="col-xs-6 col-sm-2 control-label">Observacion: </label>
+							            <div class="col-xs-6 col-sm-3 col-md-9">
+							            <textarea
+							            class="form-control"
+							            id="description"
+								        name="description"
+							            ng-model="form.description"
+							            placeholder="description"
+							            ng-required=1
+							            focus="{{$parent.$parent.$first && $first}}"
+							            ng-readonly="0"
+							            ng-blur="focused[description] = false" autocomplete="off">
+							            </textarea>
+							            </div>
+						             </div>
+							 </div>
+						</div>
+						</div>
+						<div style="margin:5px 10px">
+						 <div class="form-section" id="section-2" style="padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;">
+	    							   <span> Observaciones </span>
+	    					</h5>
+							<div class="container-fluid con-margin">  
+							    <div class="row">
+									<table class="table table-bordered table-notAssc">
+								    	<tbody style="font-size:10px">
+								    		<tr ng-repeat="observation in form.observationdetail_obj">
+								    			<td style="padding:5px">
+								    				<span>{{observation.description}}</span>
+								    			</td>
+								    		</tr>
+								    	</tbody>
+								    </table>
+							    </div>
+							 </div>
+					      </div>
+					   </div>
+				</form>
+			</div>
+			<br>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submit()"  value="Enviar" class="btn btn-primary pull-right" >
+				</div>
+            </div>
+		</div>
+	</div>
+</div>
+</div>
+
+<!--DISPLAY POPUP TO createEMail-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showCreateEmail" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showCreateEmail && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+                <h4 class="modal-title" id="fileModalLabel">Email Carta de Garantia</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >DATOS EMAIL</span>
+						</h5>
+						<div class="container-fluid con-margin">	
+							<div class="row">
+							  		<div class="form-group" ng-class="{'highlight': focused[to], 'invalid' : !modalForm[to].$valid && modalForm[to].$touched}">
+								    <label for="to" class="col-xs-12 col-sm-3 control-label">Para:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input  
+                                            class="form-control"
+									        type="text"
+									        id="email"
+									        value="{{ form.email}}"
+									        name="to"
+									        ng-model="form.email"
+									        ng-init="form.email"
+									        placeholder="email"
+									        ng-required=1
+									        focus="{{$parent.$parent.$first && $first}}"
+									        ng-readonly="0"
+									        ng-blur="focused[email] = false" autocomplete="off">
+								    	
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[copy], 'invalid' : !modalForm[copy].$valid && modalForm[copy].$touched}">
+								    <label for="copy" class="col-xs-12 col-sm-3 control-label">CC:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"
+								            type="text"
+								            id="copy"
+								            value="{{ form.copy }}"
+								            name="copy"
+								            ng-model="form.copy"
+								            ng-init="form.copy"
+								            placeholder="example@mail.com"
+								            ng-required=1 
+								            autocomplete="off">
+								    </div>
+							     </div>
+							     
+							        <div class="form-group" ng-class="{'highlight': focused['file'], 'invalid' : !modalForm['file'].$valid && modalForm['file'].$touched}">
+									    <label for="file" class="col-xs-12 col-sm-3 control-label">Adjunto:</label>
+									    <div class="col-xs-12 col-sm-2">
+									    	<button class="btn btn-primary btn-sm" 
+										        style='display:inline;' type="file" ngf-select="registerFile($file, attachment)" accept="*/*" ngf-max-height="1000" >
+										            <i class='glyphicon glyphicon-upload'></i>
+										    </button>
+										    <button class="btn btn-danger btn-sm" 
+											        style='display:inline;' ng-click="deleteFile(attachment,$index!=0)" >
+											        <i class='glyphicon glyphicon-trash'></i>
+											</button>
+									    </div>
+									    <div class="col-xs-12 col-sm-7">
+									    	<span>
+									    		{{attachment.name}}
+									    	</span>
+									    	<span ng-show="attachment.file.progress > 0" ng-bind="attachment.file.progress + '%'"></span>
+									    </div>
+								    </div>
+
+							     <div class="form-group" ng-class="{'highlight': focused[content], 'invalid' : !modalForm[content].$valid && modalForm[content].$touched}">
+								    <label for="content" class="col-xs-12 col-sm-3 control-label">Contenido:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<textarea 
+								            class="form-control"
+								            type="text"
+								            id="content"
+								            value="{{ form.content }}"
+								            name="content"
+								            ng-model="form.content"
+								            ng-init="form.content"
+								            placeholder="Contenido"
+								            ng-required=1 
+								            autocomplete="off">
+								        </textarea>
+								    </div>
+							    </div>
+							   
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submitEmail()"  value="Enviar Email" class="btn btn-primary pull-right" >
+				</div>
+            </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-xs-12">
+        <div class="col-xs-4" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="file.descrip"
+            ng-init="file.descrip"
+            placeholder="Descripción"
+            required
+            readonly=1
+            autofocus autocomplete="off">
+        </div>
+        <div class="col-xs-1" style="font:smaller; display:inline;"> 
+            <span ng-if="file.paycheck==1">Sí</span>
+            <span ng-if="file.paycheck==0">No</span>
+        </div>
+        <div class="col-xs-3" style="font:smaller; display:inline;"> 
+            <a ng-if="!file.error" ng-href="file/view/{{file.id}}?token={{ ntoken }}" target="_blank">
+                {{file.name}}
+            </a>
+            <span ng-if="file.error">{{file.name}}</span>
+        </div>
+        <div ng-if="file.error">
+            <span class="col-xs-1"><i style='font-size: 15px; color:red' class='glyphicon glyphicon-remove-sign'></i></span>
+        </div>
+	</div> 
+</div>
+<br>

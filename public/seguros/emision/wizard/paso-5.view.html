@@ -1,0 +1,102 @@
+
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                <div class="modal-body">
+                    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+                        <div class="form-section" id="section-0">
+                            <h5><span>INFORMACIÓN DE PAGO</span></h5>
+                            <div class="container-fluid con-margin">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4>Modo de pago</h4>
+                                        <div class="radio" ng-repeat="cuota in data.number_payments">
+                                          <label>
+                                            <input type="radio" name="payment_number" ng-model="form.payment_number" ng-value="{{cuota.id}}">
+                                            {{cuota.name}}
+                                          </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Método de pago</h4>
+                                        <div class="radio" ng-repeat="metodo in data.payment_method">
+                                          <label>
+                                            <input type="radio" name="payment_method" ng-model="form.payment_method" ng-value="{{metodo.id}}" ng-click="selectPaymentMode()">
+                                            {{metodo.method}}
+                                          </label>
+                                        </div>
+                                    </div>
+                                </div>  
+                             </div>
+                        </div>
+                        <div class="form-section" id="section-1">
+                            <h5><span>DESCUENTO Y FACTURA</span></h5>
+                            <div class="container-fluid con-margin">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">Solicitar Descuento </div>
+                                            <input type="checkbox"
+                                                class="form-control"
+                                                ng-model="form.request_discount",
+                                                name="request_discount">
+                                    </div>
+                                    <div ng-if="form.request_discount" class="col-md-12">
+                                        <div class="col-md-6">Porcentaje de descuento </div>
+                                        <div class="col-md-2" style="padding-left:0">
+                                            <input type="text"
+                                                class="form-control"
+                                                ng-model="form.discount_percentage",
+                                                name="discount_percentage"
+                                                required="1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">Solicitar Factura antes de Pago</div>
+                                        <input type="checkbox"
+                                                class="form-control"
+                                                ng-model="form.request_invoice",
+                                                name="request_invoice">
+                                    </div>
+                                </div>  
+                             </div>
+                        </div>
+                    </form>
+                    <br /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Seguir</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^.paso-4" class="btn btn-link pull-right">Regresar</a>
+                </div>
+
+                

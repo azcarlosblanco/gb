@@ -1,0 +1,450 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Emisiones - Registrar Método de Pago
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-1">
+							<h5 >
+								<span>DATOS PÓLIZA</span>
+							</h5>
+							<div class="container-fluid con-margin">	
+								<div class="row">
+									<div class="form-group">
+									    <label for="cname" class="col-xs-12 col-sm-3 control-label"># Póliza:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+								    		<span class="form-control">{{ catalog.policy_number }}</span>
+									    </div>
+								    </div>
+								    <div class="form-group">
+									    <label for="cname" class="col-xs-12 col-sm-3 control-label">Nombre del Cliente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+								    		<span class="form-control">{{ catalog.client_name }}</span>
+									    </div>
+								    </div>
+								    <div class="form-group">
+									    <label for="clastname" class="col-xs-12 col-sm-3 control-label">Valor Total Póliza :</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<span class="form-control">{{ catalog.costs['total_cost'] | currency:$:2 }}</span>
+									    </div>
+								    </div>
+								    <div class="form-group">
+									    <label for="clastname" class="col-xs-12 col-sm-3 control-label">Frecuencia de Pagos :</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<span class="form-control">{{ catalog.number_payments  }}</span>
+									    </div>
+								    </div>
+								    <div class="form-group">
+									    <label for="clastname" class="col-xs-12 col-sm-3 control-label">Valor Primer Pago :</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<span class="form-control">{{ catalog.costs[0]['total'] | currency:$:2 }}</span>
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<div class="form-section" id="section-1">
+							<h5 >
+								<span>MÉTODO DE PAGO</span>
+							</h5>
+							<div class="container-fluid con-margin">	
+								<div class="form-group" ng-class="{'highlight': focused[agente_id], 'invalid' : !modalForm[agente_id].$valid && modalForm[agente_id].$touched}">
+								    <label for="agente_id" class="col-xs-12 col-sm-3 control-label">Método de Pago:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<select
+							                class="form-control"
+							                ng-options="key as (value) for (key, value) in catalog.payment_method" 
+							                ng-model="form.payment_method_id"
+							                ng-init="form.payment_method_id"
+							                required
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+							            </select>
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[payment_date], 'invalid' : !modalForm[payment_date].$valid && modalForm[payment_date].$touched}">
+								    <label for="payment_date" class="col-xs-12 col-sm-3 control-label">Fecha de Pago:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"
+								            type="date"
+								            id="payment_date"
+								            value="{{ form.payment_date }}"
+								            name="payment_date"
+								            ng-model="form.payment_date"
+								            ng-init="form.payment_date"
+								            placeholder="dd//mm/yyyy"
+								            ng-required=1
+								            ng-disabled="viewprocess" 
+								            autocomplete="off">
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[value], 'invalid' : !modalForm[value].$valid && modalForm[value].$touched}">
+								    <label for="value" class="col-xs-12 col-sm-3 control-label">Valor:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"
+								            type="number" 
+											min="0.00"
+								            id="value"
+								            value="{{ form.value }}"
+								            name="value"
+								            ng-model="form.value"
+								            ng-init="form.value"
+								            ng-required=1
+								            ng-disabled="viewprocess" 
+								            autocomplete="off">
+								    </div>
+							    </div>
+							    <div ng-if="catalog.payment_name[form.payment_method_id]=='cheque'">
+								    <div class="form-group" ng-class="{'highlight': focused[cheque_num], 'invalid' : !modalForm[cheque_num].$valid && modalForm[cheque_num].$touched}">
+									    <label for="cheque_num" class="col-xs-12 col-sm-3 control-label">Número de Cheque:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="cheque_num"
+									            value="{{ form.cheque_num }}"
+									            name="cheque_num"
+									            ng-model="form.cheque_num"
+									            ng-init="form.cheque_num"
+									            placeholder="#"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[bank_name], 'invalid' : !modalForm[bank_name].$valid && modalForm[bank_name].$touched}">
+									    <label for="bank_name" class="col-xs-12 col-sm-3 control-label">Nombre del Banco:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="bank_name"
+									            value="{{ form.bank_name }}"
+									            name="bank_name"
+									            ng-model="form.bank_name"
+									            ng-init="form.bank_name"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[filefields], 'invalid' : !modalForm[filefields].$valid && modalForm[filefields].$touched}">
+									    <label for="filefields" class="col-xs-12 col-sm-3 control-label">Cheque:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="file"
+									            id="filefields"
+									            name="filefields"
+									            file-model="filefields"
+									            ng-required="!form.uploaded_file"
+									            ng-disabled="viewprocess" 
+									            focus="{{$parent.$parent.$first && $first}}"
+									            autocomplete="off">
+									        <a ng-href="file/download/{{form.files.id}}?token={{ ntoken }}" target="_blank">
+								                {{form.files.name}}
+								            </a>
+									    </div>
+								    </div>
+								</div>
+								<div ng-if="catalog.payment_name[form.payment_method_id]=='transfer'">
+									<div class="form-group" ng-class="{'highlight': focused[transfer_num], 'invalid' : !modalForm[transfer_num].$valid && modalForm[transfer_num].$touched}">
+									    <label for="transfer_num" class="col-xs-12 col-sm-3 control-label">Número de Transferencia:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="transfer_num"
+									            value="{{ form.transfer_num }}"
+									            name="transfer_num"
+									            ng-model="form.transfer_num"
+									            ng-init="form.transfer_num"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[bank_name], 'invalid' : !modalForm[bank_name].$valid && modalForm[bank_name].$touched}">
+									    <label for="bank_name" class="col-xs-12 col-sm-3 control-label">Nombre del Banco:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="bank_name"
+									            value="{{ form.bank_name }}"
+									            name="bank_name"
+									            ng-model="form.bank_name"
+									            ng-init="form.bank_name"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[titular_account], 'invalid' : !modalForm[titular_account].$valid && modalForm[titular_account].$touched}">
+									    <label for="titular_account" class="col-xs-12 col-sm-3 control-label">Nombre del Titular:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="titular_account"
+									            value="{{ form.titular_account }}"
+									            name="titular_account"
+									            ng-model="form.titular_account"
+									            ng-init="form.titular_account"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[bank_account_type_id], 'invalid' : !modalForm[bank_account_type_id].$valid && modalForm[bank_account_type_id].$touched}">
+									    <label for="bank_account_type_id" class="col-xs-12 col-sm-3 control-label">Tipo de Cuenta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+							                class="form-control"
+							                ng-options="key as (value) for (key, value) in catalog.account_type" 
+							                ng-model="form.bank_account_type_id"
+							                ng-init="form.bank_account_type_id"
+							                required
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+							            </select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[account_num_from], 'invalid' : !modalForm[account_num_from].$valid && modalForm[account_num_from].$touched}">
+									    <label for="account_num_from" class="col-xs-12 col-sm-3 control-label">Número de Cuenta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="account_num_from"
+									            value="{{ form.account_num_from }}"
+									            name="account_num_from"
+									            ng-model="form.account_num_from"
+									            ng-init="form.account_num_from"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[filefields], 'invalid' : !modalForm[filefields].$valid && modalForm[filefields].$touched}">
+									    <label for="filefields" class="col-xs-12 col-sm-3 control-label">Papeleta de Transferencia:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="file"
+									            id="filefields"
+									            name="filefields"
+									            file-model="filefields"
+									            ng-required="!form.uploaded_file"
+									            ng-disabled="viewprocess" 
+									            focus="{{$parent.$parent.$first && $first}}"
+									            autocomplete="off">
+									        <a ng-href="file/download/{{form.files.id}}?token={{ ntoken }}" target="_blank">
+								                {{form.files.name}}
+								            </a>
+									    </div>
+								    </div>
+								</div>
+								<div ng-if="catalog.payment_name[form.payment_method_id]=='deposit'">
+								    <div class="form-group" ng-class="{'highlight': focused[bank_name], 'invalid' : !modalForm[bank_name].$valid && modalForm[bank_name].$touched}">
+									    <label for="bank_name" class="col-xs-12 col-sm-3 control-label">Nombre del Banco:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="bank_name"
+									            value="{{ form.bank_name }}"
+									            name="bank_name"
+									            ng-model="form.bank_name"
+									            ng-init="form.bank_name"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[desposit_num], 'invalid' : !modalForm[desposit_num].$valid && modalForm[desposit_num].$touched}">
+									    <label for="desposit_num" class="col-xs-12 col-sm-3 control-label">Número de Depósito:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="desposit_num"
+									            value="{{ form.desposit_num }}"
+									            name="desposit_num"
+									            ng-model="form.desposit_num"
+									            ng-init="form.desposit_num"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[account_num], 'invalid' : !modalForm[account_num].$valid && modalForm[account_num].$touched}">
+									    <label for="account_num" class="col-xs-12 col-sm-3 control-label">Número de Cuenta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="account_num"
+									            value="{{ form.account_num }}"
+									            name="account_num"
+									            ng-model="form.account_num"
+									            ng-init="form.account_num"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[filefields], 'invalid' : !modalForm[filefields].$valid && modalForm[filefields].$touched}">
+									    <label for="filefields" class="col-xs-12 col-sm-3 control-label">Papeleta de Depósito:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="file"
+									            id="filefields"
+									            name="filefields"
+									            file-model="filefields"
+									            ng-required="!form.uploaded_file"
+									            ng-disabled="viewprocess" 
+									            focus="{{$parent.$parent.$first && $first}}"
+									            autocomplete="off">
+									        <a ng-href="file/download/{{form.files.id}}?token={{ ntoken }}" target="_blank">
+								                {{form.files.name}}
+								            </a>
+									    </div>
+								    </div>
+								</div>
+								<div ng-if="catalog.payment_name[form.payment_method_id]=='creditcard'">
+								    <div class="form-group" ng-class="{'highlight': focused[titular_name], 'invalid' : !modalForm[titular_name].$valid && modalForm[titular_name].$touched}">
+									    <label for="titular_name" class="col-xs-12 col-sm-3 control-label">Nombre del Titular:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="titular_name"
+									            value="{{ form.titular_name }}"
+									            name="titular_name"
+									            ng-model="form.titular_name"
+									            ng-init="form.titular_name"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[titular_lastname], 'invalid' : !modalForm[titular_lastname].$valid && modalForm[titular_lastname].$touched}">
+									    <label for="titular_lastname" class="col-xs-12 col-sm-3 control-label">Apellidos del Titular:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="titular_lastname"
+									            value="{{ form.titular_lastname }}"
+									            name="titular_lastname"
+									            ng-model="form.titular_lastname"
+									            ng-init="form.titular_lastname"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[credit_card_type_id], 'invalid' : !modalForm[credit_card_type_id].$valid && modalForm[credit_card_type_id].$touched}">
+									    <label for="credit_card_type_id" class="col-xs-12 col-sm-3 control-label">Tipo de Tarjeta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.credit_card_type" 
+								                ng-model="form.credit_card_type_id"
+								                ng-init="form.credit_card_type_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							            	</select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[credit_card_brand_id], 'invalid' : !modalForm[credit_card_brand_id].$valid && modalForm[credit_card_brand_id].$touched}">
+									    <label for="credit_card_brand_id" class="col-xs-12 col-sm-3 control-label">Marca de Tarjeta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.credit_card_brand" 
+								                ng-model="form.credit_card_brand_id"
+								                ng-init="form.credit_card_brand_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							            	</select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[bank_name], 'invalid' : !modalForm[bank_name].$valid && modalForm[bank_name].$touched}">
+									    <label for="account_num" class="col-xs-12 col-sm-3 control-label">Banco de la tarjeta:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input 
+									            class="form-control"
+									            type="text"
+									            id="bank_name"
+									            value="{{ form.bank_name }}"
+									            name="bank_name"
+									            ng-model="form.bank_name"
+									            ng-init="form.bank_name"
+									            ng-required=1
+									            ng-disabled="viewprocess" 
+									            autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[credit_card_way_pay_id], 'invalid' : !modalForm[credit_card_way_pay_id].$valid && modalForm[credit_card_way_pay_id].$touched}">
+									    <label for="form_pay" class="col-xs-12 col-sm-3 control-label">Forma de Pago:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.form_pay" 
+								                ng-model="form.credit_card_way_pay_id"
+								                ng-init="form.credit_card_way_pay_id"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+							            	</select>
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[filefields], 'invalid' : !modalForm[filefields].$valid && modalForm[filefields].$touched}">
+									    <label for="filefields" class="col-xs-12 col-sm-3 control-label">Formulario Autorización:</label>
+									    <div class="col-xs-12 col-sm-6">
+									    	<input 
+									            class="form-control"
+									            type="file"
+									            id="filefields"
+									            name="filefields"
+									            file-model="filefields"
+									            ng-required="!form.uploaded_file"
+									            ng-disabled="viewprocess" 
+									            focus="{{$parent.$parent.$first && $first}}"
+									            autocomplete="off">
+									        <a ng-href="file/download/{{form.files.id}}?token={{ ntoken }}" target="_blank">
+								                {{form.files.name}}
+								            </a>
+									    </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+				    </form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" ng-click="checking=1;submit()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Enviar Respuesta</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

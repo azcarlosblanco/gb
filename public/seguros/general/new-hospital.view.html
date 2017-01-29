@@ -1,0 +1,62 @@
+<div class="modal-backdrop bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="fileModalLabel" ng-controller="NewHospitalCtrl">>
+	<div class="modal-dialog modal-lg" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-content wizard-form">
+		<div class="modal-header">
+                 <button type="button" class="close" ng-click="closeAddHospital()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="fileModalLabel">Hospital</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >CREAR HOSPITAL</span>
+						</h5>
+						<div class="container-fluid con-margin">	
+							<div class="row">
+								<div class="form-group" ng-class="{'highlight': focused[name], 'invalid' : !modalForm[name].$valid && modalForm[name].$touched}">
+								    <label for="name" class="col-xs-12 col-sm-3 control-label">Nombre:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input  
+								            class="form-control"
+								            id="name"
+								            value="{{form.name}}"
+								            name="name"
+								            ng-model="form.name"
+								            ng-init="form.name"
+								            placeholder="Nombre"
+								            ng-required=1 
+								            autocomplete="off">
+					
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[address], 'invalid' : !modalForm[address].$valid && modalForm[address].$touched}">
+								    <label for="address" class="col-xs-12 col-sm-3 control-label">Dirección:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input 
+								            class="form-control"		            
+								            id="address"
+								            value="{{form.address}}"
+								            name="address"
+								            ng-model="form.address"
+								            ng-init="form.address"
+								            placeholder="Dirección"
+								            ng-required=1 
+								            autocomplete="off">
+								       
+								    </div>
+							    </div>
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submit()"  value="Enviar Hospital" class="btn btn-primary pull-right" >
+				</div>
+            </div>
+		</div>
+	</div>
+</div>

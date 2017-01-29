@@ -1,0 +1,65 @@
+<style>
+	#cancel_procedure_reason{
+
+	}
+	#cancel-procedure-warning{
+		margin-top:10px;
+	}
+	#cancel-procedure-warning > div{
+		padding: 10px;
+    	text-align: justify;
+	}
+</style>
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-sm in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">Eliminar Trámite # {{id}}</h4>
+				</div>
+				<div class="modal-body">
+					<form name="modalForm">
+						<div class="container-fluid con-margin">
+							<div class="row">
+								<div class="col-sm-12" id="cancel-procedure-reason">
+									<h4>Razón por la que desea cancelar el Trámite:</h4>
+									<div>
+										<textarea 
+					            			style="display:block; border: 1px solid #ddd;"
+					            			class="col-xs-12" 
+								            type="text"
+								            id="reason"
+								            name="reason"
+								            ng-model="reason"
+								            ng-init="reason"
+								            ng-required="1" 
+								            autocomplete="off"
+								            rows="3">
+								        </textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12" id="cancel-procedure-warning" >
+									<div class="alert-danger">
+										{{message}}
+									</div>
+								</div>
+					  		</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" ng-click="acceptCancel=1;cancelProcedure()" ng-disabled="modalForm.$invalid || acceptCancel==true" class="btn btn-primary pull-right">
+                        <span ng-show="!acceptCancel">Aceptar</span>
+                        <btn-spinner ng-show="acceptCancel"></btn-spinner>
+                    </button>
+					<a ui-sref="^" class="btn btn-danger pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

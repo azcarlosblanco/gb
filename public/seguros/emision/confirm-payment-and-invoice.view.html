@@ -1,0 +1,102 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Emisiones - Registrar Método de Pago
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-1">
+							<h5>
+								<span>DATOS PÓLIZA</span>
+							</h5>
+							<div class="container-fluid con-margin">
+								<div class="row">
+									<div class="form-group">
+										<label for="cname" class="col-xs-12 col-sm-3 control-label"># Póliza:</label>
+										<div class="col-xs-12 col-sm-9 col-md-6">
+											<span class="form-control">{{ catalog.policy_number }}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="cname" class="col-xs-12 col-sm-3 control-label">Nombre del Cliente:</label>
+										<div class="col-xs-12 col-sm-9 col-md-6">
+											<span class="form-control">{{ catalog.client_name }}</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="clastname" class="col-xs-12 col-sm-3 control-label">Valor Primera Cuota :</label>
+										<div class="col-xs-12 col-sm-9 col-md-6">
+											<span class="form-control">{{ catalog.total_quote | currency:$:2 }}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-section" id="section-2">
+							<h5>
+								<span>MÉTODO DE PAGO</span>
+							</h5>
+							<div class="container-fluid con-margin">
+								<div class="form-group" ng-class="{'highlight': focused[agente_id], 'invalid' : !modalForm[agente_id].$valid && modalForm[agente_id].$touched}">
+									<label for="agente_id" class="col-xs-12 col-sm-3 control-label">Método de Pago:</label>
+									<div class="col-xs-12 col-sm-9 col-md-6">
+										<select class="form-control" ng-options="key as (value) for (key, value) in catalog.payment_method" ng-model="form.payment_method" ng-init="form.payment_method" required ng-disabled="1" autofocus autocomplete="off">
+							            </select>
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'highlight': focused[payment_date], 'invalid' : !modalForm[payment_date].$valid && modalForm[payment_date].$touched}">
+									<label for="payment_date" class="col-xs-12 col-sm-3 control-label">Fecha de Pago:</label>
+									<div class="col-xs-12 col-sm-9 col-md-6">
+										<input class="form-control" type="date" id="payment_date" name="payment_date" ng-init="form.payment_date = (form.payment_date | parseDate)" ng-model="form.payment_date" placeholder="dd//mm/yyyy" ng-required=1 ng-disabled="1" autocomplete="off">
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'highlight': focused[value], 'invalid' : !modalForm[value].$valid && modalForm[value].$touched}">
+									<label for="value" class="col-xs-12 col-sm-3 control-label">Valor:</label>
+									<div class="col-xs-12 col-sm-9 col-md-6">
+										<input class="form-control" type="number" min="0.00" id="value" value="{{ form.value }}" name="value" ng-model="form.value" ng-init="form.value" ng-required=1 ng-disabled="1" autocomplete="off">
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'highlight': focused[confirm_payment_file], 'invalid' : !modalForm[confirm_payment_file].$valid && modalForm[confirm_payment_file].$touched}">
+									<label for="filefields" class="col-xs-12 col-sm-3 control-label">Documento Comprobación de Pago:</label>
+									<div class="col-xs-12 col-sm-9 col-md-6">
+										<input class="form-control" type="file" id="confirm_payment_file" name="confirm_payment_file" file-model="confirm_payment_file" ng-required="1" focus="{{$parent.$parent.$first && $first}}" autocomplete="off">
+										<a ng-href="file/download/{{form.files.id}}?token={{ ntoken }}" target="_blank">
+							                {{form.files.name}}
+							            </a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-section" id="section-3">
+							<h5>
+								<span>FACTURA</span>
+							</h5>
+							<div class="container-fluid con-margin">
+								<div class="form-group" ng-class="{'highlight': focused[invoice_file], 'invalid' : !modalForm[invoice_file].$valid && modalForm[invoice_file].$touched}">
+									<label for="filefields" class="col-xs-12 col-sm-3 control-label">Factura del Cliente:</label>
+									<div class="col-xs-12 col-sm-9 col-md-6">
+										<input class="form-control" type="file" id="invoice_file" name="invoice_file" file-model="invoice_file" ng-required="1" focus="{{$parent.$parent.$first && $first}}" autocomplete="off">
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" ng-click="checking=true;submit()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Enviar Respuesta</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+					<a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

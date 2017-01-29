@@ -1,0 +1,15 @@
+{
+    "name": "Observation",
+    "alias": "observation",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Observation\\Providers\\ObservationServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

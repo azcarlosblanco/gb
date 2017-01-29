@@ -1,0 +1,263 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-xlg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<div></div>
+					<div class="col-md-6" style="margin-left: 30px">
+                        <div>
+                            <h4 style="font-size: 16px;">Reclamo #: {{claim.id}}</h4>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 16px;">Poliza #: {{claim.policy_num}}</h4>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 16px;">Afiliado: {{claim.affiliate_name}}</h4>
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-body">
+					<div class="decor-title">
+                        <h5><span>Pagos Hechos</span></h5>
+                        <div class="container-fluid con-margin">
+                        	<div class="row">
+                        		<div class="col-md-2">
+                        			<header>
+                        				<h5 class="text-center">Factura N.</h5>
+                        			</header>
+                        		</div>
+                                <div class="col-md-10">
+                            		<div class="col-md-2">
+                            			<header>
+                            				<h5 class="text-center">
+                                                Monto Pagado
+                                            </h5>
+                            			</header>
+                            		</div>
+                            		<div class="col-md-2">
+                            			<header>
+                            				<h5 class="text-center">
+                                                Beneficiario
+                                            </h5>
+                            			</header>
+                            		</div>
+                                    <div class="col-md-3">
+                                        <header>
+                                            <h5 class="text-center">
+                                                Fecha de Pago
+                                            </h5>
+                                        </header>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <header>
+                                            <h5 class="text-center">
+                                                Forma de Pago
+                                            </h5>
+                                        </header>
+                                    </div>
+                                </div>
+                        	</div>
+							<form ng-repeat="refund in refunds" name="pending-form-{{$index}}" class="form-horizontal clearfix" ng-submit="submitRefundChanges(refund)" >
+                                <div class="row row-edit-hover pos-rel">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <input class="form-control" type="text" ng-model="refund.invoice" placeholder="" required="" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" ng-model="refund.amount" required="required"
+                                                        disabled="disabled">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <select class="form-control" type="text" 
+                                                        ng-model="refund.beneficiary" 
+                                                        placeholder="" 
+                                                        required="required" 
+                                                        ng-options="key as (value) for (key, value) in beneficiaries"
+                                                        disabled="disabled">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <input class="form-control text-right" 
+                                                         type="date"
+                                                         ng-model="refund.date" 
+                                                         required="required"
+                                                         disabled="disabled">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <select class="form-control" type="text" 
+                                                        ng-model="refund.method" 
+                                                        placeholder="" 
+                                                        required="required" 
+                                                        ng-options="key as (value) for (key, value) in pmethods"
+                                                        disabled="disabled">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <button class="btn btn-danger btn-block" type="button" ng-click="deleteRefund(refund)">
+                                                     <i class="glyphicon glyphicon glyphicon-remove"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+   							</form> 
+                        </div>
+       				</div>
+       				<form name="addRefundForm" class="form-horizontal clearfix" ng-submit="">
+                        <div class="form-section" id="section-0">
+                            <h5><span>Descripción Pago</span></h5>
+                            <div class="container-fluid con-margin">
+                            	<div class="row">
+                            		<div class="col-md-2">
+                            			<header>
+                            				<h5 class="text-center">Factura N.</h5>
+                            			</header>
+                            		</div>
+                                    <div class="col-md-10">
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Monto Por Pagar</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Monto a Pagar</h5>
+                                			</header>
+                                		</div>
+                                		<div class="col-md-2">
+                                			<header>
+                                				<h5 class="text-center">Beneficiaro</h5>
+                                			</header>
+                                		</div>
+                                        <div class="col-md-3">
+                                            <header>
+                                                <h5 class="text-center">Fecha de Pago</h5>
+                                            </header>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <header>
+                                                <h5 class="text-center">Método Pago</h5>
+                                            </header>
+                                        </div>
+                                    </div> 
+                            	</div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12" style="margin:auto">
+                                                <select class="form-control" type="text" id="number-invoice" name="number-invoice" ng-model="form.settlement" placeholder="" required="required" ng-options="settlement as settlement.description for settlement in settlements track by settlement.id" ng-change="selectInvoice(form.settlement)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" ng-model="amountByPay"
+                                                        ng-disabled="1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input class="form-control text-right" type="number" min="0.00" max="{{amountByPay}}" ng-model="form.amount" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <select class="form-control" type="text" 
+                                                        ng-model="form.beneficiary" 
+                                                        placeholder="" 
+                                                        required="required" 
+                                                        ng-options="key as (value) for (key, value) in beneficiaries">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <input class="form-control text-right" 
+                                                        type="date"
+                                                        ng-model="form.date" 
+                                                        required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                 <div class="col-xs-12 btn-group">
+                                                    <div class="input-group" style="margin:auto">
+                                                        <select class="form-control" type="text" 
+                                                        ng-model="form.method" 
+                                                        placeholder="" 
+                                                        required="required" 
+                                                        ng-options="key as (value) for (key, value) in pmethods">
+                                                        <option value="">{{'Seleccionar'}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+       					</div>
+						<div class="modal-footer">
+							<input type="submit" value="Guardar y crear uno nuevo" class="btn btn-primary pull-right" ng-click="addRefund()" ng-disabled="addRefundForm.$invalid">
+						</div>
+       				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

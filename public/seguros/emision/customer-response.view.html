@@ -1,0 +1,85 @@
+<style type="text/css">
+	.color-rojo:{
+		color: red;
+	}
+</style>
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Emisiones - Respuesta del Cliente
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-1">
+							<h5 >
+								<span>RESPUESTA DEL CLIENTE</span>
+							</h5>
+							<div class="container-fluid con-margin">	
+								<div class="row">
+								    <div class="form-group" ng-class="{'highlight': focused[response], 'invalid' : !modalForm[response].$valid && modalForm[response].$touched}">
+									    <label for="response" class="col-xs-12 col-sm-3 control-label">El cliente desea la póliza:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<select
+								                class="form-control"
+								                ng-options="key as (value) for (key, value) in catalog.response" 
+								                ng-model="form.response"
+								                ng-init="form.response"
+								                name="response"
+								                required
+								                ng-disabled="viewprocess"
+								                autofocus autocomplete="off">
+								            </select>
+									    </div>
+								    </div>
+						        </div>
+							</div>
+						</div>
+				    </form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" ng-click="checking=1;showMessage()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Enviar Respuesta</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<<!--modal for confirmation -->
+<div class="modal-backdrop bs-example-modal" ng-show="confirmSendApp" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+    <div class="modal-dialog modal" ng-style="{'display':confirmSendApp && 'block'}">
+        <div class="modal-content wizard-form">
+            <div class="modal-header">
+               <button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myLargeModalLabel">Confirmar Envio de Solicitud</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid con-margin">
+                    <div class="row">
+                        <header class="col-xs-12 text-center">
+                        <br />
+                            <h4>Confirma que el cliente {{ catalog.response[form.response] | uppercase }} desea la póliza.<br>
+                            Esta acción no puede ser revertida.
+                            </h4>
+                        </header>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" ng-click="confirmSendApp = false; checking = false">Cancelar</button>
+                <button class="btn btn-success" type="button" ng-click="submit()">Enviar Respuesta</button>
+            </div>
+        </div>
+    </div>
+</div>

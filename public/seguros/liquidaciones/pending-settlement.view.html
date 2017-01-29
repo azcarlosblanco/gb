@@ -1,0 +1,852 @@
+<style type="text/css" scoped>
+	.settlement-saved{
+		background-color: #d9edf7; 
+	}
+	.settlement-dirty{
+		background-color: #f0ad4e; 
+	}
+	.settlement-error{
+		background-color: #f2dede; 
+	}
+	.span-form{
+		padding-top: #7px; 
+	}
+	.settlement-ticket{
+		border-color: #d43f3a;
+	}
+	.pale-red{
+		background-color: #ebccd1;
+	}
+</style>
+<div >
+	<div style="width:100%">
+		<div class="nova-content modal-content">
+			<div class="nova-header modal-header">
+				<h4 >Liquidaciones - Tramites Pendientes</h4>
+			</div>
+			<div class="nova-body modal-body">
+				<form name="claimForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="generalInfo">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+								    	<label for="affiliate" class="col-sm-4 control-label">
+								    		Nombre Reclamante:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{claim.affiliate_name}}</span>
+								    	</div>
+								  	</div>
+								  	<div class="form-group">
+								    	<label for="affiliate" class="col-sm-4 control-label">
+								    		# Poliza:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{claim.policy_num}}</span>
+								    	</div>
+								  	</div>
+								  	<div class="form-group">
+								    	<label for="client" class="col-sm-4 control-label">
+								    		Afiliado Principal:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{claim.customer_name}}</span>
+								    	</div>
+								  	</div>
+								  	<div class="form-group">
+								    	<label for="effective_date" class="col-sm-4 control-label">
+								    		Año Cobertura:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{claim.effective_date}}</span>
+								    	</div>
+								  	</div>
+								</div>
+								<div class="col-sm-6" style="vertical-align:top">
+									<div class="form-group">
+								    	<label for="affiliate" class="col-sm-4 control-label">
+								    		# Reclamo Interno:
+								    	</label>
+								    	<div class="col-sm-6">
+								    		<span class="form-control">{{claim.id}}</span>
+								    	</div>
+								    </div>
+									<div class="form-group" ng-class="{'highlight': focused[claim_date], 'invalid' : !claimForm[claim_date].$valid && claimForm[claim_date].$touched}">
+								    	<label for="claim_date" class="col-sm-4 control-label">
+								    		Fecha Envió Liquidación:
+								    	</label>
+								    	<div class="col-sm-8">
+								    		<span class="form-control">{{claim.claim_date}}</span>
+								    	</div>
+								  	</div>
+								  	<div class="form-group">
+								    	<label for="affiliate" class="col-sm-4 control-label">
+								    		Plan:
+								    	</label>
+								    	<div class="col-sm-8">
+								    		<span class="form-control">{{claim.plan}}</span>
+								    	</div>
+								  	</div>
+								  	<div class="form-group">
+								    	<label for="affiliate" class="col-sm-4 control-label">
+								    		Agente:
+								    	</label>
+								    	<div class="col-sm-8">
+								    		<span class="form-control">{{claim.agent_name}}</span>
+								    	</div>
+								  	</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="showClaimFiles=true">
+										<i class="glyphicon glyphicon-file"></i> 
+										<span>Ver Archivos del Reclamo</span>
+									</button>
+								</div>
+							</div>
+					  	</div>
+					</div>
+					<div style="margin:5px 10px">
+						<div class="form-section" id="section-1" style="padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;">
+	    							   <span>Facturas</span>
+	    					</h5>
+							<div class="container-fluid con-margin">
+								<div class="row">
+									<table class="table table-bordered table-notAssc">
+								    	<thead>
+								    		<th># Reclamo</th>
+								    		<th># Factura</th>
+								    		<th>F. Servicio</th>
+								    		<th>Fuera USA</th>
+								    		<th>Valor </th>
+								    		<th>Valor (USD)</th>
+								    		<th>$ No Cubierto</th>
+								    		<th>$ Descuento</th>
+								    		<th>$ Deducible</th>
+								    		<th>$ Copago</th>
+								    		<th>$ Pagado</th>
+								    		<th>$ Deducible Cal</th>
+								    		<th>$ Pagado Cal</th>
+								    		<th ></th>
+								    	</thead>
+								    	<tbody style="font-size:10px">
+								    		<tr ng-repeat="invoice in invoices" 
+								    			ng-class="{ 'settlement-error': invoice.error_deduct,
+								    						'settlement-dirty': invoice.dirty,
+								    						'settlement-saved': invoice.saved,
+								    						'settlement-ticket': invoice.tickets.length>0
+								    						}"
+								    			>
+								    			<td style="padding:5px">
+								    				<input 
+								    					style="width:100px" 
+								    					type="text"
+								    					ng-model="invoice.settlement.claim_num"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.claim_num"
+								    					id="claim_num-{{$index}}"
+								    					name="claim_num-{{$index}}"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<a ng-href="file/view/{{invoice.file_entry_id}}?token={{ ntoken}}" target="_blank">
+								    					{{invoice.description}}
+								    				</a>
+								    			</td>
+								    			<td style="padding:5px">
+								    				{{invoice.date_invoice}}
+								    			</td>
+								    			<td style="padding:5px">
+								    				{{invoice.usa==1 ? 'No':'Si'}}
+								    			</td>
+								    			<td style="padding:5px">
+								    				{{currencies[invoice.currency_id]}} {{invoice.amount}}
+								    			</td>
+								    			<td style="padding:5px">
+								    				<input ng-if="currencies[invoice.currency_id]!='USD'"
+								    					style="width:100px" 
+								    					type="number"
+								    					min="0.00"
+								    					ng-model="invoice.settlement.amount"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.amount"
+								    					id="amount-{{$index}}"
+								    					name="amount-{{$index}}"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    				<span ng-if="currencies[invoice.currency_id]=='USD'">
+								    					{{invoice.amount}}
+								    				</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<input 
+								    					style="width:100px" 
+								    					type="number"
+								    					min="0.00"
+								    					max="{{invoice.amount}}"
+								    					ng-model="invoice.settlement.uncovered"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.uncovered"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<input 
+								    					style="width:100px" 
+								    					type="number"
+								    					min="0.00"
+								    					max="{{invoice.amount}}"
+								    					ng-model="invoice.settlement.discount"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.discount"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<input 
+								    					style="width:100px" 
+								    					type="number"
+								    					min="0.00"
+								    					max="{{invoice.amount}}"
+								    					ng-model="invoice.settlement.deduct"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.deduct"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<input 
+								    					style="width:100px" 
+								    					type="number"
+								    					min="0.00"
+								    					max="{{invoice.amount}}"
+								    					ng-model="invoice.settlement.coaseguro"
+								    					ng-required="1"
+								    					ng-init="invoice.settlement.coaseguro"
+								    					ng-change="calculateTotal(invoice)"
+								    					>
+								    			</td>
+								    			<td>
+								    				<strong>{{  invoice.settlement.total | currency:$:2 }}</strong>
+								    			</td>
+								    			<td>
+								    				{{ invoice.settlement.expected_deduct | currency:$:2 }}
+								    			</td>
+								    			<td>
+								    				<strong> {{invoice.settlement.expected_refund | currency:$:2}} </strong>
+								    			</td>
+								    			<td>
+								    				<div class="btns">
+									    				<button class="btn btn-primary btn-sm" ng-click="submitSettlement(invoice)" >
+												            <i class='glyphicon glyphicon-ok'></i>
+												        </button>
+												        <div class="btn-group" uib-dropdown is-open="status.isopen">
+													     	<button id="single-button" type="button" class="btn btn-info btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+													        <i class="glyphicon glyphicon-cog"></i><span class="caret"></span>
+													      	</button>
+													      	<ul style="left: -118px !important;" class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button"
+													      	>
+													        	<li role="menuitem">
+											<a ng-click="registerRefund(invoice)" 
+												ng-disabled="invoice.saved==0 || !invoice.settlement.total>0">
+												<i class='glyphicon glyphicon-usd'></i>Reembolso
+											</a>
+													        	</li>
+													        	<li role="menuitem">
+											<a ng-class="{'pale-red': invoice.tickets.length>0}" ng-click="createTicket(invoice)"><i class='glyphicon glyphicon-flag'></i>Tickets</a>
+													        	</li>
+													        	<li role="menuitem">
+											<a ng-click="addNotes(invoice)"><i class='glyphicon glyphicon-list-alt'></i>Comentarios</a>
+													        	</li>
+													      	</ul>
+													    </div>
+											        </div>
+								    			</td>
+								    		</tr>
+								    	</tbody>
+								    </table>
+								</div>
+								<div class="row">
+									<div class="col-sm-2">
+										<button class="btn btn-md btn-success" data-toggle="modal" data-target="modal-backdrop" ng-click="openUploadFiles()">
+											<i class="glyphicon glyphicon-file"></i> 
+											<span>Subir Archivos</span>
+										</button>
+									</div>
+									<div class="col-sm-2">
+										<a class="btn btn-md btn-default" ng-click="imprimirCarta(url_print_letter);$event.preventDefault()" target="_blank">
+											<i class="glyphicon glyphicon-print"></i> 
+											<span>Imprimir Carta Liquidación</span>
+										</a>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-sm-6">
+										<table class="table table-bordered">
+											<thead>
+												<th></th>
+												<th>FUERA USA</th>
+												<th>USA</th>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Individual</td>
+													<td>
+														<span class="str-truncated">
+														{{ aff_deduct.local | currency:$:2 }} / {{ policy_deduct.local | currency:$:2 }}
+														</span>
+													</td>
+													<td>
+														<span class="str-truncated">
+														{{ aff_deduct.usa | currency:$:2 }} / {{ policy_deduct.usa | currency:$:2 }}
+														</span>
+													</td>
+												</tr>
+												<tr ng-if="deduct_familiar">
+													<td>Familiar</td>
+													<td>
+														<span class="str-truncated"> 
+														{{ global_deduct.local | currency:$:2 }} / {{ policy_deduct.local * 2 | currency:$:2 }} 
+														</span>
+													</td>
+													<td>
+														<span class="str-truncated"> 
+														{{ global_deduct.usa | currency:$:2 }} / {{ policy_deduct.usa * 2 | currency:$:2 }} 
+														</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--end invoices section-->
+						<div style="margin:5px 10px">
+						 	<div class="form-section" id="section-3" style="padding:5px; margin:5px 0px">
+								<h5 style="color: #61a8cf; 
+	    							   margin-bottom: 10px;">
+	    							<span>Forma de Pago</span>
+	    						</h5>
+								<div class="container-fluid con-margin">
+									<table class="table table-bordered table-notAssc">
+								    	<thead>
+								    		<th># Factura</th>
+								    		<th>Ref Number</th>
+								    		<th>Monto Pagado</th>
+								    		<th>Metodo de Pago</th>
+								    		<th>Fecha de Pago</th>
+								    		<th>A proveedor</th>
+								    		<th></th>
+							         	</thead>
+								    	<tbody style="font-size:10px">
+								    		<tr ng-repeat="refund in refunds"
+								    			ng-class="{'pale-red':refund.deleted_at}">
+								    			<td style="padding:5px !important">
+								    				<span>{{refund.document}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				<span>{{refund.reference_number}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				<span>{{refund.value}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				<span>{{payments_method[refund.payment_method_id]}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				<span>{{refund.pay_date}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				<span>{{refund.to_supplier==1?'Sí':'No'}}</span>
+								    			</td>
+								    			<td style="padding:5px !important">
+								    				 <button ng-if="!refund.deleted_at" class="btn btn-sm btn-danger"
+											        	ng-click="deleteRefund(refund)" >
+											            <i class='glyphicon glyphicon-trash'></i>
+											        </button>
+								    			</td>
+								    		</tr>
+								    	</tbody>
+								    </table>
+							 	</div>
+					      	</div>
+					    </div>
+					    <!--end refunds sections-->
+					</div>
+				</form>
+			</div>
+			<div class="nova-footer modal-footer">
+				<div class="col-offset-md-6 col-md-12">
+                    <a ui-sref="root.seguros.reclamos-liquidaciones" class="btn btn-danger">Regresar</a>
+                    <button style="margin: 0px 5px" type="submit" ng-click="confirmFinishSettelement()" class="btn btn-primary pull-right">
+                        <span>Finalizar Liquidación</span>
+                    </button>
+            	</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--modal to register a refund in a settlemetn-->
+<div class="modal-backdrop bs-example-modal" ng-show="showRegisterRefund" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog lg-modal" ng-style="{'display':showRegisterRefund && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closeRegisterRefund()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Pago de la Liquidación</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="paymentForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="section-1">
+						<div class="container-fluid">
+							<div class="row">
+								<input type="hidden" ng-model="invoice.id">
+								<div class="form-group">
+							    	<label for="category" class="col-sm-3 control-label">
+							    		Tipo Beneficiaro:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id="beneficiary_type"
+							                ng-options="key as (value) for (key, value) in beneficiary_types" 
+							                ng-model="refund.beneficiary_type"
+							                ng-init="refund.beneficiary_type"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							  	</div>
+								<div class="form-group">
+							    	<label for="description" class="col-sm-3 control-label">
+							    		Beneficiaro:
+							    	</label>
+							    	<div class="col-sm-6">
+							            <span ng-if="refund.beneficiary_type=='0'">
+							            	{{claim.affiliate_name}}
+							            </span>
+							            <span ng-if="refund.beneficiary_type=='1'">
+							            	{{invoices[currentInvoiceIdx]['supplier_name']}}
+							            </span>
+							    	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="supplier" class="col-sm-3 control-label">
+							    		Monto:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		{{invoices[currentInvoiceIdx]['settlement']['total']}}
+							    	</div>
+							  	</div>
+							  	<div class="form-group" >
+							    	<label for="method" class="col-sm-3 control-label">
+							    		Método de Pago:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id="method"
+							                name="method"
+							                ng-options="key as (value) for (key, value) in payments_method" 
+							                ng-model="refund.method"
+							                ng-init="refund.method"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							  	</div>
+							  	<div class="form-group" >
+							    	<label for="reference_number" class="col-sm-3 control-label">
+							    		Número Referencia:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<input
+								            class="form-control"
+								            type="number"
+								            ng-model="refund.reference_number"
+								            ng-init="refund.reference_number"
+								            placeholder=""
+								            id="reference_number"
+								            name="reference_number"
+								            required
+								            autofocus autocomplete="off">
+							    	</div>
+							  	</div>
+							  	<div class="form-group" >
+							    	<label for="date" class="col-sm-3 control-label">
+							    		Fecha de Pago:
+							    	</label>
+							    	<div class="col-sm-6">
+							            <input
+							            class="form-control"
+							            type="date"
+							            ng-model="refund.date"
+							            ng-init="refund.date"
+							            name="date"
+							            id='date'
+							            placeholder=""
+							            required
+							            autofocus autocomplete="off">
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="closeRegisterRefund()">
+            			Cancelar
+            		</button>
+            		<button style="margin: 0px 5px" type="submit" ng-click="checking_refund=1;submitRegisterRefund(refund)" ng-disabled=" checking_refund==true" class="btn btn-success pull-right">
+                        <span ng-show="!checking_refund">Registrar Pago</span>
+                        <btn-spinner ng-show="checking_refund"></btn-spinner>
+                    </button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div><!--modal to register a refund in a settlement-->
+<!--modal to create ticket for the settlement-->
+<div class="modal-backdrop bs-example-modal" ng-show="showCreateTicket" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog lg-modal" ng-style="{'display':showCreateTicket && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closeCreateTicket()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Ticket para la Liquidación</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="ticketForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="section-1">
+						<div class="container-fluid">
+							<div class="row" ng-if="invoices[currentInvoiceIdx].tickets.length==0">
+								<input type="hidden" ng-model="invoice.id">
+								<div class="form-group">
+							    	<label for="category" class="col-sm-3 control-label">
+							    		Categorría:
+							    	</label>
+							    	<div class="col-sm-6">
+							    		<select
+							                class="form-control" 
+							                id=""
+							                ng-options="key as (value) for (key, value) in ticket_categories" 
+							                ng-model="ticket.category"
+							                ng-init="ticket.category"
+							                ng-required="1"
+							                ng-disabled="viewprocess"
+							                autofocus autocomplete="off">
+								        </select>
+							    	</div>
+							  	</div>
+							  	<div class="form-group" >
+							    	<label for="reference_number" class="col-sm-3 control-label">
+							    		Descripción:
+							    	</label>
+							    	<div class="col-sm-6">
+							    	<textarea 
+								            class="form-control"
+								            id="descripción"
+								            name="descripción"
+								            ng-model="ticket.description"
+								            ng-init="ticket.description"
+								            placeholder="description"
+								            ng-required='1'
+								            rows="3"></textarea>
+							    	</div>
+							  	</div>
+							</div>
+							<div class="row" ng-if="invoices[currentInvoiceIdx].tickets.length>0">
+								<div ng-repeat="ticketObj in invoices[currentInvoiceIdx].tickets">
+									<div>
+										<a ui-sref="root.seguros.ticket.view({id:ticketObj.id})" target="_blank">
+											{{ticketObj.display_name}}
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<!--<button type="submit" ng-click="previewEmail()" 
+            		class="btn btn-info pull-left">
+                        <span><i class="glyphicon glyphicon-envelope"></i>Visualizar Correo</span>
+                    </button>-->
+            		<button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="closeCreateTicket()">
+            			Cancelar
+            		</button>
+            		<button style="margin: 0px 5px" type="submit" ng-if="invoices[currentInvoiceIdx].tickets.length==0"
+            		ng-click="checking_ticket=1;submitCreateTicket(ticket)" ng-disabled="ticketForm.$invalid || checking_ticket==true" class="btn btn-success pull-right">
+                        <span ng-show="!checking_ticket">Crear Ticket</span>
+                        <btn-spinner ng-show="checking_ticket"></btn-spinner>
+                    </button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div><!--en modal to create ticket for the settelementt-->
+<div class="nova-confirm-email">
+    <div ng-show="emailObject.showPreviewEmail" 
+        ng-include="'seguros/email/new-email.view.html'"></div>
+</div>
+<!--modal to show the files that was uploaded in the claim procedure-->
+<div class="modal-backdrop bs-example-modal" ng-show="showClaimFiles" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showClaimFiles && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="showClaimFiles=false" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Archivos del Reclamo</h4>
+			</div>
+			<div class="modal-body">
+			    <table class="table table-bordered table-condesed">
+			    	<thead>
+			    		<tr >
+				    		<th style="padding: 5px 5px !important;">Tipo</th>
+				    		<th style="padding: 5px 5px !important;">Descripción</th>
+				    		<th style="padding: 5px 5px !important;">Proveedor</th>
+				    		<th style="padding: 5px 5px !important;">Concepto</th>
+				    		<th style="padding: 5px 5px !important;">Fecha</th>
+				    		<th style="padding: 5px 5px !important;">Moneda</th>
+				    		<th style="padding: 5px 5px !important;">Valor</th>
+				    		<th style="padding: 5px 5px !important;">USA</th>
+			    		</tr>
+			    	</thead>
+			    	<tbody style="font-size:10px">
+			    		<tr ng-repeat="claimFile in claimFiles">
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{categories[claimFile.procedure_document_id]}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					<a ng-href="file/view/{{claimFile.file_entry_id}}?token={{ ntoken }}" target="_blank">
+			    						{{claimFile.description}}
+			    					</a>
+			    				</span>
+						    </td>
+			    			<td style="padding:5px"> 
+			    				<span>
+			    					{{claimFile.supplier_name}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{concepts[claimFile.concept]}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{claimFile.date_invoice}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{currencies[claimFile.currency_id]}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{claimFile.amount}}
+			    				</span>
+			    			</td>
+			    			<td style="padding:5px">
+			    				<span>
+			    					{{claimFile.usa==1?'Sí':'No'}}
+			    				</span>
+			    			</td>
+			    		</tr>
+			    	</tbody>
+			    </table>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button class="btn btn-danger" type="button" ng-click="closeViewClaimFiles()">
+            			Cerrar
+            		</button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div><!--en modal to show file uploaded in the claim procedure-->
+<!--Modal to aggregate notes to a invoice-->
+<div class="modal-backdrop bs-example-modal" ng-show="showAddNotes" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog lg-modal" ng-style="{'display':showAddNotes && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="showAddNotes=false" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Notas Liquidación</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="section-1">
+						<div class="container-fluid">
+							<div class="row">
+							  	<div class="form-group" >
+							    	<label for="reference_number" class="col-sm-12 control-label" style="text-align:left">
+							    		Los siguientes valores no son incluidos en la liquidación:
+							    	</label>
+							    	<div class="col-sm-12">
+							    	<textarea 
+								            class="form-control"
+								            id="notes"
+								            name="notes"
+								            ng-model="invoices[currentInvoiceIdx].settlement.notes"
+								            placeholder="valores"
+								            ng-required='1'
+								            rows="3"></textarea>
+							    	</div>
+							  	</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="showAddNotes=false;invoices[currentInvoiceIdx].notes=''">
+            			Cancelar
+            		</button>
+            		<button style="margin: 0px 5px" 
+            		type="submit" 
+            		ng-disabled="modalForm.$invalid"
+            		ng-click="saveAddNote()" class="btn btn-success pull-right">
+                        <span >Guardar</span>
+                    </button>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div><!--en modal to aggregate notes to an invoice-->
+<!--modal to upload files to an invoice -->
+<div class="modal-backdrop bs-example-modal" ng-show="showAddFile" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog lg-modal" ng-style="{'display':showAddFile && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="closeAddFile()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="fileModalLabel">Archivos Liquidación</h4>
+			</div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section" id="section-1">
+						<h5 >
+                            <span>DOCUMENTOS</span>
+                        </h5>
+                        <div class="container-fluid">
+							<div class="row" ng-repeat="ufile in settelementFiles">
+							  	<div class="form-group">
+							    	<div class="col-xs-3" style='display:inline;'>   
+							            <select
+							                class="form-control"
+							                ng-options="key as (value) for (key, value) in settelemetDocCategories" 
+							                ng-model="ufile.category"
+							                required
+							                autofocus autocomplete="off">
+							            </select>
+							        </div>
+							        <div class="col-xs-3" style='display:inline;'>
+							            <input
+							            class="form-control"
+							            type="text"
+							            ng-model="ufile.description"
+							            placeholder=""
+							            required
+							            autofocus autocomplete="off">
+							        </div>
+							        <button style="margin: 0 5px;" class="col-xs-1 btn btn-primary btn-sm" 
+							        style='display:inline;' type="file" ngf-select="registerFile($file, ufile)" accept="*/*"  >
+							            <i class='glyphicon glyphicon-upload'></i>
+							        </button>
+							        <button style="margin: 0 5px;" class="col-xs-1 btn btn-danger btn-sm" style='display:inline;' ng-click="deleteRegisterFile(ufile)">
+							            <i class='glyphicon glyphicon-remove'></i>
+							        </button>
+							        <div class="col-xs-3"> 
+							            <a ng-if="!ufile.file.error" ng-href="file/view/{{ufile.id}}?token={{ ntoken }}" target="_blank">
+							                <span class="str-truncated" style="max-width:100px">
+							                	{{ufile.name}}
+							                </span>
+							                <span ng-show="ufile.file.progress > 0" ng-bind="ufile.file.progress + '%'"></span>
+							            </a>
+							            <span class="str-truncated" style="max-width:100px" ng-if="ufile.file.error">{{ufile.name}}</span>
+							        </div>
+							    </div>
+						  	</div>
+							<div class="row">
+                                <div class="col-xs-12">
+                                    <a ng-click="addRegisterFile()" class="btn btn-sm btn-success">
+                                        <span class="glyphicon glyphicon-plus"></span> Agregar Archivo</a>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+            	<div class="col-offset-md-6 col-md-12">
+            		<button style="margin: 0px 5px" class="btn btn-danger" type="button" ng-click="showAddFile=false">
+            			Cancelar
+            		</button>
+            		<!--<button style="margin: 0px 5px" 
+            		type="submit" 
+            		ng-click="saveUploadFile()"
+            		ng-disabled="modalForm.$invalid" 
+            		class="btn btn-success pull-right">
+                        <span >Guardar</span>
+                    </button>-->
+            	</div>
+            </div>
+		</div>
+	</div>
+</div><!--end modal to aggregate files to an invoice-->
+<!--modal to display messsage to finsh settlement -->
+<div class="modal-backdrop bs-example-modal" ng-show="showconfirmFinishSettelemnt" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-md" ng-style="{'display':showconfirmFinishSettelemnt && 'block'}">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myLargeModalLabel">
+					Finalizar Liquidación
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid con-margin">
+					<div class="row">
+						<header class="col-xs-12 text-center">
+						<br />
+					    	<h4>{{finish_settlement.msg}}</h4>
+				  		</header>
+			  		</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+                <a ng-show="checking_finish_settelement==false" ng-click="checking_finish_settelement=0;showconfirmFinishSettelemnt=false" class="btn btn-danger">
+                	Regresar
+                </a>
+				<button style="margin: 0px 5px" ng-click="checking_finish_settelement=true;finishSettlement()" ng-disabled="checking_finish_settelement==true" class="btn btn-success pull-right">
+					<span ng-show="!checking_finish_settelement">Finalizar Liquidación</span>
+                    <btn-spinner ng-show="checking_finish_settelement"></btn-spinner>
+				</button>
+			</div>
+		</div>
+	</div>
+</div><!--end modal-->

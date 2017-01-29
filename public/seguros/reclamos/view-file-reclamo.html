@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col-xs-12">
+      	<div class="col-xs-2" style='display:inline;'>
+            <select
+            class="form-control"
+            ng-model="form[$index]['category']"
+            ng-init="form[$index]['category']"
+            ng-options="key as (value | titleCase) for (key, value) in categories"
+            required
+            autofocus autocomplete="off"
+            ng-readonly="1">
+            </select>
+        </div>
+        <div class="col-xs-2" style='display:inline;'>
+            <input
+            class="form-control"
+            type="text"
+            ng-model="form[$index]['description']"
+            ng-init="form[$index]['description']"
+            placeholder="# Factura | # Orden | Resultado"
+            required
+            autofocus autocomplete="off"
+            ng-readonly="1">
+        </div>
+        <div class="col-xs-1" >
+            <select ng-if="cat_names[form[$index]['category']]=='claim_invoice'"
+            class="form-control"
+            ng-model="form[$index]['currency']"
+            ng-init="form[$index]['currency']"
+            ng-options="key as (value) for (key, value) in currency"
+            required
+            autofocus autocomplete="off">
+            </select>
+        </div>
+        <div class="col-xs-2">
+            <input ng-if="cat_names[form[$index]['category']]=='claim_invoice'"
+            class="form-control"
+            type="number" 
+            min="0.00"
+            style="text-align:right"
+            ng-model="form[$index]['amount']"
+            ng-init="form[$index]['amount']"
+            placeholder="1.00"
+            required
+            autofocus autocomplete="off">
+        </div>
+        <input type="hidden" ng-model=form[$index]['ts']>
+        <input type="hidden" ng-model=form[$index]['fid']>
+        <div ng-switch on="form[$index]['status']" class="col-xs-2">
+        	<div ng-switch-when="1"> <!-- Finished -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:green' class='glyphicon glyphicon-ok-sign'></i></span>
+            </div>
+            <div ng-switch-when="2"> <!-- Failed -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:red' class='glyphicon glyphicon-remove-sign'></i></span>
+                <button class="col-xs-5 btn btn-primary" type="file" ngf-select="registerFile($file, uregister)" accept="*/*">
+                    <i class='glyphicon glyphicon-upload'></i>
+                </button>
+            </div>
+            <div ng-switch-default> <!-- Uploading -->
+                <span class="col-xs-5"><i style='font-size: 15px; color:green' class='glyphicon glyphicon-time'></i></span>
+            </div>
+		</div>
+        <div class="col-xs-3">
+            <div style="overflow:hidden;">{{form[$index]['name']}}</div>
+        </div>
+	</div> 
+</div>
+<br>

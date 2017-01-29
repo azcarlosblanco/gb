@@ -1,0 +1,15 @@
+{
+    "name": "Renovation",
+    "alias": "renovation",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Renovation\\Providers\\RenovationServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

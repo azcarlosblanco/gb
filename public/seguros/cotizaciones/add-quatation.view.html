@@ -1,0 +1,53 @@
+
+								
+													<br>	
+												 <div class="form-group ">
+
+												    <label class="col-xs-2 control-label">Propietario:</label>
+												   <div class="col-xs-2">
+												 		<select ng-if="$index==0"
+											                class="form-control"
+											                ng-options="key as (value) for (key, value) in aroletitular" 
+											                ng-model="form.affiliates[$index].role"
+											                ng-init="form.affiliates[$index].role"
+											                required
+											                ng-disabled="1"
+											                autofocus autocomplete="off">
+										        		</select>
+										        		<select ng-if="$index!=0"
+											                class="form-control"
+											                ng-options="key as (value) for (key, value) in arole" 
+											                ng-model="form.affiliates[$index].role"
+											                ng-init="form.affiliates[$index].role"
+											                required
+											                autofocus autocomplete="off">
+										        		</select>
+													</div>
+												  </div>
+												  		<div class="form-group">
+															<label for="" class="col-xs-1 control-label">Edad:</label>
+															<div class="col-xs-2">
+														    	<input class="form-control" type="NUMBER" id="XS" ng-model=form.affiliates[$index].age>
+												  			</div>
+												 		 </div>
+												  <div class="form-group">
+												    <label for="" class="col-xs-1 control-label">Sexo:</label>
+												    <div class="col-xs-2">
+												    	<select
+											                class="form-control"
+											                ng-options="key as (value) for (key, value) in gender" 
+											                ng-model="form.affiliates[$index].gender"
+											                ng-init="form.affiliates[$index].gender"
+											                required
+											                ng-disabled="viewprocess"
+											                autofocus autocomplete="off">
+										        		</select>
+												   	</div>
+												  </div>
+		           									<a ng-if="$index==0" ng-click="addQuotation()" class="col-xs-1 btn btn-sm btn-success">
+                                            			<span class="glyphicon glyphicon-plus"></span></a>
+                                            		</a>
+                                            		<a ng-if="$index!=0" ng-click="deleteQuotation(affiliate)" class="col-xs-1 btn btn-sm btn-danger">
+                                            			<span class="glyphicon glyphicon-remove"></span></a>
+                                            		</a>
+                                            		<br>	

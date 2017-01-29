@@ -1,0 +1,12 @@
+	<li class="sidebar-head">{{section.label | uppercase}}</li>
+	<li>
+		<ul class="accordion">
+
+		    <li id="recep" class="files" ng-repeat="group in section.groups">
+		    	<a ui-sref="{{group.url}}" slide-toggle="#row_{{$parent.$index}}_{{$index}}"><span class="{{group.icon}}" aria-hidden="true"></span>{{group.label}} <span ng-show="group.notifications" class="label label-success label-as-badge pull-right">{{group.notifications}}</span></a>
+			    <ul id="row_{{$parent.$index}}_{{$index}}" class="slideable sub-menu">
+	        		<li ng-repeat="link in group.links"><a ui-sref="{{link.url}}">{{link.label}} <span ng-show="link.notifications" class="label label-success label-as-badge pull-right">{{link.notifications}}</span></a></li>
+			    </ul>
+		    </li>
+		</ul>
+	</li>

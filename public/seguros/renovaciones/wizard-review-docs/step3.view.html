@@ -1,0 +1,58 @@
+<div class="modal-body">
+    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+		<div class="form-section">
+			<h5 >
+				<span>Resumen</span>
+			</h5>
+			<div class="container-fluid con-margin">	
+				<div ng-repeat="affass in resume track by affass.id" >
+					<div style="border:solid 1px;" class='row'>
+						<table style="border:solid 1px;width:100%">
+							<tr style="width:100%">
+								<td colspan="4" style="border:solid 1px">
+									Afiliado: {{ affass.aff_name }}
+								</td>
+							</tr>
+							<tr style="width:100%">
+								<td style="width:25%;border:solid 1px">
+									Categoria   
+								</td>
+								<td style="width:25%;border:solid 1px">
+									Descripción  
+								</td>
+								<td style="width:25%;border:solid 1px">
+									Proveedor  
+								</td>
+								<td style="width:25%;border:solid 1px">
+									Valor Factura
+								</td>
+							</tr>
+							<tr style="width:100%"
+								ng-repeat="file in affass.files track by file.id">
+								<td style="width:25%;border:solid 1px">
+									{{ file.category }}   
+								</td>
+								<td style="width:25%;border:solid 1px">
+									{{ file.description }}   
+								</td>
+								<td style="width:25%;border:solid 1px">
+									{{ file.supplier }}  
+								</td>
+								<td style="width:25%;border:solid 1px">
+									{{ file.value }}
+								</td>
+							</tr>
+						</table>
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+    </form>
+</div>
+<div class="modal-footer">
+	<a ng-click="next()" class="btn btn-primary pull-right">
+    Continuar <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </a>
+    <a ng-click="previous()" class="btn btn-link pull-right">Atrás</a>
+</div>

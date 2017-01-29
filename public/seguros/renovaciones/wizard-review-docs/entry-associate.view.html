@@ -1,0 +1,46 @@
+<div class="col-xs-4" style='display:inline;'>
+	<div class="col-xs-2" style='display:inline;'>
+   		<select
+            class="form-control"
+            ng-options="affiliate.id as affiliate.name for affiliate in affiliates"
+            ng-model="file[$index]['affiliate']"
+            ng-init="file[$index]['affiliate']"
+            required
+            autofocus autocomplete="off">
+        </select>
+   	</div>
+   	<div class="col-xs-4" style='display:inline;'>
+    	<input
+	        class="form-control"
+	        type="text"
+	        ng-model="file[$index]['invoice_date']"
+	        ng-init="file[$index]['invoice_date']"
+	        required
+	        placeholder="mm/dd/aaaa"
+	        autofocus autocomplete="off">
+	   	</div>
+   	<div class="col-xs-3" style='display:inline;'>
+       	<input
+            class="form-control"
+            type="text"
+            ng-model="file[$index]['invoice_concept']"
+            ng-init="file[$index]['invoice_concept']"
+            required
+            placeholder="Concept"
+            autofocus autocomplete="off">
+    </div>
+    <div class="col-xs-3" style='display:inline;'>
+        <input
+            class="form-control"
+            type="text"
+            ng-model="file[$index]['invoice_value']"
+            ng-init="file[$index]['invoice_value']"
+            required
+            placeholder="$"
+            autofocus autocomplete="off">
+    </div>
+	<button class="col-xs-2" style='display:inline;' 
+    	ng-click="addOtherAffiliate(file[$index]['id'])">
+    	<i class='glyphicon glyphicon-plus'></i>
+	</button>
+</div>

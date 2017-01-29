@@ -1,0 +1,84 @@
+<style>
+.claim-fdeleted {
+    color: red;
+    background-color: gray;
+}
+</style>
+<div class="modal-body">
+    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+		<div class="form-section">
+			<h5 >
+				<span>DATOS DEL RECLAMO</span>
+			</h5>
+			<div class="container-fluid con-margin">	
+				<div class="row">
+					<br>
+					<div class="col-xs-12" >
+						<div class="form-group">
+							<label for="policy_num" class="col-xs-12 col-sm-3 control-label">
+								Número de Póliza:
+							</label>
+							<div class="col-xs-12 col-sm-9 col-md-6">
+								<span class="form-control form-control-display">
+						            {{ form.policy_number }}
+						        </span>
+					        </div>
+					    </div>
+			            <div class="form-group">
+							<label for="policy_num" class="col-xs-12 col-sm-3 control-label">
+								Nombre del Cliente:
+							</label>
+							<div class="col-xs-12 col-sm-9 col-md-6">
+								<span class="form-control form-control-display">
+						            {{ form.customer_name }}
+						        </span>
+					        </div>
+					    </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+		<div class="form-section">
+			<h5 >
+				<span>DOCUMENTOS</span>
+			</h5>
+			<br>
+			<div class="container-fluid con-margin">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-xs-2" style='display:inline;'>
+							<b>Categoría</b>
+						</div>
+						<div class="col-xs-3" style='display:inline;'>
+							<b>Descripción</b>
+						</div>
+						<div class="col-xs-2" style='display:inline;'>
+							<b>Proveedor</b>
+						</div>
+						<div class="col-xs-3" style='display:inline;'>
+							<b>Nombre del Archivo</b>
+						</div>
+						<div class="col-xs-2" style='display:inline;'>
+							<b>Válido</b>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="container-fluid con-margin">	
+				<claim-files ng-repeat="(id, fi) in file" >
+				</claim-files> 
+			</div>
+		</div>
+    </form>
+</div>
+<div class="modal-footer">
+	<a ng-click="next()" ng-disabled="modalForm.$invalid" class="btn btn-primary pull-right">
+    Continuar <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </a>
+    <!--<button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+        <span ng-show="!checking">Continuar</span>
+        <btn-spinner ng-show="checking"></btn-spinner>
+    </button>-->
+    <a ui-sref="^.^" class="btn btn-link pull-right">Salir</a>
+</div>

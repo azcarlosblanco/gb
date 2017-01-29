@@ -1,0 +1,167 @@
+<div class="modal-backdrop ng-scope">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close" href="#/seguros/recepcion/envio-documentos">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title ng-binding" id="myLargeModalLabel">GUIA DE REMISIÓN</h4>
+				</div>
+				<div class="modal-body">
+					<form name="modalForm" class="form-horizontal clearfix ng-pristine ng-invalid ng-invalid-required" ng-submit="">
+						<div class="form-section ng-scope" id="section-0">
+							<h5 class="">
+								<span class="ng-binding">
+									DATOS DESTINATARIO
+								</span>
+							</h5>
+							<div class="container-fluid con-margin">
+								<div class="row">
+									<div class="form-group" ng-class="{'highlight': focused[receiver_name], 'invalid' : !modalForm[receiver_name].$valid &amp;&amp; modalForm[receiver_name].$touched}" style="">
+    									<label for="receiver_name" class="col-xs-12 col-sm-3 control-label ng-binding">Nombre</label>
+    									<div class="col-xs-12 col-sm-9 col-md-6">
+   											<input  
+   											class="form-control" 
+   											type="text" 
+   											id="receiver_name" 
+   											name="receiver_name"
+   											section="0" 
+   											ng-class="{'first': $first}" 
+   											ng-model="form.receiver_name" 
+   											ng-init="form.receiver_name ? (form.receiver_name = form.receiver_name):''" 
+   											placeholder="" 
+   											ng-required="1" 
+   											ng-disabled="" 
+   											focus="true" 
+   											ng-readonly="" 
+   											ng-focus="focused[receiver_name] = true" 
+   											ng-blur="focused[receiver_name] = false" 
+   											autocomplete="off" required="required" style=""><!-- end ngSwitchWhen:  -->
+    									</div>
+									</div>
+									<div class="form-group" ng-class="{'highlight': focused[receiver_address], 'invalid' : !modalForm[receiver_address].$valid &amp;&amp; modalForm[receiver_address].$touched}" style="">
+    									<label for="receiver_address" class="col-xs-12 col-sm-3 control-label ng-binding">Dirección</label>
+    									<div class="col-xs-12 col-sm-9 col-md-6">
+   											<input 
+   											class="form-control" 
+   											type="text" 
+   											id="receiver_address" 
+   											name="receiver_address"
+   											section="0" 
+   											ng-class="{'first': $first}" 
+   											ng-model="form.receiver_address" 
+   											ng-init="form.receiver_address ? (form.receiver_address = form.receiver_address):''" 
+   											placeholder="" 
+   											ng-required="1" 
+   											ng-disabled="" 
+   											focus="true" 
+   											ng-readonly="" 
+   											ng-focus="focused[receiver_address] = true" 
+   											ng-blur="focused[receiver_address] = false" 
+   											autocomplete="off" required="required" style=""><!-- end ngSwitchWhen:  -->
+    									</div>
+									</div>
+									<div class="form-group" ng-class="{'highlight': focused[receiver_phone], 'invalid' : !modalForm[receiver_phone].$valid &amp;&amp; modalForm[receiver_phone].$touched}" style="">
+    									<label for="receiver_phone" class="col-xs-12 col-sm-3 control-label ng-binding">Teléfono</label>
+    									<div class="col-xs-12 col-sm-9 col-md-6">
+   											<input 
+   											class="form-control" 
+   											type="text" 
+   											id="receiver_phone" 
+   											name="receiver_phone"
+   											section="0" 
+   											ng-class="{'first': $first}" 
+   											ng-model="form.receiver_phone" 
+   											ng-init="form.receiver_phone ? (form.receiver_phone = form.receiver_phone):''" 
+   											placeholder="Optional" 
+   											ng-required="0" 
+   											ng-disabled="" 
+   											focus="true" 
+   											ng-readonly="" 
+   											ng-focus="focused[receiver_phone] = true" 
+   											ng-blur="focused[receiver_phone] = false" 
+   											autocomplete="off" required="required" style=""><!-- end ngSwitchWhen:  -->
+    									</div>
+									</div>
+									<div class="form-group" ng-class="{'highlight': focused[carrier_id], 'invalid' : !modalForm[carrier_id].$valid &amp;&amp; modalForm[carrier_id].$touched}" style="">
+    									<label for="carrier_id" class="col-xs-12 col-sm-3 control-label ng-binding">Mensajero</label>
+    									<div class="col-xs-12 col-sm-9 col-md-6">
+	    									<select 
+	    									class="form-control" 
+	    									id="carrier_id" 
+	    									section="0" 
+	    									ng-class="{'first': $first}" 
+	    									ng-model="form.carrier_id" 
+	    									ng-init="form.carrier_id ? (form.carrier_id = form.carrier_id):''" 
+	    									ng-required="!field.optional" 
+	    									ng-disabled="" 
+	    									focus="false" 
+	    									ng-readonly="" 
+	    									ng-options="key as (value | titleCase) for (key, value) in carrier_opt" 
+	    									required="required"></select>
+	    								</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-section ng-scope" id="section-1" >
+								<h5  class="">
+									<span class="ng-binding">IMPRESIÓN GUÍA</span>
+								</h5>
+								<div class="container-fluid con-margin">
+									<div class="row">
+										<div class="form-group" ng-class="{'highlight': focused[print_guia], 'invalid' : !modalForm[print_guia].$valid &amp;&amp; modalForm[fprint_guia].$touched}">
+   											<label for="print_guia" class="col-xs-12 col-sm-3 control-label ng-binding">Imprimir Guía</label>
+											<div class="col-xs-12 col-sm-9 col-md-6">
+    											<a 
+    												class="form-control" 
+    												href="" 
+    												id="print_guia" 
+    												ng-click="myFunction('reception/guiaremision/printGuide');$event.preventDefault()" 
+    												target="_blank">
+        											<span class="glyphicon glyphicon-print"></span>
+    											</a>
+								    		</div>
+										</div>	
+										<div class="form-group" ng-class="{'highlight': focused[field.name], 'invalid' : !modalForm[field.name].$valid &amp;&amp; modalForm[field.name].$touched}">
+		    								<label for="filefields[]" class="col-xs-12 col-sm-3 control-label ng-binding">
+		    									Cargar Guía
+		    								</label>
+		    								<div class="col-xs-12 col-sm-9 col-md-6" >
+												<input  
+													class="form-control" 
+													type="file" 
+													id="filefields[]" 
+													section="1" 
+													ng-class="{'first': $first}" 
+													name="filefields[]" 
+													file-model="filefields[]" 
+													placeholder="" 
+													ng-required="!field.optional" 
+													ng-disabled="" focus="false" 
+													required="required">
+										    </div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-section ng-scope" id="section-2" >
+								<h5 class="">
+									<span class="ng-binding">DOCUMENTOS A ENVIAR</span>
+								</h5>
+								<div class="container-fluid con-margin">
+									<dispatch-doc ng-repeat="documents in form.groupDocuments" ></dispatch-doc>
+								</div>
+							</div>
+						</div>
+					</form>
+			    	<br><br>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" ng-click="submit()" ng-disabled="modalForm.$invalid" value="Crear la Guìa" class="btn btn-primary pull-right" disabled="disabled">
+					<a ui-sref="^" class="btn btn-link pull-right" href="#/seguros/recepcion/envio-documentos">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

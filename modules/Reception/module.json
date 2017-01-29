@@ -1,0 +1,15 @@
+{
+    "name": "Reception",
+    "alias": "reception",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Reception\\Providers\\ReceptionServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

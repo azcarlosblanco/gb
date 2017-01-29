@@ -1,0 +1,157 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Reclamos - Detalle del Reporte
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+				        <div style="margin:5px 10px">
+						   <div class="form-section" id="section-1" style="padding:5px; margin:5px 0px">
+						    	<h5 style="color: #61a8cf;
+	    							   margin-bottom: 10px;">
+	    							   <span>Informacion Reclamo</span>
+	    					    </h5>
+					       </div>
+					       <div class="container-fluid con-margin" >
+					       	<label for="create_at" class="col-xs-6 col-sm-2 control-label">Reclamante:</label>
+							 <div class="col-xs-6 col-sm-3 col-md-3">
+								<span class="form-control">{{form.name}}</span>
+	                         </div>
+							  <label for="type" class="col-xs-6 col-sm-2 control-label">#Poliza:</label>
+					         	<div class="col-xs-6 col-sm-3 col-md-3">
+					         	  <span class="form-control">{{form.policy}}</span>
+                                </div>
+							</div>
+							<div class="container-fluid con-margin" >
+					       	<label for="create_at" class="col-xs-6 col-sm-2 control-label">Fecha:</label>
+							 <div class="col-xs-6 col-sm-3 col-md-3">
+								<span class="form-control">{{form.date}}</span>
+	                         </div>
+							  <label for="type" class="col-xs-6 col-sm-2 control-label">Factura:</label>
+					         	<div class="col-xs-6 col-sm-3 col-md-3">
+					         	  <span class="form-control">{{form.factura}}</span>
+                                </div>
+							</div>
+                        </div>
+						<div style="margin:5px 10px">
+						<div class="form-section" id="section-2" style="padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf;
+	    							   margin-bottom: 10px;">
+	    							   <span>Detalle de la Liquidacion del Reclamo</span>
+	    					</h5>
+							<div class="container-fluid con-margin">
+									<table class="table table-bordered table-notAssc">
+								    	<thead>
+								    		<th>$ No Cubierto</th>
+								    		<th>$ Descuento</th>
+								    		<th>$ Deducible</th>
+								    		<th>$ Copago</th>
+								    		<th>$ Pagado</th>
+								    		<th>$ Deducible Cal</th>
+								    		<th>$ Pagado Cal</th>
+								    	</thead>
+								    	<tbody style="font-size:10px">
+								    		<tr>
+								    			<td style="padding:5px">
+								    				<span>{{form.uncovered_value}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{form.descuento}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{form.deducible}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{form.coaseguro}}</span>
+								    			</td>
+								    			<td>
+								    				<span>{{form.refunded}}</span>
+								    			</td>
+								    			<td>
+								    				<span>{{form.expected_deduct}}</span>
+								    			</td>
+								    			<td>
+								    				<span>{{form.expected_refund}}</span>
+								    			</td>
+								     		</tr>
+								    	</tbody>
+								    </table>
+							    </div>
+					         </div>
+					     </div>
+					    <div style="margin:5px 10px">
+						 <div class="form-section" id="section-3" style="padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf;
+	    							   margin-bottom: 10px;">
+	    							   <span>Forma de Pago</span>
+	    					</h5>
+							<div class="container-fluid con-margin">
+									<table class="table table-bordered table-notAssc">
+								    	<thead>
+								    		<th>Monto Pagado</th>
+								    		<th>Metodo de Pago</th>
+								    		<th>Fecha de Pago</th>
+								    		<th>A proveedor</th>
+							         	</thead>
+								    	<tbody style="font-size:10px">
+								    		<tr ng-repeat="refund in form.refunds">
+								    			<td style="padding:5px">
+								    				<span>{{refund.amount}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{refund.payment_method}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{refund.pay_date}}</span>
+								    			</td>
+								    			<td style="padding:5px">
+								    				<span>{{refund.to_supplier==1?'Sí':'No'}}</span>
+								    			</td>
+								    		</tr>
+								    	</tbody>
+								    </table>
+							 </div>
+					      </div>
+					    </div>
+					    <div style="margin:5px 10px">
+						 <div class="form-section" id="section-4" style="padding:5px; margin:5px 0px">
+							<h5 style="color: #61a8cf;
+	    							   margin-bottom: 10px;">
+	    							   <span> Tickets </span>
+	    					</h5>
+							<div class="container-fluid con-margin">
+							    <div class="row">
+									<table class="table table-bordered table-notAssc">
+								    	<thead>
+								    		<th>Tickets</th>
+							         	</thead>
+								    	<tbody style="font-size:10px">
+								    		<tr ng-repeat="ticket in form.ticketsdetail">
+								    			<td style="padding:5px">
+								    				<a ng-click="seeTicketDetail(ticket.id)" target="_blank">{{ticket.description}}</a>
+								    			</td>
+								    		</tr>
+								    	</tbody>
+								    </table>
+							    </div>
+							 </div>
+					      </div>
+					    </div>
+					 </form>
+				</div>
+			    <br>
+			    <div class="modal-footer">
+						 <a  ng-click="seeSettlementDetail(form.id)" class="btn btn-primary pull-right" target="_blank">Editar</a>
+			       	<a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

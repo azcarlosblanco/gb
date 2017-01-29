@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="ngNova">
+<head>
+	<meta charset="UTF-8">
+	<title>Gilbert & Boloña | SGS</title>
+	<base href="/">
+
+	<link href="assets/img/favicon.ico" rel="icon" type="image/x-icon">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/perfect-scrollbar/css/perfect-scrollbar.min.css">
+	<!-- <link rel="stylesheet" href="libs/ng-toast/ngToast.css">
+	<link rel="stylesheet" href="libs/ng-toast/ngToast-animations.css"> -->
+	<!-- Optional theme -->
+	<!--
+	<link rel="stylesheet" href="bootstrap.theme.css">
+	-->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic">
+	<link rel="stylesheet" href="assets/css/page-animations.css">
+	<link rel="stylesheet" href="assets/css/index.css">
+	<link rel="stylesheet" href="assets/css/login.css">
+	<link rel="stylesheet" href="assets/css/sidebar.css">
+	<link rel="stylesheet" href="assets/css/headbar.css">
+	<link rel="stylesheet" href="assets/css/pearls.css">
+
+	<!--upload files plugin-->
+	<link rel="stylesheet" href="libs/uploadFiles/uploadFile.css">
+	<!--switch plugin-->
+	<link rel="stylesheet" href="libs/ui-switch/angular-ui-switch.min.css"/>
+
+
+<!-- modulos -->
+	<script src="libs/angular/angular.min.js"></script>
+	<script src="libs/angular-ui-router/angular-ui-router.min.js"></script>
+	<script src="libs/restangular/underscore-min.js"></script>
+	<script src="libs/restangular/restangular.js"></script>
+	<script src="libs/angular-sanitize/angular-sanitize.js"></script>
+	<script src="libs/angular-web-notification/desktop-notify.js"></script>
+	<script src="libs/angular-web-notification/angular-web-notification.js"></script>
+	<script src="libs/angular-animate/angular-animate.min.js"></script>
+	<script src="libs/angular-hotkeys/hotkeys.js"></script>
+	<script src="libs/slideables/slideables.js"></script>
+	<script src="libs/angular-selection-model/selection-model.js"></script>
+	<script src="libs/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
+	<script src="libs/bootstrap/js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+	<!--upload files-->
+	<script src="libs/uploadFiles/ng-file-upload.min.js"></script>
+	<!--script file th generate graphs-->
+	<script src="libs/angular-chart/Chart.js"></script>
+  	<script src="libs/angular-chart/angular-chart.js"></script>
+
+<!-- app -->
+	<script src="app.js"></script>
+	<script src="env.cons.js"></script>
+	<script src="config.js"></script>
+	<script src="routes.js"></script>
+	<script src="seguros/email/email-service.ctrl.js"></script>
+	<script src="seguros/share-info-service.ctrl.js"></script>
+
+	<script src="core/login/login.ctrl.js"></script>
+	<script src="core/layout/sidebar.ctrl.js"></script>
+	<script src="core/layout/headbar.ctrl.js"></script>
+	<script src="core/listables/list.ctrl.js"></script>
+	<script src="core/formidables/form.ctrl.js"></script>
+	<script src="core/dialogables/dialog.ctrl.js"></script>
+
+	<!-- CORE - Api Sales -->
+	<script src="api/list/list.ctrl.js"></script>
+	<script src="api/form/form.ctrl.js"></script>
+	<script src="api/dialog/dialog.ctrl.js"></script>
+	<!-- CORE END -->
+
+	<script src="seguros/emision/initial-documentation.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-1.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-2.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-3.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-4.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-5.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-6.ctrl.js"></script>
+	<script src="seguros/emision/wizard/paso-7.ctrl.js"></script>
+	<script src="seguros/emision/check-policy-data.ctrl.js"></script>
+	<script src="seguros/emision/customer-response.ctrl.js"></script>
+	<script src="seguros/emision/register-payment.ctrl.js"></script>
+	<script src="seguros/emision/confirm-payment-and-invoice.ctrl.js"></script>
+	<script src="seguros/reclamos/nuevo-reclamo.ctrl.js"></script>
+	<script src="seguros/guia-remision/create-guide.ctrl.js"></script>
+	<script src="seguros/reclamos/wizard-review-docs/review-docs.ctrl.js"></script>
+	<script src="seguros/reclamos/print-claim-letter.ctrl.js"></script>
+	<script src="seguros/reclamos/pending-claim.ctrl.js"></script>
+	<script src="seguros/liquidaciones/subir-archivos.ctrl.js"></script>
+	<script src="seguros/liquidaciones/pending-settlement.ctrl.js"></script>
+	<script src="seguros/liquidaciones/pending-liquidation.ctrl.js"></script>
+	<script src="seguros/liquidaciones/refund-settlement.ctrl.js"></script>
+	<script src="seguros/liquidaciones/finish-settlement.ctrl.js"></script>
+	<script src="seguros/planes/plan.details.ctrl.js"></script>
+	<script src="seguros/planes/plan.ctrl.js"></script>
+	<script src="seguros/afiliado/affiliate.ctrl.js"></script>
+	<script src="seguros/policy/policy.ctrl.js"></script>
+	<script src="seguros/policy/policy_files.ctrl.js"></script>
+	<script src="seguros/ventas/agente.ctrl.js"></script>
+	<script src="seguros/ticket/ticket.ctrl.js"></script>
+	<script src="seguros/ticket/ticketdetail.ctrl.js"></script>
+	<script src="seguros/cotizaciones/new-quatation-bd.ctrl.js"></script>
+	<script src="seguros/cotizaciones/view-quotation.ctrl.js"></script>
+	<script src="seguros/cancel-procedure/cancel-procedure.ctrl.js"></script>
+    <script src="seguros/dashboard/dashboard.ctrl.js"></script>
+    <script src="seguros/email/new-email.ctrl.js"></script>
+    <script src="seguros/claim_report/reportdetail.ctrl.js"></script>
+    <script src="seguros/general/new-diagnosis.ctrl.js"></script>
+    <script src="seguros/general/new-concept.ctrl.js"></script>
+    <script src="seguros/general/new-specialty.ctrl.js"></script>
+    <script src="seguros/general/new-doctor.ctrl.js"></script>
+    <script src="seguros/general/new-hospital.ctrl.js"></script>
+    <script src="seguros/servicio_cliente/emergency.ctrl.js"></script>
+    <script src="seguros/servicio_cliente/processed.ctrl.js"></script>
+    <script src="seguros/servicio_cliente/warranty_letter.ctrl.js"></script>
+    <script src="seguros/servicio_cliente/emergency-view.ctrl.js"></script>
+    <script src="seguros/renovaciones/renovaciones.ctrl.js"></script>
+</head>
+
+<body class="app-page" ui-view=""></body>
+
+</html>

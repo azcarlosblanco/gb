@@ -1,0 +1,98 @@
+
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal-body">
+                    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+                        <div class="form-section" id="section-0">
+                            <h5 >
+                                <span>DOCUMENTOS</span>
+                            </h5>
+                            <div class="container-fluid con-margin">
+                                <files-upload ng-repeat="register in registers" >
+                                </files-upload>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a ng-click="addRegister()" class="btn btn-sm btn-success">
+                                            <span class="glyphicon glyphicon-plus"></span> Agregar Archivo</a>
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </form>
+                    <br /><br />
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="submit" ng-click="previewEmail()" 
+                    class="btn btn-info pull-left">
+                        <span><i class="glyphicon glyphicon-envelope"></i>Visualizar Correo</span>
+                    </button>-->
+                    <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Seguir</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^.paso-6" class="btn btn-link pull-right">
+                        Regresar
+                    </a>
+                </div>
+
+<!--modal for confirmation -->
+<div class="modal-backdrop bs-example-modal" ng-show="confirmSendApp" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+    <div class="modal-dialog modal" ng-style="{'display':confirmSendApp && 'block'}">
+        <div class="modal-content wizard-form">
+            <div class="modal-header">
+               <button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myLargeModalLabel">Confirmar Envio de Solicitud</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid con-margin">
+                    <div class="row">
+                        <header class="col-xs-12 text-center">
+                        <br />
+                            <h4>Confirma que los datos de la aplicación están completos y desea mandar la aplicación a Best Doctors</h4>
+                        </header>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" ng-click="confirmSendApp = false">Cancelar</button>
+                <button class="btn btn-success" type="button" ng-click="sendApplicationBD()">Enviar Solicitud</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nova-confirm-email">
+    <div ng-show="emailObject.showPreviewEmail" 
+        ng-include="'seguros/email/new-email.view.html'"></div>
+</div>

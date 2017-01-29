@@ -1,0 +1,119 @@
+
+            <div class="modal-body">
+                <div class="pearls row" style="margin-left:30px">
+                    <div ng-repeat="wstep in wizard_steps">
+                        <div ng-if="wstep.step<=max_step && wstep.step!=current_step"
+                            ui-sref="{{ wstep.link }}"
+                            style="cursor:pointer; width: 120px;" 
+                            class="pearl col-xs-2 done" 
+                            aria-expanded="false">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step==current_step" 
+                            class="pearl col-xs-2 current" 
+                            aria-expanded="true"
+                            style="width: 120px;"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                        <div ng-if="wstep.step>max_step && wstep.step!=current_step" 
+                            class="pearl col-xs-2 disabled"
+                            style="width: 120px;" 
+                            aria-expanded="false"
+                            ng-class="{wstep.step==1: nova-margin-left-30}">
+                            <div class="pearl-icon"><span class="glyphicon {{ wstep.icon }}"></span></div>
+                            <span class="pearl-title">{{ wstep.label }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal-body">
+
+                    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+
+                        <div ng-repeat="section in data.quiz">
+                                    <!-- <hr /> class="col-xs-12 col-md-offset-2 col-md-8"
+                                    <h5 class="col-sm-offset-3 col-xs-12 col-sm-9">{{section.label}}</h5>-->
+                            <h5><span>{{section.description | uppercase}}</span></h5>
+
+                            <div class="container-fluid con-margin" style="border-bottom: 1px solid #eee; margin:0px; padding: 10px 30px; color: #888;" ng-repeat="item in section.items">
+                                <div class="col-xs-12">
+                                    <!-- <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-sm btn-default yes-toggle" ng-class="{'active': form[item.id] == 1}">
+                                            <input type="radio" name="options-{{form[item.id]}}" ng-model="form[item.id]" ng-value="1" autocomplete="off"> SI
+                                        </label>
+                                        <label class="btn btn-sm btn-default no-toggle" ng-class="{'active': form[item.id] == '0'}">
+                                            <input type="radio" name="options-{{form[item.id]}}" ng-model="form[item.id]" ng-value="0" autocomplete="off" ng-init="form[item.id] = '0'" checked> NO
+                                        </label>
+                                    </div>  -->
+                                    <a ng-click="addComment=!addComment" style="margin-left: 15px;" class="btn btn-default btn-sm pull-right">Observación</a>
+                                    <div class="btn-group pull-right" style="margin-left: 15px;" data-toggle="buttons">
+                                        <label class="btn btn-sm btn-default yes-toggle" ng-class="{'active': form[item.id] == 1}">
+                                            <input type="radio" name="options-{{form[item.id]}}" ng-model="form[item.id]" ng-value="1" autocomplete="off"> SI
+                                        </label>
+                                        <label class="btn btn-sm btn-default no-toggle" ng-class="{'active': form[item.id] == '0'}">
+                                            <input type="radio" name="options-{{form[item.id]}}" ng-model="form[item.id]" ng-value="0" autocomplete="off" ng-init="form[item.id] = '0'" checked> NO
+                                        </label>
+                                    </div>
+                                    <span class="">{{item.description}}</span>
+
+
+                                    <div ng-show="addComment" class="add-comment">
+                                        <div class="form-group">
+                                            <label for="{{field.name}}" class="col-xs-12 col-sm-3 control-label">Subsanable por</label>
+                                            <div class="col-xs-12 col-sm-9 col-md-6">
+                                                <select ng-model="form.subsanable[item.id]" class="form-control" 
+                                                        ng-options="key as (value | titleCase) for (key, value) in data.observation_type">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="observacion" class="col-xs-12 col-sm-3 control-label">Observación</label>
+                                            <div class="col-xs-12 col-sm-9 col-md-6">
+                                                <textarea ng-model="form.observacion[item.id]" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                   
+
+                        </div>
+
+                                <!--<div class="form-section" id="section-0">
+                                    <h5><span>QUIZ</span></h5>
+
+                                    <div class="container-fluid con-margin">
+                                        <div class="row">
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+
+
+
+
+                    </form>
+
+                    <br /><br />
+                    </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" ng-click="checking=1;next()" ng-disabled="modalForm.$invalid || checking==true" class="btn btn-primary pull-right">
+                        <span ng-show="!checking">Seguir</span>
+                        <btn-spinner ng-show="checking"></btn-spinner>
+                    </button>
+                    <a ng-show="!checking" ui-sref="^.paso-3" class="btn btn-link pull-right">Regresar</a>
+                </div>
+                
+                                <!--<pre style="margin-top: 40px;"class="col-xs-12 col-md-offset-3 col-md-7">{{form | json}}</pre>
+                               <pre class="col-xs-12 col-md-offset-3 col-md-7">{{data | json}}</pre> <!-- -->

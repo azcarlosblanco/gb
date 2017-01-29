@@ -1,0 +1,15 @@
+{
+    "name": "Authorization",
+    "alias": "authorization",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Authorization\\Providers\\AuthorizationServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

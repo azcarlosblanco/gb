@@ -1,0 +1,652 @@
+<div class="modal-backdrop">
+	<div class="modal bs-example-modal-lg in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block; /*padding-right: 17px;*/">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ui-sref="^" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myLargeModalLabel">
+						Ticket - Detalle del Ticket
+					</h4>
+				</div>
+				<div class="modal-body">
+				    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+						<div class="form-section" id="section-1">
+							<h5 >
+								<span>DATOS DEL TICKET</span>
+							</h5>
+							<div class="container-fluid con-margin">
+								<div class="row">
+								    <div class="form-group" ng-class="{'highlight': focused[ticket_id], 'invalid' : !modalForm[ticket_id].$valid && modalForm[policy_number].$touched}">
+									    <label for="ticket_id" class="col-xs-12 col-sm-3 control-label"># Ticket:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input
+									            class="form-control"
+									            type="text"
+									            id="ticket_id"
+									            value="{{ form.ticket_id }}"
+									            name="ticket_id"
+									            ng-model="form.ticket_id"
+									            ng-init="form.ticket_id"
+									            placeholder="# Ticket"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[ticket_id] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[ticket_cat_id], 'invalid' : !modalForm[ticket_cat_id].$valid && modalForm[ticket_cat_id].$touched}">
+									    <label for="ticket_cat_id" class="col-xs-12 col-sm-3 control-label">Categoria:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input
+									            class="form-control"
+									            type="text"
+									            id="ticket_cat_id"
+									            value="{{ form.ticket_cat_id}}"
+									            name="ticket_cat_id"
+									            ng-model="form.ticket_cat_id"
+									            ng-init="form.ticket_cat_id"
+									            placeholder="Categoria"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[ticket_cat_id] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[policy_id], 'invalid' : !modalForm[policy_id].$valid && modalForm[policy_id].$touched}"><label for="policy_id" class="col-xs-12 col-sm-3 control-label">Poliza:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input
+									            class="form-control"
+									            type="text"
+									            id="policy_id"
+									            value="{{ form.policy_id}}"
+									            name="policy_id"
+									            ng-model="form.policy_id"
+									            ng-init="form.policy_id"
+									            placeholder="policy_id"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[policy_id] = false" autocomplete="off">
+									    </div>
+								    </div>
+								    <div class="form-group" ng-class="{'highlight': focused[customer], 'invalid' : !modalForm[customer].$valid && modalForm[customer].$touched}"><label for="customer" class="col-xs-12 col-sm-3 control-label">Cliente:</label>
+									    <div class="col-xs-12 col-sm-9 col-md-6">
+									    	<input
+									            class="form-control"
+									            type="text"
+									            id="customer"
+									            value="{{ form.customer}}"
+									            name="customer"
+									            ng-model="form.customer"
+									            ng-init="form.customer"
+									            placeholder="customer"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[customer] = false" autocomplete="off">
+									    </div>
+								    </div>
+								 </div>
+							</div>
+						</div>
+
+						<div class="form-section" id="section-2">
+							<h5 >
+								<span>DETALLE</span>
+							</h5>
+							<div class="container-fluid con-margin" ng-hide="view">
+								<div class="row">
+										<div class="row" ng-repeat="ticketdetail in form.ticketdetail_obj">
+										  <br>
+										   <div class="col-xs-12" style="border:solid 1px">
+											<div class="col-xs-12">
+												<div class="form-group" ng-class="{'highlight': focused[create_at], 'invalid' : !modalForm[create_at].$valid && modalForm[create_at].$touched}">
+													<label for="create_at" class="col-xs-6 col-sm-2 control-label">Fecha:</label>
+										         	<div class="col-xs-6 col-sm-3 col-md-3">
+										    	 		<span class="form-control">{{ticketdetail.created_at}}</span>
+	                                            	</div>
+
+										            <label for="type" class="col-xs-6 col-sm-2 control-label">Tipo:</label>
+										         	<div class="col-xs-6 col-sm-3 col-md-3">
+										    	 		<span class="form-control">{{ticketDetailDisplay[ticketdetail.type]}}</span>
+										         	</div>
+								                </div>
+								                <div class="form-group" ng-class="{'highlight': focused[user_id, 'invalid' : !modalForm[user_id].$valid && modalForm[user_id].$touched}"><label for="user_id" class="col-xs-6 col-sm-2 control-label">Usuario:</label>
+									             <div class="col-xs-6 col-sm-3 col-md-3">
+									                 <span class="form-control">{{ticketdetail.user_id}}</span>
+                                                 </div>
+									         </div>
+									         <div class="form-group" ng-class="{'highlight': focused[comment, 'invalid' : !modalForm[comment].$valid && modalForm[comment].$touched}"><label for="comment" class="col-xs-6 col-sm-2 control-label">Contenido: </label>
+									          <div class="col-xs-14 col-sm-10 col-md-6">
+									            <textarea
+									            class="form-control"
+									            id="comment"
+ 									            name="comment"
+									            ng-model="ticketdetail.comment"
+									            placeholder="comment"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[comment] = false" autocomplete="off">
+									            </textarea>
+									          </div>
+								             </div>
+								               <div ng-if="ticketdetail.type ==1" class="form-group" ng-class="{'highlight': focused[attach, 'invalid' : !modalForm[attach].$valid && modalForm[attach].$touched}"><label for="attach" class="col-xs-6 col-sm-2 control-label">Adjunto: </label>
+									            <div class="col-xs-6 col-sm-3 col-md-9">
+									            <textarea
+									            class="form-control"
+									            id="attach"
+										            name="attach"
+									            ng-model="ticketdetail.files"
+									            placeholder="attach"
+									            ng-required=1
+									            focus="{{$parent.$parent.$first && $first}}"
+									            ng-readonly="0"
+									            ng-blur="focused[attach] = false" autocomplete="off">
+									            </textarea>
+									            </div>
+								             </div>
+								              <div ng-if="ticketdetail.type ==2" class="form-group" ng-class="{'highlight': focused[email, 'invalid' : !modalForm[email].$valid && modalForm[email].$touched}"><label for="attach" class="col-xs-6 col-sm-2 control-label">To: </label>
+									            <div class="col-xs-12 col-sm-3 col-md-9">
+									                 <textarea class="form-control">{{ticketdetail.email}}> </textarea>
+									          </div>
+								             </div>
+								              <div ng-if="ticketdetail.type ==2" class="form-group" ng-class="{'highlight': focused[email, 'invalid' : !modalForm[email].$valid && modalForm[email].$touched}"><label for="attach" class="col-xs-6 col-sm-2 control-label">CC: </label>
+									            <div class="col-xs-12 col-sm-3 col-md-9">
+									                 <textarea class="form-control">{{ticketdetail.copy}}> </textarea>
+									          </div>
+								             </div>
+								           </div>
+								         </div>
+								      </div>
+							      </div>
+						        </div>
+						    </div>
+						 </form>
+						 <br>
+						    <div class=" col-xs-8 col-sm-8 col-md-8 text-right">
+										<button type="button" class="btn btn-primary"
+											ng-click="createCall()">
+											  Llamada
+										</button>
+										<button type="button" class="btn btn-primary"
+											ng-click="createEmail(form.ticket_id)">
+											  Email
+										</button>
+										<button type="button" class="btn btn-primary"
+											ng-click="registerReplay()">
+												Registrar Respuesta
+										</button>
+										<button type="button" class="btn btn-primary"
+											ng-click="Claim(form.ticket_id)">
+												Ver Reclamo
+										</button>
+										<button type="button" class="btn btn-primary"
+											ng-click="endTicket()">
+											  Cerrar Ticket
+										</button>
+
+									</div>
+			    </div>
+			    <br>
+			    <div class="modal-footer">
+			       	<a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO registerReplay-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showRegReplay" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showRegReplay && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >REGISTRAR RESPUESTA</span>
+						</h5>
+						<div class="container-fluid con-margin">
+							<div class="row">
+								<div class="form-group" ng-class="{'highlight': focused[replay], 'invalid' : !modalForm[replay].$valid && modalForm[replay].$touched}">
+								    <label for="question" class="col-xs-12 col-sm-3 control-label">Respuesta:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<textarea
+								            class="form-control"
+
+								            id="question"
+								            value="{{ form.replay }}"
+								            name="question"
+								            ng-model="form.replay"
+								            ng-init="form.replay"
+								            placeholder="Respuesta"
+								            ng-required=1
+								            autocomplete="off">
+								        </textarea>
+								    </div>
+							    </div>
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submitReplay()"  value="Enviar Respuesta" class="btn btn-primary pull-right" >
+				</div>
+            	<div class="col-offset-md-6 col-md-12">
+            		<a ng-show="!checking" ui-sref="^" class="btn btn-link pull-right">Regresar</a>
+            	</div>
+            </div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO createEMail-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showCreateEmail" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showCreateEmail && 'block'}">
+		<div class="modal-content wizard-form">
+			<div class="modal-header">
+                <button type="button" class="close" ng-click="closeCreateEmail()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="fileModalLabel">Ticket Detalle Email</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >DATOS EMAIL</span>
+						</h5>
+						<div class="container-fluid con-margin">
+							<div class="row">
+							  		<div class="form-group" ng-class="{'highlight': focused[to], 'invalid' : !modalForm[to].$valid && modalForm[to].$touched}">
+								    <label for="to" class="col-xs-12 col-sm-3 control-label">Para:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+                                        <input
+                                            class="form-control"
+									        type="text"
+									        id="email"
+									        value="{{ form_detail.email}}"
+									        name="to"
+									        ng-model="form_detail.email"
+									        ng-init="form_detail.email"
+									        placeholder="email"
+									        ng-required=1
+									        focus="{{$parent.$parent.$first && $first}}"
+									        ng-readonly="0"
+									        ng-blur="focused[email] = false" autocomplete="off">
+
+								    </div>
+							    </div>
+							    <div class="form-group" ng-class="{'highlight': focused[copy], 'invalid' : !modalForm[copy].$valid && modalForm[copy].$touched}">
+								    <label for="copy" class="col-xs-12 col-sm-3 control-label">CC:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input
+								            class="form-control"
+								            type="text"
+								            id="copy"
+								            value="{{ form_detail.copy }}"
+								            name="copy"
+								            ng-model="form_detail.copy"
+								            ng-init="form_detail.copy"
+								            placeholder="example@mail.com"
+								            ng-required=1
+								            autocomplete="off">
+								    </div>
+							     </div>
+							     <div class="row" ng-repeat ="attachment in attachments">
+							        <div class="form-group" ng-class="{'highlight': focused['file'], 'invalid' : !modalForm['file'].$valid && modalForm['file'].$touched}">
+									    <label for="file" class="col-xs-12 col-sm-3 control-label">Adjunto:</label>
+									    <div class="col-xs-12 col-sm-2">
+									    	<button class="btn btn-primary btn-sm"
+										        style='display:inline;' type="file" ngf-select="registerFile($file, attachment)" accept="*/*" ngf-max-height="1000" >
+										            <i class='glyphicon glyphicon-upload'></i>
+										    </button>
+										    <button class="btn btn-danger btn-sm"
+											        style='display:inline;' ng-click="deleteFile(attachment,$index!=0)" >
+											        <i class='glyphicon glyphicon-trash'></i>
+											</button>
+									    </div>
+									    <div class="col-xs-12 col-sm-7">
+									    	<span>
+									    		{{attachment.name}}
+									    	</span>
+									    	<span ng-show="attachment.file.progress > 0" ng-bind="attachment.file.progress + '%'"></span>
+									    </div>
+								    </div>
+								</div>
+							     <div class="form-group" ng-class="{'highlight': focused[content], 'invalid' : !modalForm[content].$valid && modalForm[content].$touched}">
+								    <label for="content" class="col-xs-12 col-sm-3 control-label">Contenido:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<textarea
+								            class="form-control"
+								            type="text"
+								            id="content"
+								            value="{{ form_detail.content }}"
+								            name="content"
+								            ng-model="form_detail.content"
+								            ng-init="form_detail.content"
+								            placeholder="Contenido"
+								            ng-required=1
+								            autocomplete="off">
+								        </textarea>
+								    </div>
+							    </div>
+
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submitEmail()"  value="Enviar Email" class="btn btn-primary pull-right" >
+				</div>
+            </div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO addQuestion-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showEndTicket" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showEndTicket && 'block'}">
+		<div class="modal-content wizard-form">
+		<div class="modal-header">
+                <button type="button" class="close" ng-click="closeEndTicket()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="fileModalLabel">Ticket Cerrar Ticket</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >Desea cerrar el Ticket?</span>
+						</h5>
+					 </div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="closeTicket()"  value="Cerrar Ticket" class="btn btn-primary pull-right" >
+				</div>
+            </div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO createCall-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showCreateCall" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showCreateCall && 'block'}">
+		<div class="modal-content wizard-form">
+		<div class="modal-header">
+                <button type="button" class="close" ng-click="closeCreateCall()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="fileModalLabel">Ticket Detalle Llamada</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >DATOS LLAMADA</span>
+						</h5>
+						<div class="container-fluid con-margin">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12">
+									<div ng-repeat="form_detail in form_detail.qr">
+										<div class="form-group" ng-class="{'highlight': focused[question], 'invalid' : !modalForm[question].$valid && modalForm[question].$touched}">
+										    <label for="question" class="col-xs-12 col-sm-2 control-label">Pregunta:</label>
+										    <div class="col-xs-12 col-sm-5 col-md-6">
+										    	<select
+										            class="form-control"
+										            ng-options="key as (value) for (key, value) in catalog.question"
+										            ng-model="form_detail.question"
+										            ng-init="form_detail.question"
+										            ng-required=1
+										            focus="{{$parent.$parent.$first && $first}}"
+										            ng-blur="focused[question] = false" autocomplete="off">
+										            <option value="">--Elige Pregunta--</option>
+										        </select>
+										    </div>
+										    <div class="col-sm-2">
+		                                       <a ng-click="addQuestion()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span></a>
+		                                       <a ng-if="$index==1" ng-click="deleteQuestion(form_detail,$index!=0)" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+		                                    </div>
+									    </div>
+									    <div class="form-group" ng-class="{'highlight': focused[comment], 'invalid' : !modalForm[comment].$valid && modalForm[comment].$touched}">
+										    <label for="comment" class="col-xs-12 col-sm-2 control-label">Respuesta:</label>
+										    <div class="col-xs-12 col-sm-5 col-md-6">
+										    	<input
+										            class="form-control"
+										            type="text"
+										            id="comment"
+										            value="{{ form_detail.replay}}"
+										            name="comment"
+										            ng-model="form_detail.replay"
+										            ng-init="form_detail.replay"
+										            placeholder="Respuesta"
+										            ng-required=1
+										            autocomplete="off">
+										    </div>
+									    </div>
+								    </div>
+								    <div class="row" class="form-group">
+								    	<div class="col-xs-12 col-sm-2"></div>
+								    	<div class="col-xs-12 col-sm-5 col-md-6">
+										    <button class="btn btn-success btn-sm" ng-click="addQuestionReply()">
+									         	<i class='glyphicon glyphicon-plus'>Anadir Seccion</i>
+										    </button>
+									    </div>
+								    </div>
+								    <div ng-repeat ="attachment in attachments">
+								        <div class="form-group" ng-class="{'highlight': focused['file'], 'invalid' : !modalForm['file'].$valid && modalForm['file'].$touched}">
+										    <label for="file" class="col-xs-12 col-sm-2 control-label">Adjunto:</label>
+										    <div class="col-xs-12 col-sm-5 col-md-6">
+								    			<input
+								    				class="form-control"
+									    			type="text"
+									    			name="description"
+									    			ng-model="attachment.description" >
+									    	</div>
+									    	<div class="col-sm-2" style="width:110px">
+									    		<button class="btn btn-primary btn-sm"
+										         type="file" ngf-select="registerFileCall($file, attachment)" accept="*/*" ngf-max-height="1000" >
+										            <i class='glyphicon glyphicon-upload'></i>
+										   		</button>
+										   		<button class="btn btn-danger btn-sm"
+										       	 ng-click="deleteFile(attachment)" ng-if="$index!=0" >
+										            <i class='glyphicon glyphicon-trash'></i>
+										    	</button>
+										   	</div>
+										    <div class="col-sm-2">
+								    	    	<span class="str-truncated">
+								    		  		{{attachment.name}}
+								    	     	</span>
+								    	    	<span ng-show="attachment.file.progress > 0" ng-bind="attachment.file.progress + '%'"></span>
+								           	</div>
+									    </div>
+									</div>
+							   	</div>
+						     </div>
+					    </div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                   <div >
+					<input type="submit" ng-click="submitCallDetail()"  value="Enviar Llamada" class="btn btn-primary pull-right" >
+			      </div>
+            </div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO addQuestion-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showAddQuestion" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showAddQuestion && 'block'}">
+		<div class="modal-content wizard-form">
+		<div class="modal-header">
+                <button type="button" class="close" ng-click="closeAddQuestion()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="fileModalLabel">Crear Nueva Pregunta</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="modalForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >AGREGAR PREGUNTA</span>
+						</h5>
+						<div class="container-fluid con-margin">
+							<div class="row">
+								<div class="form-group" ng-class="{'highlight': focused[question], 'invalid' : !modalForm[question].$valid && modalForm[question].$touched}">
+								    <label for="question" class="col-xs-12 col-sm-3 control-label">Pregunta:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+								    	<input
+								            class="form-control"
+								            type="text"
+								            id="question"
+								            value="{{ form.question }}"
+								            name="question"
+								            ng-model="form.question"
+								            ng-init="form.question"
+								            placeholder="Pregunta"
+								            ng-required=1
+								            autocomplete="off">
+								    </div>
+							    </div>
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="submitQuestion()"  value="Enviar Pregunta" class="btn btn-primary pull-right" >
+				</div>
+             </div>
+		</div>
+	</div>
+</div>
+<!--DISPLAY POPUP TO Claim-->
+<div class="modal-backdrop bs-example-modal-lg" ng-show="showClaim" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel">
+	<div class="modal-dialog modal-lg" ng-style="{'display':showClaim && 'block'}">
+		<div class="modal-content wizard-form">
+		<div class="modal-header">
+                <button type="button" class="close" ng-click="closeClaim()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="claimModalLabel">Detalles de Reclamo Asociado</h4>
+            </div>
+			<div class="modal-body">
+			    <form name="claimForm" class="form-horizontal clearfix" ng-submit="">
+					<div class="form-section">
+						<h5 style="text-align:center">
+							<span >MODIFICAR RECLAMO</span>
+						</h5>
+						<div class="container-fluid con-margin">
+							<div class="row">
+
+	<div class="form-group" ng-class="{'highlight': focused[policy], 'invalid' : !claimForm[policy].$valid && claimForm[policy].$touched}">
+			<label for="policy" class="col-xs-12 col-sm-3 control-label"># Poliza:</label>
+			<div class="col-xs-12 col-sm-9 col-md-2">
+				<input
+							class="form-control"
+							type="text"
+							id="policy"
+							value="{{ form_detail.policy }}"
+							name="type"
+							ng-model="form_detail.policy"
+							ng-init="form_detail.policy"
+							placeholder="Poliza"
+							ng-required=1
+							autocomplete="off" readonly="readonly">
+			</div>
+			<label for="type" class="col-xs-12 col-sm-2 control-label"># Reclamo:</label>
+			<div class="col-xs-12 col-sm-9 col-md-2">
+				<input
+							class="form-control"
+							type="text"
+							id="claim"
+							value="{{ form_detail.claim }}"
+							name="claim"
+							ng-model="form_detail.claim"
+							ng-init="form_detail.claim"
+							placeholder="Reclamo"
+							ng-required=1
+							autocomplete="off" readonly="readonly">
+			</div>
+		</div>
+								<div class="form-group" ng-class="{'highlight': focused[type_claim], 'invalid' : !claimForm[type_claim].$valid && claimForm[type_claim].$touched}">
+								    <label for="type" class="col-xs-12 col-sm-3 control-label">Tipo:</label>
+								    <div class="col-xs-12 col-sm-9 col-md-6">
+														<select
+								            class="form-control"
+								            ng-model="selected.id"
+								            ng-init="selected.id"
+								            ng-options="type.id as type.description for type in form_detail.types"
+								            required
+								            autofocus autocomplete="off"
+								            ng-readonly="1" id="type_claim" name="type_claim">
+								            </select>
+								    </div>
+							    </div>
+									<div class="form-group" ng-class="{'highlight': focused[claim_description], 'invalid' : !claimForm[claim_description].$valid && claimForm[claim_description].$touched}">
+											<label for="claim_description" class="col-xs-12 col-sm-3 control-label">Descripcion:</label>
+											<div class="col-xs-12 col-sm-9 col-md-6">
+												<input
+															class="form-control"
+															type="text"
+															id="claim_description"
+															value="{{ form_detail.description }}"
+															name="claim_description"
+															ng-model="form_detail.description"
+															ng-init="form_detail.description"
+															placeholder="Descripcion"
+															ng-required=1
+															autocomplete="off">
+											</div>
+									</div>
+									<div class="form-group" ng-class="{'highlight': focused[currency], 'invalid' : !claimForm[currency].$valid && claimForm[currency].$touched}">
+												<label for="currency" class="col-xs-12 col-sm-3 control-label">Moneda:</label>
+												<div class="col-xs-12 col-sm-9 col-md-6">
+																<select
+																class="form-control"
+																ng-model="selected_currency.id"
+																ng-init="selected_currency.id"
+																ng-options="currency.id as currency.display_name for currency in form_detail.currencies"
+																required
+																autofocus autocomplete="off"
+																ng-readonly="1" id="currency" name="currency">
+														</select>
+												</div>
+									</div>
+											<div class="form-group" ng-class="{'highlight': focused[amount], 'invalid' : !claimForm[amount].$valid && claimForm[amount].$touched}">
+													<label for="question" class="col-xs-12 col-sm-3 control-label">Valor Fc:</label>
+													<div class="col-xs-12 col-sm-9 col-md-6">
+														<input
+																	class="form-control"
+																	type="text"
+																	id="amount"
+																	value="{{ form_detail.amount }}"
+																	name="amount"
+																	ng-model="form_detail.amount"
+																	ng-init="form_detail.amount"
+																	placeholder="Monto"
+																	ng-required=1
+																	autocomplete="off">
+													</div>
+												</div>
+							 </div>
+						</div>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer">
+                <div >
+					<input type="submit" ng-click="editClaim(form_detail)"  value="Editar Reclamo" class="btn btn-primary pull-right" >
+				</div>
+             </div>
+		</div>
+	</div>
+</div>

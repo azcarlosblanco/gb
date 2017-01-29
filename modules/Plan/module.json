@@ -1,0 +1,15 @@
+{
+    "name": "Plan",
+    "alias": "plan",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Plan\\Providers\\PlanServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}

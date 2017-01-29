@@ -1,0 +1,135 @@
+
+
+<div class="form-group" ng-class="{'highlight': focused[field.name], 'invalid' : !modalForm[field.name].$valid && modalForm[field.name].$touched}">
+    <label for="{{field.name}}" class="col-xs-12 col-sm-3 control-label">{{field.label}}</label>
+    <div class="col-xs-12 col-sm-9 col-md-6" ng-switch="field.type">
+
+        <textarea ng-switch-when="textarea"
+            class="form-control"
+            id="{{field.name}}"
+            section="{{$parent.$parent.$index}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+            ng-model="form[field.name]"
+            ng-init="formidable.data_fields[field.name] ? (form[field.name] = formidable.data_fields[field.name]):''"
+            placeholder="{{field.placeholder ? field.placeholder : field.optional ? '(opcional)':''}} "
+            ng-required='!field.optional'
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-readonly="{{field.readonly}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false"
+            rows="{{field.num_rows ? field.num_rows : 3}}"></textarea>
+
+        <span ng-switch-when="display" class="form-control form-control-display">
+            {{formidable.data_fields[field.name]}}
+        </span>
+
+        <a ng-switch-when="link" 
+            class="form-control form-control-display"
+            href=""
+            id="{{field.name}}"
+            ng-click="myFunction(field.link);$event.preventDefault()"
+            target="_blank" 
+            >
+            <span class="glyphicon glyphicon-print"></span>
+        </a>
+
+       <select ng-switch-when="select"
+            class="form-control"
+            id="{{field.name}}"
+            section="{{$parent.$parent.$index}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+            ng-init="formidable.data_fields[field.name] ? (form[field.name] = formidable.data_fields[field.name]):''"
+            ng-model="form[field.name]"
+            ng-required='!field.optional'
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-readonly="{{field.readonly}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false"
+            ng-options="key as (value | titleCase) for (key, value) in field.options" >
+            <option value="">{{field.placeholder ? field.placeholder : 'Seleccionar'}}</option>
+        </select>
+        <!---->
+        
+        <div class="input-group" ng-switch-when="currency">
+            <div class="input-group-addon">$</div>
+            <input  class="form-control"
+            type="number"
+            id="{{field.name}}"
+            section="{{$parent.$parent.$index}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+            ng-model="form[field.name]"
+            ng-init="formidable.data_fields[field.name] ? (form[field.name] = formidable.data_fields[field.name]):''"
+            placeholder="{{field.placeholder ? field.placeholder : field.optional ? '(opcional)':''}} "
+            ng-required="!field.optional"
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-readonly="{{field.readonly}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false" autocomplete="off">
+        </div>
+
+        <input ng-switch-when="date"
+            class="form-control"
+            type="{{field.type}}"
+            id="{{field.name}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+
+            ng-init="form[field.name] = (formidable.data_fields[field.name] | parseDate)"
+            ng-model="form[field.name]"
+
+            placeholder="mm/dd/yyyy"
+            ng-required='!field.optional'
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-readonly="{{field.readonly}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false" autocomplete="off">
+
+        <div ng-switch-when="checkbox">
+            <div ng-repeat="(key, value) in field.options" class="checkbox">
+              <label>
+                <input 
+                    ng-model="form[field.name]"
+                    name={{field.name}} 
+                    type="checkbox" 
+                    ng-true-value="{{key}}">
+                {{value}}
+              </label>
+            </div>
+        </div>
+
+        <input ng-switch-when="file"
+            class="form-control"
+            type="file"
+            id="{{field.name}}"
+            section="{{$parent.$parent.$index}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+            file-model="{{field.name}}"
+            placeholder="{{field.placeholder ? field.placeholder : field.optional ? '(opcional)':'';}} "
+            ng-required='!field.optional'
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false" autocomplete="off">
+
+
+        <input ng-switch-default
+            class="form-control"
+            type="{{field.type}}"
+            id="{{field.name}}"
+            value="{{formidable.data_fields[field.name]}}"
+            section="{{$parent.$parent.$index}}"
+            ng-class="{'first': $first}"
+            name="{{field.name}}"
+            ng-model="form[field.name]"
+            ng-init="formidable.data_fields[field.name] ? (form[field.name] = formidable.data_fields[field.name]):''"
+            placeholder="{{field.placeholder ? field.placeholder : field.optional ? '(opcional)':'';}} "
+            ng-required='!field.optional'
+            ng-disabled="{{field.disabled}}"
+            focus="{{$parent.$parent.$first && $first}}"
+            ng-readonly="{{field.readonly}}"
+            ng-init="focused[field.name] = false" ng-focus="focused[field.name] = true" ng-blur="focused[field.name] = false" autocomplete="off">
+    </div>
+</div>
